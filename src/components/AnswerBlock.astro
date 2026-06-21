@@ -1,0 +1,24 @@
+---
+/**
+ * Answer-first summary block. Renders a concise, self-contained answer that
+ * AI answer engines (ChatGPT, Gemini, Perplexity, AI Overviews) can lift
+ * cleanly, while reading well for humans. Core of our discoverability strategy.
+ */
+interface Props {
+  label?: string;
+  text: string;
+  class?: string;
+}
+const { label = "Quick answer", text, class: className = "" } = Astro.props;
+---
+<aside
+  class={`surface-card relative overflow-hidden p-6 md:p-7 ${className}`}
+  data-answer
+  aria-label={label}
+>
+  <div class="absolute inset-y-0 left-0 w-[3px] bg-gradient-to-b from-brand-500 to-signal-500"></div>
+  <div class="flex items-center gap-2">
+    <span class="eyebrow">{label}</span>
+  </div>
+  <p class="mt-3 text-[1.0625rem] leading-relaxed text-ink">{text}</p>
+</aside>

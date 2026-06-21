@@ -1,0 +1,105 @@
+---
+import { LOCALE_META, LOCALES, type Locale } from "../config";
+import { ui } from "../i18n/ui";
+import { localizePath } from "../i18n/utils";
+import Logo from "./Logo.astro";
+import Button from "./Button.astro";
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+const { locale, path } = Astro.props;
+const t = ui[locale];
+---
+<header class="sticky top-0 z-50 border-b border-line bg-canvas/80 backdrop-blur-xl">
+  <nav class="container-x flex h-16 items-center justify-between" aria-label="Primary">
+    <a href={localizePath("/", locale)} class="flex items-center" aria-label="ShopEye home">
+      <Logo />
+    </a>
+
+    <ul class="hidden items-center gap-7 lg:flex">
+      {
+        t.nav.map((item) => (
+          <li>
+            <a
+              href={localizePath(item.href, locale)}
+              class="text-sm text-muted transition-colors hover:text-ink"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="hidden items-center gap-2 lg:flex">
+      <div class="mr-1 flex items-center gap-1 rounded-full border border-line p-0.5 text-xs">
+        {
+          LOCALES.map((loc) => (
+            <a
+              href={localizePath(path, loc)}
+              class:list={[
+                "rounded-full px-3 py-1 font-medium transition-colors",
+                loc === locale ? "bg-brand-600 text-white shadow-sm" : "text-faint hover:text-ink",
+              ]}
+              hreflang={LOCALE_META[loc].htmlLang}
+              title={LOCALE_META[loc].label}
+              lang={LOCALE_META[loc].htmlLang}
+            >
+              {LOCALE_META[loc].short}
+            </a>
+          ))
+        }
+      </div>
+      <a href={localizePath("/contact", locale)} class="px-3 py-2 text-sm text-muted hover:text-ink">
+        {t.signIn}
+      </a>
+      <Button href={localizePath("/contact", locale)} size="md">{t.bookDemo}</Button>
+    </div>
+
+    <button
+      id="nav-toggle"
+      class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line text-ink lg:hidden"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="hidden border-t border-line bg-canvas lg:hidden">
+    <ul class="container-x flex flex-col gap-1 py-4">
+      {
+        t.nav.map((item) => (
+          <li>
+            <a
+              href={localizePath(item.href, locale)}
+              class="block rounded-lg px-3 py-2.5 text-muted hover:bg-mist hover:text-ink"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="mt-2 px-3">
+        <Button href={localizePath("/contact", locale)} class="w-full">{t.bookDemo}</Button>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const btn = document.getElementById("nav-toggle");
+    const menu = document.getElementById("mobile-menu");
+    if (!btn || !menu) return;
+    btn.addEventListener("click", function () {
+      const open = menu.classList.toggle("hidden");
+      btn.setAttribute("aria-expanded", String(!open));
+    });
+  })();
+</script>

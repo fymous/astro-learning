@@ -1,0 +1,265 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* ------------------------------------------------------------------ *
+ * ShopEye design tokens — LIGHT theme
+ * Clean, modern, enterprise. Blue primary + emerald signal + violet.
+ * ------------------------------------------------------------------ */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+
+  /* Backgrounds */
+  --color-canvas: #ffffff;
+  --color-mist: #f4f7fc;
+  --color-mist-2: #eef3fa;
+  --color-surface: #ffffff;
+
+  /* Text */
+  --color-ink: #0b1220;
+  --color-muted: #4f5d76;
+  --color-faint: #8492ab;
+
+  /* Primary — blue */
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #2563eb;
+  --color-brand-600: #1d4ed8;
+  --color-brand-700: #1e3a8a;
+  --color-brand-800: #172554;
+  --color-brand-50: #eff5ff;
+
+  /* Secondary — emerald signal */
+  --color-signal-400: #34d399;
+  --color-signal-500: #10b981;
+  --color-signal-600: #059669;
+  --color-signal-50: #ecfdf5;
+
+  /* Tertiary accent — violet (for industry variety) */
+  --color-violet-500: #7c3aed;
+  --color-violet-50: #f5f1fe;
+
+  /* Status */
+  --color-danger-500: #ef4444;
+  --color-danger-50: #fef2f2;
+  --color-warn-500: #f59e0b;
+  --color-warn-50: #fffbeb;
+
+  /* Lines */
+  --color-line: #e7ecf3;
+  --color-line-strong: #d6dee9;
+
+  --radius-card: 1rem;
+
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px -12px rgba(16, 24, 40, 0.12);
+  --shadow-float: 0 12px 32px -8px rgba(16, 24, 40, 0.18), 0 2px 8px -2px rgba(16, 24, 40, 0.08);
+}
+
+:root {
+  color-scheme: light;
+  --grid-line: rgba(37, 99, 235, 0.05);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brand-500) 18%, transparent);
+}
+
+/* Faint analytics grid backdrop */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Soft radial brand glow */
+.glow-radial {
+  background:
+    radial-gradient(50% 60% at 80% 0%, color-mix(in srgb, var(--color-brand-500) 12%, transparent) 0%, transparent 60%),
+    radial-gradient(45% 55% at 10% 10%, color-mix(in srgb, var(--color-signal-500) 10%, transparent) 0%, transparent 55%);
+}
+
+/* Monospace system tag */
+.sys-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-brand-600);
+}
+
+.container-x {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 768px) {
+  .container-x {
+    padding-inline: 2rem;
+  }
+}
+
+.surface-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.float-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 0.875rem;
+  box-shadow: var(--shadow-float);
+}
+
+/* Form controls */
+.field {
+  width: 100%;
+  border: 1px solid var(--color-line);
+  border-radius: 0.75rem;
+  background: var(--color-mist);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+  color: var(--color-ink);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.field::placeholder {
+  color: var(--color-faint);
+}
+.field:focus {
+  outline: none;
+  background: var(--color-surface);
+  border-color: var(--color-brand-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 18%, transparent);
+}
+select.field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238492ab' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  padding-right: 2.4rem;
+}
+
+/* Animations */
+@keyframes scan {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(2600%); opacity: 0; }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.float-anim { animation: float-y 6s ease-in-out infinite; }
+
+@keyframes grow-bar {
+  from { transform: scaleY(0.15); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .chat-reveal .chat-msg {
+    opacity: 0;
+    animation: msg-in 0.5s ease forwards;
+    animation-delay: calc(var(--i, 0) * 0.9s);
+  }
+  .bar-anim {
+    transform-origin: bottom;
+    animation: grow-bar 0.9s ease forwards;
+    animation-delay: calc(var(--i, 0) * 0.08s);
+  }
+}
+
+/* Infinite horizontal scroll for trust logos */
+@keyframes scroll-x {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scroll-x-rev {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Pipeline "data flow" dots for the How-it-works connector */
+@keyframes flow-x {
+  0% { left: 0; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+@keyframes flow-y {
+  0% { top: 0; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.flow-dot {
+  position: absolute;
+  height: 9px;
+  width: 9px;
+  border-radius: 9999px;
+  background: var(--color-brand-500);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--color-brand-500) 16%, transparent),
+    0 0 14px color-mix(in srgb, var(--color-brand-500) 60%, transparent);
+}
+.flow-dot-x {
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: flow-x 3.6s linear infinite;
+}
+.flow-dot-y {
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: flow-y 3.6s linear infinite;
+}
+
+/* Outcome bar reveal (driven by IntersectionObserver) */
+.outcome-bar {
+  width: 0;
+  transition: width 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-anim,
+  .flow-dot,
+  .marquee-track {
+    animation: none !important;
+  }
+  .flow-dot { display: none; }
+  .outcome-bar { transition: none; }
+  html {
+    scroll-behavior: auto;
+  }
+}

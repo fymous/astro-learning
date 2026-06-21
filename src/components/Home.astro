@@ -1,0 +1,591 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AnswerBlock from "./AnswerBlock.astro";
+import AskShopEye from "./AskShopEye.astro";
+import LiveAlerts from "./LiveAlerts.astro";
+import InsightDashboard from "./InsightDashboard.astro";
+import IndustryIcon from "./IndustryIcon.astro";
+import StepIcon from "./StepIcon.astro";
+import PillarIcon from "./PillarIcon.astro";
+import PrivacyIcon from "./PrivacyIcon.astro";
+import CapabilityIcon from "./CapabilityIcon.astro";
+import CtaBanner from "./CtaBanner.astro";
+import ContactDemo from "./ContactDemo.astro";
+import Button from "./Button.astro";
+import { resolveLocale, localizePath } from "../i18n/utils";
+import { homeContent } from "../content/home";
+import {
+  faqSchema,
+  softwareApplicationSchema,
+  breadcrumbSchema,
+  webPageSchema,
+  howToSchema,
+  itemListSchema,
+} from "../lib/schema";
+import { SITE_URL, type Locale } from "../config";
+
+const locale: Locale = resolveLocale(Astro.currentLocale);
+const c = homeContent[locale];
+
+const pageUrl = new URL(localizePath("/", locale), SITE_URL).href;
+
+const schema = [
+  webPageSchema({ url: pageUrl, name: c.seo.title, description: c.seo.description, image: "/og/default.png" }),
+  softwareApplicationSchema(),
+  howToSchema(c.how.title, c.how.sub, c.how.steps),
+  itemListSchema(
+    "Industries served by ShopEye",
+    c.industries.items.map((i) => ({ name: i.name, description: i.blurb })),
+  ),
+  itemListSchema(
+    "ShopEye video analytics capabilities",
+    c.capabilities.items.map((i) => ({ name: i.title, description: i.body })),
+  ),
+  faqSchema(c.faq.items),
+  breadcrumbSchema([{ name: "Home", url: localizePath("/", locale) }]),
+];
+
+const contact = localizePath("/contact", locale);
+const industriesHref = localizePath("/industries", locale);
+
+const toneText: Record<string, string> = {
+  brand: "text-brand-600 bg-brand-50",
+  signal: "text-signal-600 bg-signal-50",
+  violet: "text-violet-500 bg-violet-50",
+};
+const toneIcon: Record<string, string> = {
+  brand: "text-brand-500",
+  signal: "text-signal-600",
+  violet: "text-violet-500",
+};
+const toneGrad: Record<string, string> = {
+  brand: "from-[#eef5ff] to-[#d7e6ff]",
+  signal: "from-[#ecfdf5] to-[#cdf3e3]",
+  violet: "from-[#f5f1fe] to-[#e6dafb]",
+};
+const toneBox: Record<string, string> = {
+  brand: "border-brand-500/60",
+  signal: "border-signal-500/60",
+  violet: "border-violet-500/60",
+};
+const learnMore = locale === "hi" ? "और जानें" : "Learn more";
+
+const pillarTones = ["brand", "signal", "violet", "warn"] as const;
+const pillarChip: Record<string, string> = {
+  brand: "bg-brand-50 text-brand-600",
+  signal: "bg-signal-50 text-signal-600",
+  violet: "bg-violet-50 text-violet-500",
+  warn: "bg-warn-50 text-warn-500",
+};
+const pillarBar: Record<string, string> = {
+  brand: "bg-brand-500",
+  signal: "bg-signal-500",
+  violet: "bg-violet-500",
+  warn: "bg-warn-500",
+};
+const pillarText: Record<string, string> = {
+  brand: "text-brand-600",
+  signal: "text-signal-600",
+  violet: "text-violet-500",
+  warn: "text-warn-500",
+};
+const capTones = ["brand", "signal", "violet"] as const;
+const howTones = ["brand", "brand", "violet", "signal", "signal"] as const;
+const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
+---
+<BaseLayout title={c.seo.title} description={c.seo.description} path="/" schema={schema}>
+  <!-- ============================ HERO ============================ -->
+  <section class="bg-grid relative overflow-hidden">
+    <div class="glow-radial pointer-events-none absolute inset-0"></div>
+    <div class="container-x relative grid items-center gap-12 py-16 lg:grid-cols-[1fr_1.05fr] lg:py-24">
+      <div>
+        <span class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 eyebrow shadow-sm">
+          <span class="h-1.5 w-1.5 rounded-full bg-signal-500"></span>{c.hero.eyebrow}
+        </span>
+        <h1 class="mt-5 text-balance text-4xl font-semibold leading-[1.07] tracking-tight text-ink md:text-5xl lg:text-[3.6rem]">
+          {c.hero.titleLead} <span class="text-brand-600">{c.hero.titleAccent}</span> {c.hero.titleTail}
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">{c.hero.sub}</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href={contact} size="lg">
+            {c.hero.primaryCta}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </Button>
+          <Button href={localizePath("/product", locale)} variant="secondary" size="lg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            {c.hero.secondaryCta}
+          </Button>
+        </div>
+        <p class="mt-8 sys-tag text-faint">{c.hero.trust}</p>
+      </div>
+
+      <div class="relative">
+        <InsightDashboard />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ TRUST SHOWCASE ============================ -->
+  <section class="relative overflow-hidden border-y border-line bg-gradient-to-b from-mist/80 via-canvas to-mist/60">
+    <!-- subtle decorative gradient blobs -->
+    <div class="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-brand-500/8 blur-3xl"></div>
+    <div class="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-signal-500/8 blur-3xl"></div>
+    <div class="bg-grid pointer-events-none absolute inset-0 opacity-40"></div>
+
+    <div class="container-x relative py-16 md:py-20">
+      <!-- heading + stats -->
+      <div class="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
+        <div class="max-w-2xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 font-mono text-[0.7rem] font-semibold uppercase tracking-wider text-brand-600">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            {c.trust.eyebrow}
+          </span>
+          <h2 class="mt-4 text-3xl font-semibold tracking-tight text-ink md:text-4xl lg:text-[2.6rem]">
+            {c.trust.title} <span class="bg-gradient-to-r from-brand-600 via-violet-500 to-signal-600 bg-clip-text text-transparent">{c.trust.titleAccent}</span>
+          </h2>
+          <p class="mt-4 max-w-xl text-muted">{c.trust.sub}</p>
+        </div>
+
+        <div class="flex divide-x divide-line rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)]">
+          {
+            c.trust.stats.map((s) => (
+              <div class="px-5 py-5 text-center md:px-7">
+                <div class="bg-gradient-to-b from-brand-600 to-signal-600 bg-clip-text font-mono text-2xl font-bold leading-none text-transparent md:text-3xl">
+                  {s.value}
+                </div>
+                <div class="mt-2 whitespace-nowrap text-[0.7rem] font-medium uppercase tracking-wider text-faint">{s.label}</div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- dual marquee -->
+      <div class="mt-12 space-y-4 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+        <!-- Row 1: scroll left -->
+        <div class="overflow-hidden">
+          <div class="marquee-track flex gap-4 whitespace-nowrap" style="animation: scroll-x 55s linear infinite;">
+            {
+              [...c.trust.logos.slice(0, 20), ...c.trust.logos.slice(0, 20)].map((logo) => (
+                <div class="group flex h-20 w-52 shrink-0 items-center gap-3 rounded-2xl border border-line bg-surface px-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-500/40 hover:shadow-[var(--shadow-float)]">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-mist to-mist-2 font-mono text-sm font-bold text-faint transition-colors group-hover:from-brand-50 group-hover:to-signal-50 group-hover:text-brand-600">
+                    {logo.name.charAt(0)}
+                  </span>
+                  <div class="min-w-0 flex-1">
+                    <div class="truncate text-sm font-semibold text-ink">{logo.name}</div>
+                    <div class="truncate text-[0.65rem] font-medium uppercase tracking-wider text-faint">{logo.industry}</div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Row 2: scroll right (reverse) -->
+        <div class="overflow-hidden">
+          <div class="marquee-track flex gap-4 whitespace-nowrap" style="animation: scroll-x-rev 50s linear infinite;">
+            {
+              [...c.trust.logos.slice(20), ...c.trust.logos.slice(20)].map((logo) => (
+                <div class="group flex h-20 w-52 shrink-0 items-center gap-3 rounded-2xl border border-line bg-surface px-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-signal-500/40 hover:shadow-[var(--shadow-float)]">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-mist to-mist-2 font-mono text-sm font-bold text-faint transition-colors group-hover:from-signal-50 group-hover:to-brand-50 group-hover:text-signal-600">
+                    {logo.name.charAt(0)}
+                  </span>
+                  <div class="min-w-0 flex-1">
+                    <div class="truncate text-sm font-semibold text-ink">{logo.name}</div>
+                    <div class="truncate text-[0.65rem] font-medium uppercase tracking-wider text-faint">{logo.industry}</div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ VALUE RAIL ============================ -->
+  <section class="container-x relative z-30 -mt-4 pb-14 md:-mt-10 md:pb-20">
+    <div class="surface-card overflow-hidden shadow-[var(--shadow-float)]">
+      <!-- outcome pillars -->
+      <div class="grid divide-y divide-line sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 lg:divide-x">
+        {
+          c.pillars.map((p, i) => (
+            <div class="group relative overflow-hidden p-6 md:p-7">
+              <span class={`flex h-11 w-11 items-center justify-center rounded-xl ${pillarChip[pillarTones[i]]}`}>
+                <PillarIcon icon={p.icon} />
+              </span>
+              <h3 class="mt-4 text-base font-semibold text-ink">{p.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted">{p.body}</p>
+              <span class={`absolute bottom-0 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full ${pillarBar[pillarTones[i]]}`}></span>
+            </div>
+          ))
+        }
+      </div>
+      <!-- capability stat strip -->
+      <div class="grid grid-cols-2 divide-x divide-line border-t border-line bg-mist md:grid-cols-4">
+        {
+          c.metrics.map((m, i) => (
+            <div class:list={["flex items-baseline justify-center gap-2 px-4 py-3.5 text-center", i >= 2 && "border-t border-line md:border-t-0"]}>
+              <span class="font-mono text-lg font-bold text-brand-600">{m.value}</span>
+              <span class="text-xs text-muted">{m.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ ANSWER + KEY FACTS ============================ -->
+  <section class="container-x py-12 md:py-16">
+    <div class="grid gap-6 lg:grid-cols-[1.55fr_1fr]">
+      <AnswerBlock text={c.answer} />
+      <div class="surface-card p-6 md:p-7">
+        <div class="flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <h2 class="text-sm font-semibold text-ink">{c.facts.title}</h2>
+        </div>
+        <dl class="mt-4 divide-y divide-line">
+          {
+            c.facts.items.map((f) => (
+              <div class="flex gap-4 py-2.5">
+                <dt class="w-24 shrink-0 sys-tag text-faint">{f.k}</dt>
+                <dd class="flex-1 text-sm text-ink">{f.v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ AGENTIC ASK ============================ -->
+  <AskShopEye />
+
+  <!-- ============================ LIVE ALERTS ============================ -->
+  <LiveAlerts />
+
+  <!-- ============================ CAPABILITIES ============================ -->
+  <section id="capabilities" class="container-x py-16 md:py-24">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div class="max-w-2xl">
+        <span class="eyebrow">{c.capabilities.eyebrow}</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.capabilities.title}</h2>
+        <p class="mt-4 text-muted">{c.capabilities.sub}</p>
+      </div>
+      <span class="hidden shrink-0 rounded-full border border-line bg-mist px-4 py-2 font-mono text-xs text-muted md:inline-block">
+        {c.capabilities.items.length} of 200+ detections
+      </span>
+    </div>
+
+    <div class="mt-12 overflow-hidden rounded-[var(--radius-card)] border border-line bg-line shadow-[var(--shadow-card)]">
+      <div class="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
+        {
+          c.capabilities.items.map((item, i) => (
+            <div class="group relative flex flex-col bg-surface p-6 transition-colors duration-200 hover:bg-mist md:p-7">
+              <div class="flex items-start justify-between">
+                <span class={`flex h-12 w-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-105 ${pillarChip[capTones[i % 3]]}`}>
+                  <CapabilityIcon tag={item.tag} />
+                </span>
+                <span class="font-mono text-xs text-faint">{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <h3 class="mt-5 text-lg font-semibold text-ink">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+              <span class="mt-4 inline-flex items-center gap-1.5 sys-tag text-faint">{item.tag.replace(/_/g, " ")}</span>
+              <span class={`absolute inset-x-0 bottom-0 h-0.5 w-full origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 ${pillarBar[capTones[i % 3]]}`}></span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ HOW IT WORKS ============================ -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="eyebrow">{c.how.eyebrow}</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.how.title}</h2>
+        <p class="mt-4 text-muted">{c.how.sub}</p>
+      </div>
+      <div class="relative mt-16">
+        <!-- horizontal flow connector (lg+) -->
+        <div class="absolute left-0 right-0 top-9 hidden lg:block">
+          <div class="relative mx-[10%] h-0.5 rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-x"></span>
+            <span class="flow-dot flow-dot-x" style="animation-delay:1.8s"></span>
+          </div>
+        </div>
+        <!-- vertical flow connector (below lg) -->
+        <div class="absolute bottom-10 left-9 top-9 w-0.5 lg:hidden">
+          <div class="relative h-full w-full rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-b from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-y"></span>
+          </div>
+        </div>
+
+        <div class="grid gap-10 lg:grid-cols-5 lg:gap-4">
+          {
+            c.how.steps.map((step, i) => (
+              <div class="group relative flex items-start gap-6 lg:flex-col lg:items-center lg:gap-0 lg:text-center">
+                <span class={`relative z-10 flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-float)] ${pillarText[howTones[i]]}`}>
+                  <StepIcon n={Number(step.n)} />
+                  <span class={`absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full font-mono text-xs font-bold text-white ring-4 ring-mist ${pillarBar[howTones[i]]}`}>{step.n}</span>
+                </span>
+                <div class="pt-1 lg:mt-5 lg:pt-0">
+                  <h3 class="text-base font-semibold text-ink">{step.title}</h3>
+                  <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted lg:max-w-[15rem]">{step.body}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ OUTCOMES ============================ -->
+  <section class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">{c.outcomes.eyebrow}</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.outcomes.title}</h2>
+      <p class="mt-4 text-muted">{c.outcomes.sub}</p>
+    </div>
+    <div id="outcomes-grid" class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        c.outcomes.items.map((o, i) => {
+          const num = parseInt(o.metric.replace(/[^0-9]/g, ""), 10) || 0;
+          const prefix = o.metric.replace(/[0-9].*$/, "");
+          const suffix = o.metric.replace(/^[^0-9]*[0-9]+/, "");
+          return (
+            <div class="surface-card group relative overflow-hidden p-7 transition-shadow hover:shadow-[var(--shadow-float)]">
+              <div class="flex items-center justify-between">
+                <span class={`flex h-12 w-12 items-center justify-center rounded-xl ${pillarChip[outcomeTones[i]]}`}>
+                  <PillarIcon icon={o.icon} />
+                </span>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class={pillarText[outcomeTones[i]]} stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </div>
+              <div
+                class="mt-6 bg-gradient-to-br from-brand-600 to-signal-600 bg-clip-text text-5xl font-bold tracking-tight text-transparent"
+                data-countup
+                data-num={num}
+                data-prefix={prefix}
+                data-suffix={suffix}
+              >
+                {o.metric}
+              </div>
+              <div class="mt-2 text-sm text-muted">{o.label}</div>
+              <div class="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-mist">
+                <div class={`outcome-bar h-full rounded-full ${pillarBar[outcomeTones[i]]}`} data-bar={Math.min(num, 100)}></div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+    <p class="mt-6 text-center text-xs text-faint">{c.outcomes.source}</p>
+
+    <script is:inline>
+      (function () {
+        var grid = document.getElementById("outcomes-grid");
+        if (!grid) return;
+        var nums = grid.querySelectorAll("[data-countup]");
+        var bars = grid.querySelectorAll("[data-bar]");
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reduce) {
+          bars.forEach(function (b) { b.style.width = b.getAttribute("data-bar") + "%"; });
+          return;
+        }
+
+        // reset to start state
+        nums.forEach(function (el) {
+          el.textContent = (el.getAttribute("data-prefix") || "") + "0" + (el.getAttribute("data-suffix") || "");
+        });
+
+        function animate(el) {
+          var target = parseInt(el.getAttribute("data-num"), 10) || 0;
+          var prefix = el.getAttribute("data-prefix") || "";
+          var suffix = el.getAttribute("data-suffix") || "";
+          var start = null;
+          var dur = 1300;
+          function step(ts) {
+            if (!start) start = ts;
+            var p = Math.min((ts - start) / dur, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = prefix + Math.round(eased * target) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              nums.forEach(animate);
+              bars.forEach(function (b) { b.style.width = b.getAttribute("data-bar") + "%"; });
+              io.disconnect();
+            });
+          },
+          { threshold: 0.35 }
+        );
+        io.observe(grid);
+      })();
+    </script>
+  </section>
+
+  <!-- ============================ MID CTA BANNER ============================ -->
+  <CtaBanner
+    eyebrow={c.cta.eyebrow}
+    title={c.cta.title}
+    sub={c.cta.sub}
+    primary={c.cta.primary}
+    primaryHref="#get-started"
+    secondary={c.cta.secondary}
+    secondaryHref={localizePath("/product", locale)}
+  />
+
+  <!-- ============================ INDUSTRIES ============================ -->
+  <section id="industries" class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">{c.industries.eyebrow}</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.industries.title}</h2>
+      <p class="mt-4 text-muted">{c.industries.sub}</p>
+    </div>
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        c.industries.items.map((ind) => (
+          <a
+            href={industriesHref}
+            class="surface-card group flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-float)]"
+          >
+            {/* image placeholder — analytics scene */}
+            <div class={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${toneGrad[ind.tone]}`}>
+              <div class="bg-grid absolute inset-0 opacity-60"></div>
+              <span class={`absolute inset-0 flex items-center justify-center ${toneIcon[ind.tone]} opacity-25 transition-transform duration-500 group-hover:scale-110`}>
+                <IndustryIcon slug={ind.slug} size={96} />
+              </span>
+              <span class={`absolute left-5 top-8 h-12 w-10 rounded border-2 border-dashed ${toneBox[ind.tone]} opacity-70`}></span>
+              <span class={`absolute bottom-7 right-8 h-10 w-12 rounded border-2 border-dashed ${toneBox[ind.tone]} opacity-60`}></span>
+              <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-canvas/85 px-2.5 py-1 backdrop-blur-sm">
+                <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-danger-500"></span>
+                <span class="sys-tag text-ink">CAM · LIVE</span>
+              </span>
+            </div>
+
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-center gap-3">
+                <span class={`flex h-10 w-10 items-center justify-center rounded-xl ${toneText[ind.tone]}`}>
+                  <IndustryIcon slug={ind.slug} size={20} />
+                </span>
+                <h3 class="text-xl font-semibold text-ink">{ind.name}</h3>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-muted">{ind.blurb}</p>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {ind.points.map((pt) => (
+                  <li class="inline-flex items-center gap-1.5 rounded-full border border-line bg-mist px-2.5 py-1 text-xs text-muted">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" class={toneIcon[ind.tone]} stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+              <span class={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium ${toneIcon[ind.tone]}`}>
+                {learnMore}
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ============================ INTEGRATIONS ============================ -->
+  <section id="integrations" class="bg-mist">
+    <div class="container-x py-14 text-center md:py-16">
+      <span class="eyebrow">{c.integrations.eyebrow}</span>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">{c.integrations.title}</h2>
+      <p class="mx-auto mt-3 max-w-xl text-sm text-muted">{c.integrations.sub}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-2.5">
+        {
+          c.integrations.items.map((name) => (
+            <span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted shadow-sm">{name}</span>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PRIVACY ============================ -->
+  <section class="container-x py-16 md:py-24">
+    <div class="surface-card relative overflow-hidden">
+      <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-signal-500/8 blur-3xl"></div>
+      <div class="bg-grid pointer-events-none absolute inset-0 opacity-30"></div>
+
+      <div class="relative grid gap-10 p-8 md:p-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+        <!-- intro -->
+        <div class="lg:sticky lg:top-28 lg:self-start">
+          <span class="inline-flex items-center gap-2 rounded-full border border-signal-500/25 bg-signal-50 px-3 py-1 font-mono text-[0.7rem] font-semibold uppercase tracking-wider text-signal-600">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-signal-500/15">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+            {c.privacy.eyebrow}
+          </span>
+          <h2 class="mt-4 text-2xl font-semibold tracking-tight text-ink md:text-3xl">{c.privacy.title}</h2>
+          <p class="mt-4 max-w-md text-muted">{c.privacy.body}</p>
+
+          <div class="mt-6 inline-flex items-center gap-3 rounded-2xl border border-line bg-mist px-4 py-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-signal-50 text-signal-600">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/></svg>
+            </span>
+            <span class="text-sm font-medium text-ink">{locale === "hi" ? "DPDP अधिनियम के अनुरूप डिज़ाइन" : "Designed to align with India's DPDP Act"}</span>
+          </div>
+        </div>
+
+        <!-- guarantee grid -->
+        <div class="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
+          {
+            c.privacy.points.map((pt) => (
+              <div class="group flex flex-col bg-surface p-6 transition-colors duration-200 hover:bg-mist">
+                <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-signal-50 text-signal-600 transition-transform duration-300 group-hover:-translate-y-0.5">
+                  <PrivacyIcon icon={pt.icon} />
+                </span>
+                <h3 class="mt-4 text-base font-semibold text-ink">{pt.title}</h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-muted">{pt.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ FAQ ============================ -->
+  <section class="bg-mist">
+    <div class="container-x grid gap-10 py-16 md:py-24 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <span class="eyebrow">{c.faq.eyebrow}</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.faq.title}</h2>
+      </div>
+      <div class="divide-y divide-line">
+        {
+          c.faq.items.map((item, i) => (
+            <details class="group py-4" open={i === 0}>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium text-ink">
+                {item.q}
+                <span class="shrink-0 text-faint transition-transform group-open:rotate-45">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-muted">{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CONTACT + DEMO ============================ -->
+  <ContactDemo />
+</BaseLayout>

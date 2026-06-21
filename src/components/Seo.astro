@@ -1,0 +1,56 @@
+---
+import { BRAND, LOCALE_META, type Locale } from "../config";
+import { alternateLinks } from "../i18n/utils";
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  /** Locale-agnostic path (e.g. "/pricing"). Used for canonical + hreflang. */
+  path: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  locale,
+  path,
+  image = "/og/default.png",
+  type = "website",
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = Astro.site?.href ?? "https://shopeye.ai/";
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL(image, siteUrl).href;
+const alternates = alternateLinks(path, siteUrl);
+const meta = LOCALE_META[locale];
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+{
+  alternates.map((alt) => (
+    <link rel="alternate" hreflang={LOCALE_META[alt.locale].htmlLang} href={alt.href} />
+  ))
+}
+<link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={BRAND.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content={meta.ogLocale} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />

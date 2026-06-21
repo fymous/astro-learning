@@ -1,0 +1,63 @@
+---
+import "../styles/global.css";
+import { LOCALE_META, type Locale } from "../config";
+import { ui } from "../i18n/ui";
+import { resolveLocale } from "../i18n/utils";
+import Seo from "../components/Seo.astro";
+import JsonLd from "../components/JsonLd.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { graph, organizationSchema, websiteSchema } from "../lib/schema";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Locale-agnostic path (e.g. "/pricing") for canonical, hreflang, switcher. */
+  path: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  /** Extra JSON-LD nodes (FAQ, breadcrumbs, article, etc.). */
+  schema?: Record<string, unknown>[];
+}
+
+const { title, description, path, image, type, noindex, schema = [] } = Astro.props;
+const locale: Locale = resolveLocale(Astro.currentLocale);
+const meta = LOCALE_META[locale];
+const t = ui[locale];
+
+const siteGraph = graph(organizationSchema(), websiteSchema(), ...schema);
+---
+<!doctype html>
+<html lang={meta.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#ffffff" />
+    <Seo
+      title={title}
+      description={description}
+      locale={locale}
+      path={path}
+      image={image}
+      type={type}
+      noindex={noindex}
+    />
+    <JsonLd schema={siteGraph} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[var(--color-brand-500)] focus:px-4 focus:py-2 focus:text-white"
+    >
+      {t.skipToContent}
+    </a>
+    <Nav locale={locale} path={path} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>
