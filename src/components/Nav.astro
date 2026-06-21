@@ -1,5 +1,5 @@
 ---
-import { LOCALE_META, LOCALES, type Locale } from "../config";
+import { BRAND, LOCALE_META, LOCALES, type Locale } from "../config";
 import { ui } from "../i18n/ui";
 import { localizePath } from "../i18n/utils";
 import Logo from "./Logo.astro";
@@ -14,7 +14,7 @@ const t = ui[locale];
 ---
 <header class="sticky top-0 z-50 border-b border-line bg-canvas/80 backdrop-blur-xl">
   <nav class="container-x flex h-16 items-center justify-between" aria-label="Primary">
-    <a href={localizePath("/", locale)} class="flex items-center" aria-label="ShopEye home">
+    <a href={localizePath("/", locale)} class="flex items-center" aria-label={`${BRAND.name} home`}>
       <Logo />
     </a>
 

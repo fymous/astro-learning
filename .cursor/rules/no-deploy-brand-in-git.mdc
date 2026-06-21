@@ -1,0 +1,40 @@
+---
+description: MANDATORY — never commit or push the production deployment brand to git
+alwaysApply: true
+---
+
+# NO DEPLOYMENT BRAND IN GIT (MANDATORY)
+
+The live site uses a **production deployment brand** (custom domain purchased for go-live). That brand must **never** appear in git history, staged files, commits, or remote pushes.
+
+## Hard rules
+
+1. **Never** write the production brand name, domain, or email in any tracked file.
+2. **Never** stage, commit, or push `src/brand.local.ts` or any file containing the deployment brand.
+3. **Never** replace ShopEye with the deployment brand in `src/brand.ts`, `src/config.ts`, `src/content/home.ts`, docs, or any other committed source.
+4. Deployment branding **only** via gitignored `src/brand.local.ts` (copy from `src/brand.local.example.ts`).
+5. Before any git commit or push, run `npm run check:deploy-brand` and fix violations first.
+6. If the user asks to use the production brand, apply changes **only** in `src/brand.local.ts` (or other gitignored env files), never in tracked files.
+
+## Where names live
+
+| Context | Location | In git? |
+|---------|----------|---------|
+| Placeholder / dev default | `src/brand.ts` (ShopEye) | Yes |
+| Production deployment | `src/brand.local.ts` | **No** (gitignored) |
+| Copy templates in content | `src/content/home.ts` uses ShopEye; `brandifyDeep()` swaps at build | Yes (ShopEye only) |
+
+## Examples
+
+```typescript
+// ❌ FORBIDDEN in any tracked file
+export const BRAND = { name: "MyLiveBrand", email: "hello@mylivebrand.com" };
+
+// ✅ CORRECT — gitignored local override only
+// src/brand.local.ts (never commit)
+export const BRAND_OVERRIDES = { name: "MyLiveBrand", domain: "mylivebrand.com" };
+```
+
+## On violation
+
+If the deployment brand appears in a diff or staged files: revert those changes, move overrides to `brand.local.ts`, and re-run `npm run check:deploy-brand`.

@@ -1,5 +1,5 @@
 ---
-import { BRAND, LOCALE_META, type Locale } from "../config";
+import { BRAND, LOCALE_META, SITE_URL, type Locale } from "../config";
 import { alternateLinks } from "../i18n/utils";
 
 interface Props {
@@ -23,7 +23,7 @@ const {
   noindex = false,
 } = Astro.props;
 
-const siteUrl = Astro.site?.href ?? "https://shopeye.ai/";
+const siteUrl = Astro.site?.href ?? (SITE_URL.endsWith("/") ? SITE_URL : `${SITE_URL}/`);
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = new URL(image, siteUrl).href;
 const alternates = alternateLinks(path, siteUrl);

@@ -22,7 +22,7 @@ import {
   howToSchema,
   itemListSchema,
 } from "../lib/schema";
-import { SITE_URL, type Locale } from "../config";
+import { BRAND, SITE_URL, type Locale } from "../config";
 
 const locale: Locale = resolveLocale(Astro.currentLocale);
 const c = homeContent[locale];
@@ -34,11 +34,11 @@ const schema = [
   softwareApplicationSchema(),
   howToSchema(c.how.title, c.how.sub, c.how.steps),
   itemListSchema(
-    "Industries served by ShopEye",
+    `Industries served by ${BRAND.name}`,
     c.industries.items.map((i) => ({ name: i.name, description: i.blurb })),
   ),
   itemListSchema(
-    "ShopEye video analytics capabilities",
+    `${BRAND.name} video analytics capabilities`,
     c.capabilities.items.map((i) => ({ name: i.title, description: i.body })),
   ),
   faqSchema(c.faq.items),

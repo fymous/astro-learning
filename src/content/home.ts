@@ -1,4 +1,6 @@
 import type { Locale } from "../config";
+import { BRAND, SITE_URL } from "../config";
+import { BRAND_DEFAULTS, SITE_URL_DEFAULT } from "../brand";
 
 export interface HomeContent {
   seo: { title: string; description: string };
@@ -117,7 +119,26 @@ export interface HomeContent {
   finalCta: { title: string; sub: string; primary: string; secondary: string };
 }
 
-export const homeContent: Record<Locale, HomeContent> = {
+/** Swap committed ShopEye template tokens for active brand at build time. */
+function brandifyText(text: string): string {
+  const defaultDomain = new URL(SITE_URL_DEFAULT).hostname;
+  const activeDomain = new URL(SITE_URL).hostname;
+  return text
+    .replaceAll(BRAND_DEFAULTS.name, BRAND.name)
+    .replaceAll(defaultDomain, activeDomain)
+    .replaceAll(BRAND_DEFAULTS.slug, BRAND.slug);
+}
+
+function brandifyDeep<T>(value: T): T {
+  if (typeof value === "string") return brandifyText(value) as T;
+  if (Array.isArray(value)) return value.map((item) => brandifyDeep(item)) as T;
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, brandifyDeep(v)])) as T;
+  }
+  return value;
+}
+
+const homeContentRaw: Record<Locale, HomeContent> = {
   en: {
     seo: {
       title: "ShopEye — Agentic AI video analytics for retail, QSR, dark stores, manufacturing & more",
@@ -784,3 +805,5 @@ export const homeContent: Record<Locale, HomeContent> = {
     },
   },
 };
+
+export const homeContent = brandifyDeep(homeContentRaw);

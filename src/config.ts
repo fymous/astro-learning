@@ -1,28 +1,21 @@
 /**
- * Central site configuration. Brand name "ShopEye" is a placeholder
- * (see CASHIER_AUDIT_PROJECT.md) and can be renamed in one place.
+ * Central site configuration. Committed defaults use ShopEye (placeholder).
+ * Production overrides: gitignored `src/brand.local.ts` only.
  */
 
-export const SITE_URL = "https://shopeye.ai";
+import { BRAND_DEFAULTS, SITE_URL_DEFAULT, type BrandConfig } from "./brand";
+import { BRAND_OVERRIDES, SITE_URL_OVERRIDE } from "./brand.local";
 
-export const BRAND = {
-  name: "ShopEye",
-  legalName: "ShopEye Technologies Pvt. Ltd.",
-  tagline: "Agentic AI video analytics for every operation",
-  // One-line, machine-friendly description used across schema + llms.txt + meta.
-  description:
-    "ShopEye is an India-native agentic AI video analytics platform that turns existing CCTV cameras into real-time business intelligence across retail, consumer services, QSRs, dark stores, cloud kitchens, manufacturing, logistics and education. It tracks footfall and conversion, dwell and demographics, queues and SOP/PPE safety compliance, productivity and loss prevention, and lets teams ask questions in plain language and get instant WhatsApp alerts. No new hardware.",
-  email: "hello@shopeye.ai",
-  phone: "+91-80-4718-2200",
-  city: "Bengaluru",
-  region: "Karnataka",
-  country: "IN",
-  social: {
-    linkedin: "https://www.linkedin.com/company/shopeye",
-    x: "https://x.com/shopeye_ai",
-    youtube: "https://www.youtube.com/@shopeye",
-  },
-} as const;
+function mergeBrand(defaults: BrandConfig, overrides: typeof BRAND_OVERRIDES): BrandConfig {
+  return {
+    ...defaults,
+    ...overrides,
+    social: { ...defaults.social, ...overrides.social },
+  };
+}
+
+export const SITE_URL = SITE_URL_OVERRIDE ?? SITE_URL_DEFAULT;
+export const BRAND = mergeBrand(BRAND_DEFAULTS, BRAND_OVERRIDES);
 
 export const LOCALES = ["en", "hi"] as const;
 export type Locale = (typeof LOCALES)[number];

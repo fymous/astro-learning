@@ -1,6 +1,6 @@
 ---
 import { resolveLocale } from "../i18n/utils";
-import type { Locale } from "../config";
+import { BRAND, type Locale } from "../config";
 
 const locale: Locale = resolveLocale(Astro.currentLocale);
 
@@ -79,7 +79,7 @@ const kpis = [
       <span class="h-2.5 w-2.5 rounded-full bg-signal-500/60"></span>
       <span class="ml-2 flex items-center gap-1.5 rounded-md bg-canvas px-2.5 py-1 font-mono text-[0.65rem] text-faint">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        app.shopeye.ai/dashboard
+        {BRAND.appHost}/dashboard
       </span>
     </div>
 
