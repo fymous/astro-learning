@@ -2,9 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AnswerBlock from "./AnswerBlock.astro";
 import AskShopEye from "./AskShopEye.astro";
-import LiveAlerts from "./LiveAlerts.astro";
 import InsightDashboard from "./InsightDashboard.astro";
-import IndustryIcon from "./IndustryIcon.astro";
 import StepIcon from "./StepIcon.astro";
 import PillarIcon from "./PillarIcon.astro";
 import PrivacyIcon from "./PrivacyIcon.astro";
@@ -34,10 +32,6 @@ const schema = [
   softwareApplicationSchema(),
   howToSchema(c.how.title, c.how.sub, c.how.steps),
   itemListSchema(
-    `Industries served by ${BRAND.name}`,
-    c.industries.items.map((i) => ({ name: i.name, description: i.blurb })),
-  ),
-  itemListSchema(
     `${BRAND.name} video analytics capabilities`,
     c.capabilities.items.map((i) => ({ name: i.title, description: i.body })),
   ),
@@ -46,29 +40,6 @@ const schema = [
 ];
 
 const contact = localizePath("/contact", locale);
-const industriesHref = localizePath("/industries", locale);
-
-const toneText: Record<string, string> = {
-  brand: "text-brand-600 bg-brand-50",
-  signal: "text-signal-600 bg-signal-50",
-  violet: "text-violet-500 bg-violet-50",
-};
-const toneIcon: Record<string, string> = {
-  brand: "text-brand-500",
-  signal: "text-signal-600",
-  violet: "text-violet-500",
-};
-const toneGrad: Record<string, string> = {
-  brand: "from-[#eef5ff] to-[#d7e6ff]",
-  signal: "from-[#ecfdf5] to-[#cdf3e3]",
-  violet: "from-[#f5f1fe] to-[#e6dafb]",
-};
-const toneBox: Record<string, string> = {
-  brand: "border-brand-500/60",
-  signal: "border-signal-500/60",
-  violet: "border-violet-500/60",
-};
-const learnMore = locale === "hi" ? "और जानें" : "Learn more";
 
 const pillarTones = ["brand", "signal", "violet", "warn"] as const;
 const pillarChip: Record<string, string> = {
@@ -261,9 +232,6 @@ const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
   <!-- ============================ AGENTIC ASK ============================ -->
   <AskShopEye />
 
-  <!-- ============================ LIVE ALERTS ============================ -->
-  <LiveAlerts />
-
   <!-- ============================ CAPABILITIES ============================ -->
   <section id="capabilities" class="container-x py-16 md:py-24">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -445,61 +413,6 @@ const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
     secondary={c.cta.secondary}
     secondaryHref={localizePath("/product", locale)}
   />
-
-  <!-- ============================ INDUSTRIES ============================ -->
-  <section id="industries" class="container-x py-16 md:py-24">
-    <div class="mx-auto max-w-2xl text-center">
-      <span class="eyebrow">{c.industries.eyebrow}</span>
-      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.industries.title}</h2>
-      <p class="mt-4 text-muted">{c.industries.sub}</p>
-    </div>
-    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        c.industries.items.map((ind) => (
-          <a
-            href={industriesHref}
-            class="surface-card group flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-float)]"
-          >
-            {/* image placeholder — analytics scene */}
-            <div class={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${toneGrad[ind.tone]}`}>
-              <div class="bg-grid absolute inset-0 opacity-60"></div>
-              <span class={`absolute inset-0 flex items-center justify-center ${toneIcon[ind.tone]} opacity-25 transition-transform duration-500 group-hover:scale-110`}>
-                <IndustryIcon slug={ind.slug} size={96} />
-              </span>
-              <span class={`absolute left-5 top-8 h-12 w-10 rounded border-2 border-dashed ${toneBox[ind.tone]} opacity-70`}></span>
-              <span class={`absolute bottom-7 right-8 h-10 w-12 rounded border-2 border-dashed ${toneBox[ind.tone]} opacity-60`}></span>
-              <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-canvas/85 px-2.5 py-1 backdrop-blur-sm">
-                <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-danger-500"></span>
-                <span class="sys-tag text-ink">CAM · LIVE</span>
-              </span>
-            </div>
-
-            <div class="flex flex-1 flex-col p-6">
-              <div class="flex items-center gap-3">
-                <span class={`flex h-10 w-10 items-center justify-center rounded-xl ${toneText[ind.tone]}`}>
-                  <IndustryIcon slug={ind.slug} size={20} />
-                </span>
-                <h3 class="text-xl font-semibold text-ink">{ind.name}</h3>
-              </div>
-              <p class="mt-3 text-sm leading-relaxed text-muted">{ind.blurb}</p>
-              <ul class="mt-4 flex flex-wrap gap-2">
-                {ind.points.map((pt) => (
-                  <li class="inline-flex items-center gap-1.5 rounded-full border border-line bg-mist px-2.5 py-1 text-xs text-muted">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" class={toneIcon[ind.tone]} stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
-                    {pt}
-                  </li>
-                ))}
-              </ul>
-              <span class={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium ${toneIcon[ind.tone]}`}>
-                {learnMore}
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </span>
-            </div>
-          </a>
-        ))
-      }
-    </div>
-  </section>
 
   <!-- ============================ INTEGRATIONS ============================ -->
   <section id="integrations" class="bg-mist">

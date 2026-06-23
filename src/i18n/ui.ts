@@ -1,9 +1,15 @@
 import type { Locale } from "../config";
 
 type NavItem = { label: string; href: string };
+type NavDropdown = { label: string; href: string; children: NavItem[] };
+export type NavEntry = NavItem | NavDropdown;
+
+export function isDropdown(entry: NavEntry): entry is NavDropdown {
+  return "children" in entry && Array.isArray(entry.children);
+}
 
 interface UIStrings {
-  nav: NavItem[];
+  nav: NavEntry[];
   signIn: string;
   startTrial: string;
   bookDemo: string;
@@ -25,7 +31,13 @@ export const ui: Record<Locale, UIStrings> = {
   en: {
     nav: [
       { label: "Product", href: "/product" },
-      { label: "Industries", href: "/industries" },
+      {
+        label: "Industries",
+        href: "/industries",
+        children: [
+          { label: "Retail Video Analytics", href: "/industries/retail-video-analytics" },
+        ],
+      },
       { label: "Pricing", href: "/pricing" },
       { label: "Compare", href: "/compare" },
       { label: "Learn", href: "/learn" },
@@ -64,7 +76,13 @@ export const ui: Record<Locale, UIStrings> = {
   hi: {
     nav: [
       { label: "उत्पाद", href: "/product" },
-      { label: "इंडस्ट्री", href: "/industries" },
+      {
+        label: "इंडस्ट्री",
+        href: "/industries",
+        children: [
+          { label: "रिटेल वीडियो एनालिटिक्स", href: "/industries/retail-video-analytics" },
+        ],
+      },
       { label: "मूल्य", href: "/pricing" },
       { label: "तुलना", href: "/compare" },
       { label: "जानें", href: "/learn" },

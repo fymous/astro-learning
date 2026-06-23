@@ -409,7 +409,7 @@ const homeContentRaw: Record<Locale, HomeContent> = {
       title: "Measurable impact across every operation",
       sub: "Teams using AI video analytics consistently move the metrics that matter — top line, compliance and cost.",
       items: [
-        { metric: "45%", label: "higher conversion in retail", icon: "revenue" },
+        { metric: "45%", label: "higher conversion", icon: "revenue" },
         { metric: "50%", label: "increase in SOP compliance", icon: "compliance" },
         { metric: "60%", label: "faster incident response", icon: "speed" },
         { metric: "30%", label: "lower operational costs", icon: "cost" },

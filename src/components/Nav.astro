@@ -1,6 +1,6 @@
 ---
 import { BRAND, LOCALE_META, LOCALES, type Locale } from "../config";
-import { ui } from "../i18n/ui";
+import { ui, isDropdown } from "../i18n/ui";
 import { localizePath } from "../i18n/utils";
 import Logo from "./Logo.astro";
 import Button from "./Button.astro";
@@ -20,16 +20,41 @@ const t = ui[locale];
 
     <ul class="hidden items-center gap-7 lg:flex">
       {
-        t.nav.map((item) => (
-          <li>
-            <a
-              href={localizePath(item.href, locale)}
-              class="text-sm text-muted transition-colors hover:text-ink"
-            >
-              {item.label}
-            </a>
-          </li>
-        ))
+        t.nav.map((item) =>
+          isDropdown(item) ? (
+            <li class="nav-dropdown group relative">
+              <button
+                class="flex items-center gap-1 text-sm text-muted transition-colors hover:text-ink"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {item.label}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="pointer-events-none absolute left-1/2 top-full z-50 pt-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 -translate-x-1/2">
+                <div class="min-w-[14rem] rounded-xl border border-line bg-surface p-2 shadow-[var(--shadow-float)]">
+                  {item.children.map((child) => (
+                    <a
+                      href={localizePath(child.href, locale)}
+                      class="block rounded-lg px-3 py-2.5 text-sm text-muted transition-colors hover:bg-mist hover:text-ink"
+                    >
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={localizePath(item.href, locale)}
+                class="text-sm text-muted transition-colors hover:text-ink"
+              >
+                {item.label}
+              </a>
+            </li>
+          )
+        )
       }
     </ul>
 
@@ -74,16 +99,34 @@ const t = ui[locale];
   <div id="mobile-menu" class="hidden border-t border-line bg-canvas lg:hidden">
     <ul class="container-x flex flex-col gap-1 py-4">
       {
-        t.nav.map((item) => (
-          <li>
-            <a
-              href={localizePath(item.href, locale)}
-              class="block rounded-lg px-3 py-2.5 text-muted hover:bg-mist hover:text-ink"
-            >
-              {item.label}
-            </a>
-          </li>
-        ))
+        t.nav.map((item) =>
+          isDropdown(item) ? (
+            <>
+              <li>
+                <span class="block px-3 py-2 text-xs font-semibold uppercase tracking-wider text-faint">{item.label}</span>
+              </li>
+              {item.children.map((child) => (
+                <li>
+                  <a
+                    href={localizePath(child.href, locale)}
+                    class="block rounded-lg px-6 py-2.5 text-muted hover:bg-mist hover:text-ink"
+                  >
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </>
+          ) : (
+            <li>
+              <a
+                href={localizePath(item.href, locale)}
+                class="block rounded-lg px-3 py-2.5 text-muted hover:bg-mist hover:text-ink"
+              >
+                {item.label}
+              </a>
+            </li>
+          )
+        )
       }
       <li class="mt-2 px-3">
         <Button href={localizePath("/contact", locale)} class="w-full">{t.bookDemo}</Button>
