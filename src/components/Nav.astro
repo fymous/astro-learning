@@ -31,12 +31,12 @@ const t = ui[locale];
                 {item.label}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
               </button>
-              <div class="pointer-events-none absolute left-1/2 top-full z-50 pt-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 -translate-x-1/2">
-                <div class="min-w-[14rem] rounded-xl border border-line bg-surface p-2 shadow-[var(--shadow-float)]">
+              <div class="pointer-events-none absolute left-0 top-full z-50 pt-2 opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
+                <div class="min-w-[13rem] rounded-xl border border-line bg-surface p-1.5 shadow-[var(--shadow-float)]">
                   {item.children.map((child) => (
                     <a
                       href={localizePath(child.href, locale)}
-                      class="block rounded-lg px-3 py-2.5 text-sm text-muted transition-colors hover:bg-mist hover:text-ink"
+                      class="block rounded-lg px-3 py-2 text-sm text-muted transition-colors hover:bg-mist hover:text-ink"
                     >
                       {child.label}
                     </a>
@@ -59,24 +59,26 @@ const t = ui[locale];
     </ul>
 
     <div class="hidden items-center gap-2 lg:flex">
-      <div class="mr-1 flex items-center gap-1 rounded-full border border-line p-0.5 text-xs">
-        {
-          LOCALES.map((loc) => (
-            <a
-              href={localizePath(path, loc)}
-              class:list={[
-                "rounded-full px-3 py-1 font-medium transition-colors",
-                loc === locale ? "bg-brand-600 text-white shadow-sm" : "text-faint hover:text-ink",
-              ]}
-              hreflang={LOCALE_META[loc].htmlLang}
-              title={LOCALE_META[loc].label}
-              lang={LOCALE_META[loc].htmlLang}
-            >
-              {LOCALE_META[loc].short}
-            </a>
-          ))
-        }
-      </div>
+      {path === "/" && (
+        <div class="mr-1 flex items-center gap-1 rounded-full border border-line p-0.5 text-xs">
+          {
+            LOCALES.map((loc) => (
+              <a
+                href={localizePath(path, loc)}
+                class:list={[
+                  "rounded-full px-3 py-1 font-medium transition-colors",
+                  loc === locale ? "bg-brand-600 text-white shadow-sm" : "text-faint hover:text-ink",
+                ]}
+                hreflang={LOCALE_META[loc].htmlLang}
+                title={LOCALE_META[loc].label}
+                lang={LOCALE_META[loc].htmlLang}
+              >
+                {LOCALE_META[loc].short}
+              </a>
+            ))
+          }
+        </div>
+      )}
       <a href={localizePath("/contact", locale)} class="px-3 py-2 text-sm text-muted hover:text-ink">
         {t.signIn}
       </a>

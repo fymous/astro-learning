@@ -68,7 +68,33 @@ ${chip(852, 348, 276, "CONVERSION", "38%  \u00B7  Avg dwell 4m", "#2563EB")}
 ${chip(852, 446, 276, "SAFETY ALERT", "PPE missing \u00B7 Dock A", "#ef4444")}
 </svg>`;
 
+// ---- og/retail-video-analytics.png (1200x630, retail-specific card) ----
+const retailOgSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+${gradDef}
+<rect width="1200" height="630" fill="#ffffff"/>
+${gridLines}
+<circle cx="1120" cy="40" r="320" fill="url(#glow)"/>
+${aperture(2.3, 72, 64)}
+<text x="138" y="118" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" fill="#0b1220" letter-spacing="-1">ShopEye</text>
+
+<rect x="72" y="166" width="300" height="40" rx="20" fill="#eff5ff"/>
+<text x="92" y="192" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#1d4ed8" letter-spacing="0.5">RETAIL VIDEO ANALYTICS</text>
+
+<text x="72" y="290" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="#0b1220" letter-spacing="-1.5">Turn every retail camera</text>
+<text x="72" y="360" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="#1d4ed8" letter-spacing="-1.5">into a conversion engine.</text>
+
+<text x="74" y="424" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#4f5d76">Footfall · conversion · queues · loss prevention — on existing CCTV.</text>
+
+<text x="74" y="560" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#1d4ed8">shopeye.ai</text>
+<text x="190" y="560" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="400" fill="#8492ab">· No new hardware · WhatsApp alerts · DPDP-aligned</text>
+
+${chip(852, 250, 276, "VISITORS TODAY", "1,284  \u25B2 +12%", "#0b1220")}
+${chip(852, 348, 276, "CONVERSION", "38%  \u00B7  Funnel mapped", "#1d4ed8")}
+${chip(852, 446, 276, "QUEUE ALERT", "Counter 3 \u00B7 6 waiting", "#ef4444")}
+</svg>`;
+
 await mkdir(join(pub, "og"), { recursive: true });
 await sharp(Buffer.from(logoSvg)).png().toFile(join(pub, "logo.png"));
 await sharp(Buffer.from(ogSvg)).png().toFile(join(pub, "og", "default.png"));
-console.log("Generated public/logo.png and public/og/default.png");
+await sharp(Buffer.from(retailOgSvg)).png().toFile(join(pub, "og", "retail-video-analytics.png"));
+console.log("Generated public/logo.png, public/og/default.png, public/og/retail-video-analytics.png");

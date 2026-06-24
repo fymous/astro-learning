@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Button from "../../components/Button.astro";
+import CapabilityIcon from "../../components/CapabilityIcon.astro";
+import StepIcon from "../../components/StepIcon.astro";
+import AskShopEye from "../../components/AskShopEye.astro";
+import ContactDemo from "../../components/ContactDemo.astro";
+import CtaBanner from "../../components/CtaBanner.astro";
 import { BRAND, SITE_URL, type Locale } from "../../config";
 import { resolveLocale, localizePath } from "../../i18n/utils";
 import {
@@ -8,7 +13,7 @@ import {
   faqSchema,
   breadcrumbSchema,
   howToSchema,
-  graph,
+  itemListSchema,
 } from "../../lib/schema";
 
 const locale: Locale = resolveLocale(Astro.currentLocale);
@@ -16,16 +21,16 @@ const path = "/industries/retail-video-analytics";
 const pageUrl = new URL(localizePath(path, locale), SITE_URL).href;
 const contact = localizePath("/contact", locale);
 
-const title = `Retail Video Analytics — AI Video Analytics for Retail Stores | ${BRAND.name}`;
-const description = `${BRAND.name} retail video analytics turns your existing CCTV into footfall counters, conversion funnels, heatmaps, queue alerts and loss prevention AI — no new hardware. Trusted by 40+ Indian retail chains.`;
+const title = `Retail Video Analytics for Stores & Chains | ${BRAND.name}`;
+const description = `${BRAND.name} retail video analytics turns your existing CCTV into footfall counters, conversion funnels, heatmaps, queue alerts and loss-prevention AI — no new hardware. Built for Indian retail chains, with WhatsApp alerts and DPDP-aligned privacy.`;
 
 const faqItems = [
   { q: "What is retail video analytics?", a: `Retail video analytics is AI-powered software that processes existing CCTV feeds in real time to measure footfall, dwell time, conversion rates, queue length, and demographics — turning passive security cameras into business intelligence tools. ${BRAND.name} does this on any IP camera, NVR, or DVR without new hardware.` },
-  { q: "How does AI video analytics for retail improve conversion rates?", a: `By identifying which store zones attract visitors but fail to convert, optimising staff placement based on real traffic, and detecting queue buildup before customers walk away. ${BRAND.name} clients typically see 14–22% conversion improvement within 90 days of deployment.` },
+  { q: "How does AI video analytics for retail improve conversion rates?", a: `By identifying which store zones attract visitors but fail to convert, optimising staff placement based on real traffic, and detecting queue buildup before customers walk away. Industry benchmarks associate footfall-and-conversion analytics with a 14–22% conversion improvement when teams act on the insights.` },
   { q: "Does retail CCTV analytics work with my existing cameras?", a: `Yes. ${BRAND.name} connects to any IP camera, NVR, or DVR via standard RTSP or ONVIF protocols — Hikvision, CP Plus, Dahua, Axis, Bosch, and others. No camera replacement or new hardware is needed.` },
   { q: "What data does a retail video analytics platform collect?", a: "Core metrics include: entrance footfall counts, zone dwell time, zone-level conversion rates, checkout queue length and wait time, anonymous demographics (age/gender estimation), staff-to-customer coverage ratios, and SOP compliance scores. All data is anonymised — no facial recognition, no PII stored." },
   { q: "How is customer privacy protected?", a: `${BRAND.name} analyses behavioural patterns and events, not personal identities. No biometric data or facial recognition is used. Video can remain on-premise, all access is encrypted and role-based, and the platform is designed to align with India's DPDP Act.` },
-  { q: "What ROI can I expect from retail video analytics?", a: "Based on industry benchmarks and deployment data: 14–22% conversion rate improvement, 20–35% reduction in queue wait times, up to 30% shrinkage reduction, and typical payback within 2–3 months. According to Omdia (2024), 86% of video analytics deployments achieve ROI within 12 months." },
+  { q: "What ROI can I expect from retail video analytics?", a: "Industry benchmarks for retail video analytics indicate 14–22% conversion improvement, 20–35% reduction in queue wait times, and meaningful shrinkage reduction, with payback often within months. According to Omdia (2024), 86% of video analytics deployments achieve ROI within 12 months. Actual results depend on your store formats, footfall and how teams act on the insights." },
   { q: "How long does deployment take?", a: `Single-store deployment typically takes 5–10 days including site assessment, camera connection via RTSP/ONVIF, AI model configuration, and testing. Multi-store rollouts accelerate after the first location using configuration templates across similar formats — 50+ stores can be live in 8–12 weeks.` },
   { q: "Can it scale across hundreds of store locations?", a: `Yes. ${BRAND.name} is cloud-native and scales automatically. All locations feed into a single centralized dashboard for cross-store benchmarking, regional reporting, and aggregate trend analysis.` },
   { q: "What types of retail businesses benefit most?", a: "High-footfall environments see the greatest impact: fashion/apparel chains, supermarkets, electronics retailers, pharmacies, convenience stores, shopping malls, and multi-brand outlets. Any physical retail space with 50+ daily visitors benefits from footfall and conversion analytics." },
@@ -35,23 +40,69 @@ const faqItems = [
 ];
 
 const howSteps = [
-  { title: "Connect existing cameras", body: "Link your IP cameras, NVR, or DVR via RTSP/ONVIF. No new hardware, no rip-and-replace — works with Hikvision, CP Plus, Dahua, and any ONVIF device." },
-  { title: "AI configures detections", body: "Computer vision models automatically set detection zones, entry/exit lines, queue thresholds, and compliance rules customised for your store layout." },
-  { title: "Real-time intelligence flows", body: "Footfall, conversion, dwell time, heatmaps, and queue data stream to your centralised dashboard. Multi-store benchmarking from day one." },
-  { title: "Agents alert on WhatsApp", body: "Set rules in plain language. AI agents watch 24/7 and send clip-backed alerts to WhatsApp, Slack, or Teams the moment something needs attention." },
-  { title: "Optimise and scale", body: "Use data-driven insights to adjust layouts, staffing, and merchandising. Replicate winning configurations across all locations." },
+  { n: "1", title: "Connect existing cameras", body: "Link your IP cameras, NVR, or DVR via RTSP/ONVIF. No new hardware, no rip-and-replace — works with Hikvision, CP Plus, Dahua, and any ONVIF device." },
+  { n: "2", title: "AI configures detections", body: "Computer vision models automatically set detection zones, entry/exit lines, queue thresholds, and compliance rules customised for your store layout." },
+  { n: "3", title: "Real-time intelligence flows", body: "Footfall, conversion, dwell time, heatmaps, and queue data stream to your centralised dashboard. Multi-store benchmarking from day one." },
+  { n: "4", title: "Agents alert on WhatsApp", body: "Set rules in plain language. AI agents watch 24/7 and send clip-backed alerts to WhatsApp, Slack, or Teams the moment something needs attention." },
+  { n: "5", title: "Optimise and scale", body: "Use data-driven insights to adjust layouts, staffing, and merchandising. Replicate winning configurations across all locations." },
 ];
 
-const schema = [
-  webPageSchema({ url: pageUrl, name: title, description, image: "/og/retail-video-analytics.png" }),
-  howToSchema("How retail video analytics works", "Deploy AI video analytics on existing retail CCTV in 5 steps", howSteps),
-  faqSchema(faqItems),
-  breadcrumbSchema([
-    { name: "Home", url: "/" },
-    { name: "Industries", url: "/industries" },
-    { name: "Retail Video Analytics", url: path },
-  ]),
-];
+// Tone maps mirroring the homepage "How it works" section.
+const howTones = ["brand", "brand", "violet", "signal", "signal"] as const;
+const pillarText: Record<string, string> = {
+  brand: "text-brand-600",
+  signal: "text-signal-600",
+  violet: "text-violet-500",
+};
+const pillarBar: Record<string, string> = {
+  brand: "bg-brand-500",
+  signal: "bg-signal-500",
+  violet: "bg-violet-500",
+};
+
+// Retail-focused agentic Q&A — reuses the homepage AskShopEye component.
+const retailAsk = {
+  eyebrow: "Agentic AI",
+  title: "Talk to your cameras.",
+  titleAccent: "Get answers.",
+  sub: "Ask about any store in plain language, set a monitoring rule once, and let ShopEye agents watch your retail floor 24/7 — surfacing footfall, conversion, queues and shrinkage without anyone watching a screen.",
+  agentName: "ShopEye Retail Agent",
+  online: "online",
+  inputHint: "Ask about footfall, conversion, queues, shrinkage…",
+  exchanges: [
+    {
+      q: "How many people visited the Andheri store today?",
+      a: "1,284 visitors today at Andheri — up 12% versus yesterday, peaking between 6 and 8 PM.",
+      kind: "stat" as const,
+      value: "1,284",
+      delta: "+12% vs yesterday",
+    },
+    {
+      q: "What's the conversion rate in the footwear section this week?",
+      a: "Footwear converted 31% of visitors this week — dwell is high but checkout queues are the main drop-off point.",
+      kind: "stat" as const,
+      value: "31%",
+      note: "footwear · this week",
+    },
+    {
+      q: "Alert me when any billing counter has more than 5 people waiting.",
+      a: "Done. I'll watch every checkout camera and message you on WhatsApp the moment a queue crosses 5 people.",
+      kind: "alert" as const,
+      note: "Alert created · WhatsApp · 6 counters monitored",
+    },
+    {
+      q: "Show suspected concealment near the electronics shelf today.",
+      a: "Flagged 2 concealment events near electronics today — here's the most recent clip for your loss-prevention team.",
+      kind: "clip" as const,
+      note: "Aisle 3 · 15:48 · 0:18",
+    },
+  ],
+  rail: [
+    { tag: "ASK", title: "Ask in plain language", body: "Question any store in English or Hindi — footfall, conversion, queues, dwell or shrinkage. No dashboards to learn." },
+    { tag: "MONITOR", title: "Agents watch 24/7", body: "Set up monitoring once and agents watch every camera around the clock, detecting only the retail events that matter to you." },
+    { tag: "ACT", title: "Close the loop", body: "Verified, clip-backed alerts land on WhatsApp, Slack or Teams — so store and area managers act in the moment." },
+  ],
+};
 
 const metrics = [
   { value: "14–22%", label: "conversion rate improvement" },
@@ -61,14 +112,14 @@ const metrics = [
 ];
 
 const capabilities = [
-  { icon: "footfall", title: "Footfall counting & traffic analytics", body: "Automated people counting at every entrance, exit, and zone. Know exactly how many visitors arrive, when they peak, and where they go — across one store or a thousand.", keywords: "footfall analytics retail, people counting retail stores, store traffic analytics" },
-  { icon: "conversion", title: "Conversion funnel analytics", body: "Correlate entrance counts with POS transactions to measure true visitor-to-buyer conversion. See the full funnel — Visitors → Interested → Interacted → Billed — and identify exactly where drop-off happens.", keywords: "retail conversion analytics, footfall to conversion funnel retail" },
-  { icon: "heatmap", title: "In-store heatmaps & dwell time", body: "Visual heatmaps reveal which zones attract attention and which are dead spots. Dwell-time data shows how long shoppers engage with specific displays — a direct proxy for purchase intent.", keywords: "in-store heatmap analytics, dwell time analytics retail, retail heatmap analytics" },
-  { icon: "queue", title: "Queue management & wait-time alerts", body: "Real-time queue length monitoring at every checkout counter. Predictive alerts fire before lines grow — giving managers time to open counters and prevent walkaway.", keywords: "retail queue analytics, checkout wait time monitoring, queue management video analytics" },
-  { icon: "loss", title: "Loss prevention & shrinkage AI", body: "Behavioural anomaly detection identifies concealment, staff collusion, and after-hours intrusion. Cashier fraud detection catches voids, sweet-hearting, and register manipulation with clip evidence.", keywords: "retail loss prevention AI, shoplifting detection CCTV, cashier fraud detection" },
-  { icon: "demographics", title: "Anonymous demographics & segmentation", body: "Privacy-safe age and gender estimation reveals customer mix without identifying anyone. Align merchandising, marketing, and staffing to your actual audience — data from cameras, not surveys.", keywords: "retail customer demographics, store occupancy analytics" },
-  { icon: "compliance", title: "SOP & staff compliance monitoring", body: "Automated checks for opening/closing routines, staff presence at counters, uniform compliance, and hygiene protocols — across every store, every shift. Replace monthly audits with 24/7 AI monitoring.", keywords: "staff-customer ratio retail analytics, retail SOP compliance" },
-  { icon: "agentic", title: "Agentic AI — talk to your cameras", body: "Ask questions in plain English or Hindi. Set monitoring rules in one sentence. AI agents watch every camera 24/7, verify events, and send clip-backed alerts to WhatsApp automatically. No dashboards to learn.", keywords: "agentic AI retail analytics, conversational retail video analytics, retail video analytics WhatsApp alerts" },
+  { icon: "FOOTFALL", title: "Footfall counting & traffic analytics", body: "Automated people counting at every entrance, exit, and zone. Know exactly how many visitors arrive, when they peak, and where they go — across one store or a thousand.", keywords: "footfall analytics retail, people counting retail stores, store traffic analytics" },
+  { icon: "CONVERSION", title: "Conversion funnel analytics", body: "Correlate entrance counts with POS transactions to measure true visitor-to-buyer conversion. See the full funnel — Visitors → Interested → Interacted → Billed — and identify exactly where drop-off happens.", keywords: "retail conversion analytics, footfall to conversion funnel retail" },
+  { icon: "HEATMAP", title: "In-store heatmaps & dwell time", body: "Visual heatmaps reveal which zones attract attention and which are dead spots. Dwell-time data shows how long shoppers engage with specific displays — a direct proxy for purchase intent.", keywords: "in-store heatmap analytics, dwell time analytics retail, retail heatmap analytics" },
+  { icon: "QUEUE", title: "Queue management & wait-time alerts", body: "Real-time queue length monitoring at every checkout counter. Predictive alerts fire before lines grow — giving managers time to open counters and prevent walkaway.", keywords: "retail queue analytics, checkout wait time monitoring, queue management video analytics" },
+  { icon: "LOSS_PREVENTION", title: "Loss prevention & shrinkage AI", body: "Behavioural anomaly detection identifies concealment, staff collusion, and after-hours intrusion. Cashier fraud detection catches voids, sweet-hearting, and register manipulation with clip evidence.", keywords: "retail loss prevention AI, shoplifting detection CCTV, cashier fraud detection" },
+  { icon: "DEMOGRAPHICS", title: "Anonymous demographics & segmentation", body: "Privacy-safe age and gender estimation reveals customer mix without identifying anyone. Align merchandising, marketing, and staffing to your actual audience — data from cameras, not surveys.", keywords: "retail customer demographics, store occupancy analytics" },
+  { icon: "COMPLIANCE", title: "SOP & staff compliance monitoring", body: "Automated checks for opening/closing routines, staff presence at counters, uniform compliance, and hygiene protocols — across every store, every shift. Replace monthly audits with 24/7 AI monitoring.", keywords: "staff-customer ratio retail analytics, retail SOP compliance" },
+  { icon: "AGENTIC", title: "Agentic AI — talk to your cameras", body: "Ask questions in plain English or Hindi. Set monitoring rules in one sentence. AI agents watch every camera 24/7, verify events, and send clip-backed alerts to WhatsApp automatically. No dashboards to learn.", keywords: "agentic AI retail analytics, conversational retail video analytics, retail video analytics WhatsApp alerts" },
 ];
 
 const useCases = [
@@ -96,6 +147,28 @@ const integrations = [
   "WhatsApp", "Slack", "MS Teams", "SMS & Email", "Shopify", "POS Systems",
   "SAP Retail", "Power BI", "REST API", "Webhooks", "AWS", "Google Cloud",
   "Azure", "Hikvision", "CP Plus", "Dahua", "ONVIF NVR/DVR",
+];
+
+const related = [
+  { label: "QSR video analytics", href: "/industries", note: "Drive-thru & kitchen SOP" },
+  { label: "Pricing", href: "/pricing", note: "Per-camera plans" },
+  { label: "Product overview", href: "/product", note: "How the platform works" },
+  { label: "Book a demo", href: "/contact", note: "See it on your cameras" },
+];
+
+const schema = [
+  webPageSchema({ url: pageUrl, name: title, description, image: "/og/retail-video-analytics.png" }),
+  howToSchema("How retail video analytics works", "Deploy AI video analytics on existing retail CCTV in 5 steps", howSteps),
+  itemListSchema(
+    "Retail video analytics capabilities",
+    capabilities.map((cap) => ({ name: cap.title, description: cap.body })),
+  ),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Industries", url: "/industries" },
+    { name: "Retail Video Analytics", url: path },
+  ]),
 ];
 ---
 <BaseLayout title={title} description={description} path={path} schema={schema}>
@@ -161,7 +234,7 @@ const integrations = [
         <div>
           <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-600">Quick answer — What is retail video analytics?</h2>
           <p class="mt-2 text-base leading-relaxed text-ink">
-            <strong>Retail video analytics</strong> is AI software that turns existing store CCTV cameras into business intelligence tools. It measures footfall, dwell time, zone conversion rates, queue length, and anonymous demographics in real time — without new hardware. Indian multi-site retail chains use it to increase in-store conversion by 14–22%, reduce queue abandonment by 20–35%, and cut shrinkage by up to 30%, all from cameras they already own. {BRAND.name} adds an agentic layer: ask questions in plain language, set monitoring rules once, and receive verified clip-backed alerts on WhatsApp automatically.
+            <strong>Retail video analytics</strong> is AI software that turns existing store CCTV cameras into business intelligence tools. It measures footfall, dwell time, zone conversion rates, queue length, and anonymous demographics in real time — without new hardware. Indian multi-site retail chains use it to lift in-store conversion, reduce queue abandonment, and cut shrinkage, all from cameras they already own — with industry benchmarks pointing to 14–22% conversion gains and 20–35% shorter queue waits. {BRAND.name} adds an agentic layer: ask questions in plain language, set monitoring rules once, and receive verified clip-backed alerts on WhatsApp automatically.
           </p>
         </div>
       </div>
@@ -178,6 +251,7 @@ const integrations = [
         </div>
       ))}
     </div>
+    <p class="mt-4 text-center text-xs text-faint">Figures are industry benchmarks for retail video analytics; actual results vary by store format, footfall and execution.</p>
   </section>
 
   <!-- ===================== WHAT IS (detailed) ===================== -->
@@ -194,7 +268,7 @@ const integrations = [
             The technology answers the fundamental question physical retailers have struggled with for decades: <strong>"What are customers actually doing inside my store?"</strong> E-commerce has had click-stream analytics since the early 2000s — knowing exactly which pages shoppers visit, how long they stay, where they drop off, and what converts. Retail video analytics brings that same granularity to physical stores, using the cameras that are already installed.
           </p>
           <p>
-            According to Grand View Research, the retail segment of the global video analytics market is growing at a <strong>CAGR of 25.6%</strong> and is projected to reach $37.84 billion by 2030. In India specifically, the convergence of affordable IP cameras, widespread CCTV adoption (driven by regulatory and insurance requirements), and mature AI inference engines has created ideal conditions for retail CCTV analytics adoption. Enterprise chains like Shoppers Stop, FabIndia, Reliance Trends, and V-Mart are actively deploying these platforms to compete with online retailers on data-driven decision making.
+            According to Grand View Research, the retail segment of the global video analytics market is growing at a <strong>CAGR of 25.6%</strong> and is projected to reach $37.84 billion by 2030. In India specifically, the convergence of affordable IP cameras, widespread CCTV adoption (driven by regulatory and insurance requirements), and mature AI inference engines has created ideal conditions for retail CCTV analytics adoption. Organised retail chains are increasingly adopting these platforms to compete with online retailers on data-driven decision making.
           </p>
           <p>
             {BRAND.name} takes this further with <strong>agentic AI video analytics</strong> — instead of dashboards you have to check, AI agents watch your cameras 24/7 and proactively surface insights and alerts. Ask "How many people visited the electronics section today?" in plain English or Hindi and get an instant answer. Set a rule — "alert me if queue exceeds 5 people" — and the agent handles the rest, sending verified clip-backed notifications to WhatsApp.
@@ -203,6 +277,9 @@ const integrations = [
       </div>
     </div>
   </section>
+
+  <!-- ===================== AGENTIC AI (retail) ===================== -->
+  <AskShopEye content={retailAsk} />
 
   <!-- ===================== CAPABILITIES GRID ===================== -->
   <section id="capabilities" class="container-x py-16 md:py-24">
@@ -220,7 +297,7 @@ const integrations = [
         return (
           <div class="surface-card group relative flex flex-col p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-float)]">
             <span class={`flex h-12 w-12 items-center justify-center rounded-xl ${chipClass}`}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12h6M12 9v6"/></svg>
+              <CapabilityIcon tag={cap.icon} class="h-6 w-6" />
             </span>
             <h3 class="mt-4 text-base font-semibold text-ink">{cap.title}</h3>
             <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{cap.body}</p>
@@ -230,7 +307,7 @@ const integrations = [
     </div>
   </section>
 
-  <!-- ===================== HOW IT WORKS ===================== -->
+  <!-- ===================== HOW IT WORKS (homepage style) ===================== -->
   <section id="how-it-works" class="bg-mist">
     <div class="container-x py-16 md:py-24">
       <div class="mx-auto max-w-2xl text-center">
@@ -238,17 +315,39 @@ const integrations = [
         <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Works with your existing CCTV infrastructure</h2>
         <p class="mt-4 text-muted">No new cameras needed. Connect your existing setup and start getting retail video analytics insights in days, not months.</p>
       </div>
-      <div class="mt-14 grid gap-8 md:grid-cols-5">
-        {howSteps.map((step, i) => (
-          <div class="relative flex flex-col items-center text-center">
-            <span class="relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)]">
-              <span class="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 font-mono text-xs font-bold text-white">{i + 1}</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-brand-600"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></svg>
-            </span>
-            <h3 class="mt-4 text-sm font-semibold text-ink">{step.title}</h3>
-            <p class="mt-2 text-xs leading-relaxed text-muted">{step.body}</p>
+      <div class="relative mt-16">
+        <!-- horizontal flow connector (lg+) -->
+        <div class="absolute left-0 right-0 top-9 hidden lg:block">
+          <div class="relative mx-[10%] h-0.5 rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-x"></span>
+            <span class="flow-dot flow-dot-x" style="animation-delay:1.8s"></span>
           </div>
-        ))}
+        </div>
+        <!-- vertical flow connector (below lg) -->
+        <div class="absolute bottom-10 left-9 top-9 w-0.5 lg:hidden">
+          <div class="relative h-full w-full rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-b from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-y"></span>
+          </div>
+        </div>
+
+        <div class="grid gap-10 lg:grid-cols-5 lg:gap-4">
+          {
+            howSteps.map((step, i) => (
+              <div class="group relative flex items-start gap-6 lg:flex-col lg:items-center lg:gap-0 lg:text-center">
+                <span class={`relative z-10 flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-float)] ${pillarText[howTones[i]]}`}>
+                  <StepIcon n={Number(step.n)} />
+                  <span class={`absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full font-mono text-xs font-bold text-white ring-4 ring-mist ${pillarBar[howTones[i]]}`}>{step.n}</span>
+                </span>
+                <div class="pt-1 lg:mt-5 lg:pt-0">
+                  <h3 class="text-base font-semibold text-ink">{step.title}</h3>
+                  <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted lg:max-w-[15rem]">{step.body}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
   </section>
@@ -267,7 +366,7 @@ const integrations = [
             This means you don't just know <em>how many</em> people entered — you know where they went, how long they stayed in each department, which displays stopped them, and at what point they left without purchasing. Correlate with POS data and you have a complete <strong>footfall-to-conversion funnel</strong> that reveals the exact leakage points in your customer journey.
           </p>
           <p>
-            For Indian retail chains managing 50–500+ stores, this data enables: traffic-based staff scheduling (save 12–18% on labor costs), evidence-based visual merchandising rotations, promotional impact measurement (actual footfall lift vs. baseline), and regional benchmarking across all locations from a single dashboard.
+            For Indian retail chains managing 50–500+ stores, this data enables: traffic-based staff scheduling (a meaningful lever on labour cost), evidence-based visual merchandising rotations, promotional impact measurement (actual footfall lift vs. baseline), and regional benchmarking across all locations from a single dashboard.
           </p>
         </div>
         <div class="mt-6 grid grid-cols-2 gap-3">
@@ -276,8 +375,8 @@ const integrations = [
             <div class="text-xs text-muted">counting accuracy</div>
           </div>
           <div class="rounded-xl border border-line bg-mist p-3 text-center">
-            <div class="font-mono text-lg font-bold text-signal-600">12–18%</div>
-            <div class="text-xs text-muted">labor cost savings</div>
+            <div class="font-mono text-lg font-bold text-signal-600">Zone-level</div>
+            <div class="text-xs text-muted">traffic & dwell insight</div>
           </div>
         </div>
       </div>
@@ -368,6 +467,17 @@ const integrations = [
     </div>
   </section>
 
+  <!-- ===================== MID CTA BANNER ===================== -->
+  <CtaBanner
+    eyebrow="See it on your footage"
+    title="See what your store cameras have been missing."
+    sub="Book a 30-minute walkthrough on your own retail footage — no new hardware, no rip-and-replace, no risk."
+    primary="Book a retail demo"
+    primaryHref="#get-started"
+    secondary="See how it works"
+    secondaryHref="#how-it-works"
+  />
+
   <!-- ===================== QUEUE ANALYTICS SECTION ===================== -->
   <section class="bg-mist">
     <div class="container-x py-16 md:py-24">
@@ -386,13 +496,13 @@ const integrations = [
           <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Predict queue buildup — act before customers walk away</h2>
           <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
             <p>
-              Research consistently shows that <strong>75% of customers consider leaving a store if they perceive the queue will take more than 5 minutes</strong>. Yet most retailers manage queues reactively — staff notice long lines only after customers are already frustrated or gone.
+              Long checkout lines are one of the most common reasons shoppers abandon a purchase in-store. Yet most retailers manage queues reactively — staff notice long lines only after customers are already frustrated or gone.
             </p>
             <p>
               {BRAND.name}'s <strong>checkout wait time monitoring</strong> uses overhead cameras to count people in each queue, estimate service time based on historical patterns, and <em>predict</em> when a threshold will be breached — alerting managers 5–15 minutes before lines become problematic. The alert includes a recommended action: "Open counter 4" or "Redeploy staff from zone B."
             </p>
             <p>
-              Beyond real-time intervention, the historical queue data reveals staffing sweet spots by day-of-week and hour — enabling demand-driven scheduling that eliminates both overstaffing (wasted labor) and understaffing (lost sales). Retailers using queue management video analytics typically see <strong>20–35% reduction in average wait times</strong> and measurable decreases in queue abandonment.
+              Beyond real-time intervention, the historical queue data reveals staffing sweet spots by day-of-week and hour — enabling demand-driven scheduling that eliminates both overstaffing (wasted labor) and understaffing (lost sales). Industry benchmarks associate queue management video analytics with a <strong>20–35% reduction in average wait times</strong> and measurable decreases in queue abandonment.
             </p>
           </div>
         </div>
@@ -455,42 +565,6 @@ const integrations = [
     </div>
   </section>
 
-  <!-- ===================== AGENTIC AI DIFFERENTIATOR ===================== -->
-  <section class="container-x py-16 md:py-24">
-    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-      <div>
-        <span class="eyebrow">Agentic AI — your differentiator</span>
-        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Don't watch dashboards. Talk to your cameras.</h2>
-        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
-          <p>
-            Traditional retail analytics platforms give you dashboards — useful, but someone still has to check them. {BRAND.name}'s <strong>agentic AI video analytics</strong> fundamentally changes the interaction model: you <em>tell</em> the system what you care about, and AI agents handle the rest.
-          </p>
-          <p>
-            <strong>Ask</strong> — "What was the conversion rate in the shoe section this week vs. last?" Get an instant answer backed by camera data.
-          </p>
-          <p>
-            <strong>Monitor</strong> — "Alert me if any counter has more than 5 people waiting." The agent watches every camera 24/7, verifies events (no false positives), and sends you a clip on WhatsApp the moment the rule fires.
-          </p>
-          <p>
-            <strong>Act</strong> — Agents can trigger workflows: escalate to shift supervisors, log compliance violations, or send summary reports at end of shift — automatically.
-          </p>
-          <p>
-            Works in plain English or Hindi. No training required. No dashboard login needed.
-          </p>
-        </div>
-      </div>
-      <!-- Image placeholder -->
-      <div class="surface-card aspect-[4/3] overflow-hidden">
-        <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#f5f1fe] to-[#e6dafb] p-8">
-          <div class="text-center">
-            <p class="text-sm font-medium text-violet-500">Agentic AI Image</p>
-            <p class="mt-2 max-w-xs text-xs text-muted">Nano-banana prompt: "Chat interface showing conversation with AI video analytics agent — user asks 'How many people visited Store 12 today?' and agent replies with '1,284 visitors ▲12%' with a small chart, WhatsApp notification preview in corner showing 'Queue alert · Counter 3 · 6 people', modern clean UI with purple accent"</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== INTEGRATIONS ===================== -->
   <section class="bg-mist">
     <div class="container-x py-14 text-center md:py-16">
@@ -525,6 +599,14 @@ const integrations = [
       </div>
     </div>
   </section>
+
+  <!-- ===================== CTA BANNER (lower) ===================== -->
+  <CtaBanner
+    title="Ready to turn your CCTV into retail intelligence?"
+    sub="Tell us about your stores and we'll show you exactly what ShopEye surfaces on the cameras you already own."
+    primary="Talk to us"
+    primaryHref="#get-started"
+  />
 
   <!-- ===================== PRIVACY & COMPLIANCE ===================== -->
   <section class="bg-mist">
@@ -586,30 +668,26 @@ const integrations = [
     </div>
   </section>
 
-  <!-- ===================== CTA ===================== -->
-  <section class="bg-gradient-to-br from-brand-600 via-brand-700 to-brand-800">
-    <div class="container-x py-16 text-center md:py-20">
-      <h2 class="text-3xl font-semibold tracking-tight text-white md:text-4xl">Ready to turn your existing CCTV into retail intelligence?</h2>
-      <p class="mx-auto mt-4 max-w-xl text-brand-400/90">
-        See {BRAND.name} on your own store cameras. 30-minute personalised demo — no new hardware, no commitment.
-      </p>
-      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <Button href={contact} size="lg">
-          Book a retail demo
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </Button>
-        <Button href={contact} variant="secondary" size="lg">
-          Talk to sales
-        </Button>
-      </div>
-      <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-white/70">
-        <span>Works with any IP camera</span>
-        <span>·</span>
-        <span>No new hardware</span>
-        <span>·</span>
-        <span>Live in days, not months</span>
-      </div>
+  <!-- ===================== RELATED SOLUTIONS ===================== -->
+  <section class="container-x py-14 md:py-16">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Explore related solutions</span>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Keep exploring {BRAND.name}</h2>
+    </div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {related.map((r) => (
+        <a href={localizePath(r.href, locale)} class="surface-card group flex items-center justify-between gap-3 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)]">
+          <span>
+            <span class="block text-sm font-semibold text-ink">{r.label}</span>
+            <span class="mt-0.5 block text-xs text-muted">{r.note}</span>
+          </span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      ))}
     </div>
   </section>
+
+  <!-- ===================== CONTACT + DEMO (homepage component) ===================== -->
+  <ContactDemo />
 
 </BaseLayout>

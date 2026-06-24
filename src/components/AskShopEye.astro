@@ -1,10 +1,14 @@
 ---
 import { resolveLocale } from "../i18n/utils";
-import { homeContent } from "../content/home";
+import { homeContent, type HomeContent } from "../content/home";
 import type { Locale } from "../config";
 
+interface Props {
+  content?: HomeContent["ask"];
+}
+
 const locale: Locale = resolveLocale(Astro.currentLocale);
-const a = homeContent[locale].ask;
+const a = Astro.props.content ?? homeContent[locale].ask;
 
 const railTone = ["brand", "signal", "violet"] as const;
 const railClass: Record<string, string> = {

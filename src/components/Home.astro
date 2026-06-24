@@ -7,6 +7,7 @@ import StepIcon from "./StepIcon.astro";
 import PillarIcon from "./PillarIcon.astro";
 import PrivacyIcon from "./PrivacyIcon.astro";
 import CapabilityIcon from "./CapabilityIcon.astro";
+import IndustryIcon from "./IndustryIcon.astro";
 import CtaBanner from "./CtaBanner.astro";
 import ContactDemo from "./ContactDemo.astro";
 import Button from "./Button.astro";
@@ -35,6 +36,10 @@ const schema = [
     `${BRAND.name} video analytics capabilities`,
     c.capabilities.items.map((i) => ({ name: i.title, description: i.body })),
   ),
+  itemListSchema(
+    `${BRAND.name} industries served`,
+    c.industries.items.map((i) => ({ name: i.name, description: i.blurb })),
+  ),
   faqSchema(c.faq.items),
   breadcrumbSchema([{ name: "Home", url: localizePath("/", locale) }]),
 ];
@@ -62,7 +67,12 @@ const pillarText: Record<string, string> = {
 };
 const capTones = ["brand", "signal", "violet"] as const;
 const howTones = ["brand", "brand", "violet", "signal", "signal"] as const;
-const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
+
+// Internal links for industries that have a dedicated page (others link to the industries hub)
+const industryHref: Record<string, string> = {
+  retail: localizePath("/industries/retail-video-analytics", locale),
+};
+const industriesHub = localizePath("/industries", locale);
 ---
 <BaseLayout title={c.seo.title} description={c.seo.description} path="/" schema={schema}>
   <!-- ============================ HERO ============================ -->
@@ -104,31 +114,16 @@ const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
     <div class="bg-grid pointer-events-none absolute inset-0 opacity-40"></div>
 
     <div class="container-x relative py-16 md:py-20">
-      <!-- heading + stats -->
-      <div class="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
-        <div class="max-w-2xl">
-          <span class="inline-flex items-center gap-2 rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 font-mono text-[0.7rem] font-semibold uppercase tracking-wider text-brand-600">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-            {c.trust.eyebrow}
-          </span>
-          <h2 class="mt-4 text-3xl font-semibold tracking-tight text-ink md:text-4xl lg:text-[2.6rem]">
-            {c.trust.title} <span class="bg-gradient-to-r from-brand-600 via-violet-500 to-signal-600 bg-clip-text text-transparent">{c.trust.titleAccent}</span>
-          </h2>
-          <p class="mt-4 max-w-xl text-muted">{c.trust.sub}</p>
-        </div>
-
-        <div class="flex divide-x divide-line rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)]">
-          {
-            c.trust.stats.map((s) => (
-              <div class="px-5 py-5 text-center md:px-7">
-                <div class="bg-gradient-to-b from-brand-600 to-signal-600 bg-clip-text font-mono text-2xl font-bold leading-none text-transparent md:text-3xl">
-                  {s.value}
-                </div>
-                <div class="mt-2 whitespace-nowrap text-[0.7rem] font-medium uppercase tracking-wider text-faint">{s.label}</div>
-              </div>
-            ))
-          }
-        </div>
+      <!-- heading -->
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="inline-flex items-center gap-2 rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 font-mono text-[0.7rem] font-semibold uppercase tracking-wider text-brand-600">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          {c.trust.eyebrow}
+        </span>
+        <h2 class="mt-4 text-3xl font-semibold tracking-tight text-ink md:text-4xl lg:text-[2.6rem]">
+          {c.trust.title} <span class="bg-gradient-to-r from-brand-600 via-violet-500 to-signal-600 bg-clip-text text-transparent">{c.trust.titleAccent}</span>
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl text-muted">{c.trust.sub}</p>
       </div>
 
       <!-- dual marquee -->
@@ -137,14 +132,14 @@ const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
         <div class="overflow-hidden">
           <div class="marquee-track flex gap-4 whitespace-nowrap" style="animation: scroll-x 55s linear infinite;">
             {
-              [...c.trust.logos.slice(0, 20), ...c.trust.logos.slice(0, 20)].map((logo) => (
+              [...c.trust.logos.slice(0, 10), ...c.trust.logos.slice(0, 10)].map((logo) => (
                 <div class="group flex h-20 w-52 shrink-0 items-center gap-3 rounded-2xl border border-line bg-surface px-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-500/40 hover:shadow-[var(--shadow-float)]">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-mist to-mist-2 font-mono text-sm font-bold text-faint transition-colors group-hover:from-brand-50 group-hover:to-signal-50 group-hover:text-brand-600">
                     {logo.name.charAt(0)}
                   </span>
                   <div class="min-w-0 flex-1">
                     <div class="truncate text-sm font-semibold text-ink">{logo.name}</div>
-                    <div class="truncate text-[0.65rem] font-medium uppercase tracking-wider text-faint">{logo.industry}</div>
+                    <div class="truncate text-[0.65rem] font-medium uppercase tracking-wider text-faint">{logo.category}</div>
                   </div>
                 </div>
               ))
@@ -156,20 +151,37 @@ const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
         <div class="overflow-hidden">
           <div class="marquee-track flex gap-4 whitespace-nowrap" style="animation: scroll-x-rev 50s linear infinite;">
             {
-              [...c.trust.logos.slice(20), ...c.trust.logos.slice(20)].map((logo) => (
+              [...c.trust.logos.slice(10), ...c.trust.logos.slice(10)].map((logo) => (
                 <div class="group flex h-20 w-52 shrink-0 items-center gap-3 rounded-2xl border border-line bg-surface px-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-signal-500/40 hover:shadow-[var(--shadow-float)]">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-mist to-mist-2 font-mono text-sm font-bold text-faint transition-colors group-hover:from-signal-50 group-hover:to-brand-50 group-hover:text-signal-600">
                     {logo.name.charAt(0)}
                   </span>
                   <div class="min-w-0 flex-1">
                     <div class="truncate text-sm font-semibold text-ink">{logo.name}</div>
-                    <div class="truncate text-[0.65rem] font-medium uppercase tracking-wider text-faint">{logo.industry}</div>
+                    <div class="truncate text-[0.65rem] font-medium uppercase tracking-wider text-faint">{logo.category}</div>
                   </div>
                 </div>
               ))
             }
           </div>
         </div>
+      </div>
+
+      <!-- enterprise readiness strip -->
+      <div class="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          c.trust.readiness.map((r) => (
+            <div class="group flex items-start gap-3 rounded-2xl border border-line bg-surface p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-500/40 hover:shadow-[var(--shadow-float)]">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-signal-50 text-brand-600">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+              </span>
+              <div class="min-w-0">
+                <div class="text-sm font-semibold text-ink">{r.title}</div>
+                <div class="mt-0.5 text-xs leading-relaxed text-muted">{r.body}</div>
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -231,6 +243,28 @@ const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
 
   <!-- ============================ AGENTIC ASK ============================ -->
   <AskShopEye />
+
+  <!-- ============================ SCALE BAND ============================ -->
+  <section class="container-x py-12 md:py-16">
+    <div class="surface-card overflow-hidden shadow-[var(--shadow-card)]">
+      <div class="border-b border-line bg-mist/60 px-6 py-5 text-center md:px-8">
+        <span class="eyebrow">{c.scale.eyebrow}</span>
+        <h2 class="mt-2 text-xl font-semibold tracking-tight text-ink md:text-2xl">{c.scale.title}</h2>
+      </div>
+      <div class="grid grid-cols-2 divide-x divide-y divide-line md:grid-cols-4 md:divide-y-0">
+        {
+          c.scale.items.map((s) => (
+            <div class="px-4 py-7 text-center md:px-6 md:py-9">
+              <div class="bg-gradient-to-r from-brand-600 via-violet-500 to-signal-600 bg-clip-text font-mono text-3xl font-bold leading-none text-transparent md:text-4xl lg:text-5xl">
+                {s.value}
+              </div>
+              <div class="mt-2.5 text-xs font-medium uppercase tracking-wider text-faint md:text-sm">{s.label}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
   <!-- ============================ CAPABILITIES ============================ -->
   <section id="capabilities" class="container-x py-16 md:py-24">
@@ -312,95 +346,43 @@ const outcomeTones = ["brand", "signal", "violet", "warn"] as const;
     </div>
   </section>
 
-  <!-- ============================ OUTCOMES ============================ -->
-  <section class="container-x py-16 md:py-24">
+  <!-- ============================ INDUSTRIES ============================ -->
+  <section id="industries" class="container-x py-16 md:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <span class="eyebrow">{c.outcomes.eyebrow}</span>
-      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.outcomes.title}</h2>
-      <p class="mt-4 text-muted">{c.outcomes.sub}</p>
+      <span class="eyebrow">{c.industries.eyebrow}</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.industries.title}</h2>
+      <p class="mt-4 text-muted">{c.industries.sub}</p>
     </div>
-    <div id="outcomes-grid" class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
-        c.outcomes.items.map((o, i) => {
-          const num = parseInt(o.metric.replace(/[^0-9]/g, ""), 10) || 0;
-          const prefix = o.metric.replace(/[0-9].*$/, "");
-          const suffix = o.metric.replace(/^[^0-9]*[0-9]+/, "");
+        c.industries.items.map((ind) => {
+          const href = industryHref[ind.slug] ?? industriesHub;
           return (
-            <div class="surface-card group relative overflow-hidden p-7 transition-shadow hover:shadow-[var(--shadow-float)]">
-              <div class="flex items-center justify-between">
-                <span class={`flex h-12 w-12 items-center justify-center rounded-xl ${pillarChip[outcomeTones[i]]}`}>
-                  <PillarIcon icon={o.icon} />
+            <a
+              href={href}
+              class="surface-card group relative flex flex-col p-5 transition-all hover:-translate-y-0.5 hover:border-brand-500/40 hover:shadow-[var(--shadow-float)]"
+            >
+              <div class="flex items-center gap-2.5">
+                <span class={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${pillarChip[ind.tone]}`}>
+                  <IndustryIcon slug={ind.slug} size={18} />
                 </span>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class={pillarText[outcomeTones[i]]} stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>
+                <h3 class="text-base font-semibold text-ink">{ind.name}</h3>
+                <svg class="ml-auto shrink-0 text-faint transition-colors group-hover:text-brand-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>
               </div>
-              <div
-                class="mt-6 bg-gradient-to-br from-brand-600 to-signal-600 bg-clip-text text-5xl font-bold tracking-tight text-transparent"
-                data-countup
-                data-num={num}
-                data-prefix={prefix}
-                data-suffix={suffix}
-              >
-                {o.metric}
-              </div>
-              <div class="mt-2 text-sm text-muted">{o.label}</div>
-              <div class="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-mist">
-                <div class={`outcome-bar h-full rounded-full ${pillarBar[outcomeTones[i]]}`} data-bar={Math.min(num, 100)}></div>
-              </div>
-            </div>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{ind.blurb}</p>
+              <ul class="mt-3 space-y-1.5">
+                {ind.points.map((pt) => (
+                  <li class="flex items-start gap-2 text-xs text-faint">
+                    <svg class={`mt-0.5 shrink-0 ${pillarText[ind.tone]}`} width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            </a>
           );
         })
       }
     </div>
-    <p class="mt-6 text-center text-xs text-faint">{c.outcomes.source}</p>
-
-    <script is:inline>
-      (function () {
-        var grid = document.getElementById("outcomes-grid");
-        if (!grid) return;
-        var nums = grid.querySelectorAll("[data-countup]");
-        var bars = grid.querySelectorAll("[data-bar]");
-        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        if (reduce) {
-          bars.forEach(function (b) { b.style.width = b.getAttribute("data-bar") + "%"; });
-          return;
-        }
-
-        // reset to start state
-        nums.forEach(function (el) {
-          el.textContent = (el.getAttribute("data-prefix") || "") + "0" + (el.getAttribute("data-suffix") || "");
-        });
-
-        function animate(el) {
-          var target = parseInt(el.getAttribute("data-num"), 10) || 0;
-          var prefix = el.getAttribute("data-prefix") || "";
-          var suffix = el.getAttribute("data-suffix") || "";
-          var start = null;
-          var dur = 1300;
-          function step(ts) {
-            if (!start) start = ts;
-            var p = Math.min((ts - start) / dur, 1);
-            var eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = prefix + Math.round(eased * target) + suffix;
-            if (p < 1) requestAnimationFrame(step);
-          }
-          requestAnimationFrame(step);
-        }
-
-        var io = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              if (!entry.isIntersecting) return;
-              nums.forEach(animate);
-              bars.forEach(function (b) { b.style.width = b.getAttribute("data-bar") + "%"; });
-              io.disconnect();
-            });
-          },
-          { threshold: 0.35 }
-        );
-        io.observe(grid);
-      })();
-    </script>
   </section>
 
   <!-- ============================ MID CTA BANNER ============================ -->
