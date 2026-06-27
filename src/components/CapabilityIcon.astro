@@ -42,6 +42,18 @@ const c = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "
 {tag === "COMPLIANCE" && (
   <svg {...c} class={className}><path d="M9 3h6a1 1 0 0 1 1 1v1h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2V4a1 1 0 0 1 1-1Z"/><path d="m9 14 2 2 4-4"/></svg>
 )}
+{tag === "CASH_OPS" && (
+  <svg {...c} class={className}><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M2 10h2M20 10h2M2 14h2M20 14h2"/></svg>
+)}
+{tag === "PERIMETER" && (
+  <svg {...c} class={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M12 8v4M12 16h.01"/></svg>
+)}
+{tag === "STORE_HOURS" && (
+  <svg {...c} class={className}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+)}
+{tag === "UNATTENDED" && (
+  <svg {...c} class={className}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 11l2 2 4-4"/></svg>
+)}
 {tag === "AGENTIC" && (
   <svg {...c} class={className}><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M9 13v2M15 13v2"/></svg>
 )}

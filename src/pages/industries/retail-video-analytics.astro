@@ -22,7 +22,7 @@ const pageUrl = new URL(localizePath(path, locale), SITE_URL).href;
 const contact = localizePath("/contact", locale);
 
 const title = `Retail Video Analytics for Stores & Chains | ${BRAND.name}`;
-const description = `${BRAND.name} retail video analytics turns your existing CCTV into footfall counters, conversion funnels, heatmaps, queue alerts and loss-prevention AI — no new hardware. Built for Indian retail chains, with WhatsApp alerts and DPDP-aligned privacy.`;
+const description = `${BRAND.name} retail video analytics turns your existing CCTV into footfall counters, conversion funnels, heatmaps, queue alerts, loss-prevention AI, cash operations monitoring, perimeter security, and customer engagement tracking — no new hardware. Built for Indian retail chains.`;
 
 const faqItems = [
   { q: "What is retail video analytics?", a: `Retail video analytics is AI-powered software that processes existing CCTV feeds in real time to measure footfall, dwell time, conversion rates, queue length, and demographics — turning passive security cameras into business intelligence tools. ${BRAND.name} does this on any IP camera, NVR, or DVR without new hardware.` },
@@ -37,6 +37,10 @@ const faqItems = [
   { q: "How does agentic AI video analytics differ from traditional dashboards?", a: `Traditional analytics shows dashboards you must check. ${BRAND.name}'s agentic AI lets you ask questions in plain English or Hindi ('How many people visited Store 12 today?'), set monitoring rules once, and receive verified clip-backed alerts on WhatsApp or Slack automatically — no one needs to watch screens.` },
   { q: "What is footfall analytics in retail?", a: "Footfall analytics is the automated counting and analysis of people entering and moving through a retail store using camera-based computer vision. It measures total visitors, entry/exit patterns, peak hours, zone traffic, and correlates with POS data to calculate true conversion rates." },
   { q: "Can retail video analytics detect shoplifting?", a: `Yes. The platform uses behavioural anomaly detection to identify suspicious patterns — unusual dwell in high-shrinkage zones, concealment gestures, staff collusion indicators, and after-hours intrusion. ${BRAND.name} sends real-time alerts with video clips to security teams via WhatsApp.` },
+  { q: "How does cash operations monitoring work?", a: `${BRAND.name} correlates every POS transaction event — voids, no-sale opens, refunds, register closures — with the corresponding camera feed in real time. When the system detects anomalies (void-after-tender, sweet-hearting, unusual refund patterns, or till-open-without-transaction), it flags them instantly with a timestamped video clip linked to the exact transaction for review.` },
+  { q: "Can video analytics detect suspicious activity outside the store?", a: `Yes. ${BRAND.name}'s perimeter monitoring AI uses exterior and parking-lot cameras to detect loitering beyond configurable time thresholds, tailgating through access points, forced-entry attempts on shuttered entrances, and unusual gathering patterns — sending real-time clip-backed alerts to security teams before an incident reaches the store floor.` },
+  { q: "How does customer-unattended detection improve sales?", a: `The system uses zone-level occupancy and staff-proximity analysis to identify when a customer has been browsing a service zone (electronics, jewellery, furniture) beyond a configured threshold without staff engagement. It sends an instant alert to the nearest available associate, measurably improving response times and conversion rates in high-involvement categories.` },
+  { q: "Can the system monitor store opening and closing times?", a: `Yes. ${BRAND.name} automatically verifies on-time store opening and closing — checking for staff presence, lights, shutters, and predefined routines. Late opens and early closes are flagged to area managers with photo evidence, replacing trust-based compliance with verified data across all locations.` },
 ];
 
 const howSteps = [
@@ -96,6 +100,12 @@ const retailAsk = {
       kind: "clip" as const,
       note: "Aisle 3 · 15:48 · 0:18",
     },
+    {
+      q: "Any no-sale register opens at Store 7 today?",
+      a: "Store 7 had 3 no-sale register opens today — all on Counter 2 during the 2–4 PM shift. Here's the clip for the latest one.",
+      kind: "clip" as const,
+      note: "Counter 2 · 15:22 · 0:12",
+    },
   ],
   rail: [
     { tag: "ASK", title: "Ask in plain language", body: "Question any store in English or Hindi — footfall, conversion, queues, dwell or shrinkage. No dashboards to learn." },
@@ -112,13 +122,17 @@ const metrics = [
 ];
 
 const capabilities = [
-  { icon: "FOOTFALL", title: "Footfall counting & traffic analytics", body: "Automated people counting at every entrance, exit, and zone. Know exactly how many visitors arrive, when they peak, and where they go — across one store or a thousand.", keywords: "footfall analytics retail, people counting retail stores, store traffic analytics" },
   { icon: "CONVERSION", title: "Conversion funnel analytics", body: "Correlate entrance counts with POS transactions to measure true visitor-to-buyer conversion. See the full funnel — Visitors → Interested → Interacted → Billed — and identify exactly where drop-off happens.", keywords: "retail conversion analytics, footfall to conversion funnel retail" },
   { icon: "HEATMAP", title: "In-store heatmaps & dwell time", body: "Visual heatmaps reveal which zones attract attention and which are dead spots. Dwell-time data shows how long shoppers engage with specific displays — a direct proxy for purchase intent.", keywords: "in-store heatmap analytics, dwell time analytics retail, retail heatmap analytics" },
   { icon: "QUEUE", title: "Queue management & wait-time alerts", body: "Real-time queue length monitoring at every checkout counter. Predictive alerts fire before lines grow — giving managers time to open counters and prevent walkaway.", keywords: "retail queue analytics, checkout wait time monitoring, queue management video analytics" },
   { icon: "LOSS_PREVENTION", title: "Loss prevention & shrinkage AI", body: "Behavioural anomaly detection identifies concealment, staff collusion, and after-hours intrusion. Cashier fraud detection catches voids, sweet-hearting, and register manipulation with clip evidence.", keywords: "retail loss prevention AI, shoplifting detection CCTV, cashier fraud detection" },
-  { icon: "DEMOGRAPHICS", title: "Anonymous demographics & segmentation", body: "Privacy-safe age and gender estimation reveals customer mix without identifying anyone. Align merchandising, marketing, and staffing to your actual audience — data from cameras, not surveys.", keywords: "retail customer demographics, store occupancy analytics" },
-  { icon: "COMPLIANCE", title: "SOP & staff compliance monitoring", body: "Automated checks for opening/closing routines, staff presence at counters, uniform compliance, and hygiene protocols — across every store, every shift. Replace monthly audits with 24/7 AI monitoring.", keywords: "staff-customer ratio retail analytics, retail SOP compliance" },
+  { icon: "CASH_OPS", title: "Cash operations monitoring", body: "Real-time POS-to-video correlation flags no-sale register opens, void patterns, till shortages, and cash-handling SOP violations — with timestamped clip evidence for every flagged transaction.", keywords: "cash register monitoring AI, POS fraud detection retail, retail cash operations" },
+  { icon: "INTRUSION", title: "In-store intrusion detection", body: "After-hours and restricted-zone intrusion alerts trigger instantly when anyone enters the store floor, stockroom, or server room outside permitted hours — with clip-backed WhatsApp notifications to security.", keywords: "retail store intrusion detection, after hours store security AI, restricted zone alert retail" },
+  { icon: "PERIMETER", title: "Suspicious activity outside store", body: "AI monitors exterior and parking-lot cameras for loitering, tailgating, forced-entry attempts, and unusual gathering patterns around entrances — sending perimeter alerts before an incident reaches the store floor.", keywords: "suspicious activity detection outside store, retail perimeter security AI, store exterior monitoring" },
+  { icon: "STORE_HOURS", title: "Store open / close compliance", body: "Automated verification of on-time store opening and closing routines — lights, shutters, staff presence. Late opens and early closes are flagged instantly to area managers with photo evidence.", keywords: "store opening closing time monitoring, retail store open close compliance, store operations automation" },
+  { icon: "UNATTENDED", title: "Customer left unattended alerts", body: "Detects when a customer has been waiting in a zone or at a counter beyond a configured threshold without staff engagement — triggering an instant alert so the nearest associate can respond.", keywords: "customer unattended alert retail, staff response time retail AI, customer waiting detection" },
+  { icon: "DEMOGRAPHICS", title: "Footfall counting & demographics", body: "Automated people counting at every entrance, exit, and zone with 98%+ accuracy — combined with privacy-safe age, gender, and group-size estimation (men/women/kids) to reveal your actual customer mix from cameras, not surveys.", keywords: "retail customer demographics, footfall counting demographics, people counting men women kids retail" },
+  { icon: "COMPLIANCE", title: "Staff productivity & SOP compliance", body: "Track staff idle time, counter-presence, customer engagement rate, and response time alongside automated SOP checks for opening/closing routines, uniform compliance, and hygiene protocols — across every store, every shift.", keywords: "staff productivity monitoring retail, staff-customer ratio retail analytics, retail SOP compliance, retail staff idle time detection" },
   { icon: "AGENTIC", title: "Agentic AI — talk to your cameras", body: "Ask questions in plain English or Hindi. Set monitoring rules in one sentence. AI agents watch every camera 24/7, verify events, and send clip-backed alerts to WhatsApp automatically. No dashboards to learn.", keywords: "agentic AI retail analytics, conversational retail video analytics, retail video analytics WhatsApp alerts" },
 ];
 
@@ -138,6 +152,10 @@ const comparisonRows = [
   { metric: "Store layout decisions", without: "Gut instinct, periodic surveys, or costly consultants", with: "Data-driven heatmaps and zone dwell-time analysis" },
   { metric: "Loss prevention", without: "After-the-fact footage review — find incidents days later", with: "Real-time anomaly detection with instant clip-backed alerts" },
   { metric: "Staffing optimisation", without: "Fixed schedules regardless of actual traffic patterns", with: "Dynamic — align staff presence to real-time footfall data" },
+  { metric: "Cash operations", without: "End-of-day reconciliation; fraud discovered hours later", with: "Real-time POS-video correlation; instant clip-backed fraud alerts" },
+  { metric: "Perimeter security", without: "Guards or no exterior monitoring at all", with: "AI detects loitering, forced entry, and after-hours approach automatically" },
+  { metric: "Customer engagement", without: "No visibility into unattended customers or staff response", with: "Automatic alerts when customers wait beyond threshold without staff" },
+  { metric: "Store open/close", without: "Trust-based — no verification of on-time opening or closing", with: "Automated compliance checks with photo evidence to area managers" },
   { metric: "Multi-store benchmarking", without: "Manual spreadsheets, inconsistent manual data", with: "Centralised dashboard across all locations in real time" },
   { metric: "Hardware required", without: "New sensors, counters, people-counting cameras", with: "Works with existing CCTV — zero new hardware investment" },
   { metric: "Time to ROI", without: "12–18 months (traditional solutions)", with: "2–3 months; 86% achieve ROI within 12 months (Omdia 2024)" },
@@ -518,6 +536,133 @@ const schema = [
             </p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CASH OPERATIONS MONITORING ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Cash operations monitoring</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Every register transaction, verified by video</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Cash register fraud costs retailers significantly — yet most stores only discover discrepancies during end-of-day reconciliation, hours after the incident. Traditional POS auditing relies on transaction logs alone and misses the context that only video can provide.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>cash operations monitoring</strong> correlates every POS event with the corresponding camera feed in real time. No-sale register opens, void-after-tender patterns, unusual refund sequences, sweet-hearting (scanning an item then voiding it for an accomplice), and till-open-without-transaction events are flagged instantly — each with a timestamped video clip linked to the exact transaction.
+          </p>
+          <p>
+            For multi-store chains, the system benchmarks register behaviour across locations to identify outlier patterns: which cashiers have abnormally high void rates, which stores show till shortages above the chain average, and which shifts correlate with the most flagged events. Area managers get a weekly digest; critical events trigger immediate WhatsApp alerts.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">No-sale register opens</span>
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Void-after-tender</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Sweet-hearting</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Till shortage alerts</span>
+          <span class="rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-600">Refund anomalies</span>
+        </div>
+      </div>
+      <div class="surface-card aspect-[4/3] overflow-hidden">
+        <img
+          src="/images/industries/retail/cash-operations-monitoring-pos-fraud.webp"
+          alt="AI cash operations monitoring — POS transaction correlated with video clip showing no-sale register open flagged in real time"
+          title="Cash register monitoring AI for retail — POS fraud detection with video evidence"
+          width="800"
+          height="600"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+        <!-- PLACEHOLDER: nano-banana prompt — A split-screen retail analytics dashboard: left side shows a POS terminal transaction log with flagged void-after-tender event highlighted in red, right side shows the corresponding timestamped CCTV frame of a cashier at the register. Clean modern UI with dark sidebar, data overlays showing transaction ID, timestamp, and "FLAGGED" badge. Professional, photorealistic, top-down slightly angled view. -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SUSPICIOUS ACTIVITY & PERIMETER MONITORING ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-[4/3] overflow-hidden lg:order-1">
+          <img
+            src="/images/industries/retail/suspicious-activity-perimeter-monitoring.webp"
+            alt="AI suspicious activity detection outside retail store — perimeter camera identifying loitering and unusual gathering near entrance with real-time alert overlay"
+            title="Suspicious activity detection outside store — retail perimeter security AI monitoring"
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover"
+          />
+          <!-- PLACEHOLDER: nano-banana prompt — Exterior view of a modern retail storefront at dusk, captured from an overhead security camera angle. AI overlay highlights two figures loitering near the entrance with bounding boxes and a "LOITERING DETECTED — 8 min" annotation badge. A second zone near the parking lot shows a "PERIMETER ALERT" badge. Clean analytics UI overlay with timestamp, camera ID, and alert severity indicator. Photorealistic, slight wide-angle lens effect. -->
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Store perimeter security</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Detect threats outside your store — before they walk in</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              Most retail security systems only react once a threat is inside the store. But suspicious activity often starts outside — loitering near entrances, vehicle surveillance of loading docks, forced-entry attempts on shuttered storefronts, and unusual gathering patterns in parking lots during off-hours.
+            </p>
+            <p>
+              {BRAND.name}'s <strong>perimeter monitoring AI</strong> turns your existing exterior cameras into a proactive security layer. The system detects loitering beyond a configurable time threshold, tailgating through access points, people approaching shuttered entrances after closing, and vehicles parked in restricted zones — sending real-time WhatsApp alerts with clip evidence before an incident escalates.
+            </p>
+            <p>
+              For standalone stores, this means security teams are alerted to suspicious patterns minutes before a break-in attempt. For malls and multi-store complexes, the system covers common areas, fire exits, and delivery bays — creating a unified perimeter intelligence layer across the property.
+            </p>
+          </div>
+          <ul class="mt-6 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Loitering detection with configurable time thresholds</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> After-hours approach & forced-entry attempt alerts</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Parking-lot and loading-dock zone monitoring</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Instant WhatsApp alerts with clip evidence</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CUSTOMER LEFT UNATTENDED ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Customer engagement monitoring</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Never let a customer wait unnoticed again</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            In categories like electronics, jewellery, and furniture, a customer browsing without staff engagement is a conversion lost. Industry data shows that customers who receive proactive assistance within 90 seconds of entering a high-involvement zone are significantly more likely to convert — yet most stores have no way to measure or enforce this.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>customer-unattended detection</strong> uses zone-level occupancy and staff-proximity analysis to identify when a customer has been in a service zone beyond a configurable threshold (e.g. 60–120 seconds) without staff interaction. The system sends an instant alert to the nearest available associate — via the mobile app, an in-store buzzer, or WhatsApp.
+          </p>
+          <p>
+            The result: measurably faster staff response times, higher engagement rates in high-value zones, and concrete data on which zones and shifts have the longest unattended waits — giving managers a new lever to drive conversion through service quality rather than guesswork.
+          </p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-brand-600">60–120s</div>
+            <div class="text-xs text-muted">configurable wait threshold</div>
+          </div>
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-signal-600">Instant</div>
+            <div class="text-xs text-muted">alert to nearest associate</div>
+          </div>
+        </div>
+      </div>
+      <div class="surface-card aspect-[4/3] overflow-hidden">
+        <img
+          src="/images/industries/retail/customer-unattended-alert-detection.webp"
+          alt="AI customer unattended detection — retail store zone showing customer waiting 95 seconds without staff engagement, triggering alert to nearest associate"
+          title="Customer left unattended alert — staff response time monitoring for retail stores"
+          width="800"
+          height="600"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+        <!-- PLACEHOLDER: nano-banana prompt — Interior of a modern electronics retail store from an overhead CCTV camera angle. A customer stands at a display counter alone, highlighted with an AI bounding box and a "WAITING: 1m 35s — NO STAFF NEARBY" annotation badge in amber/orange. A second overlay shows a staff member in another aisle with a green badge "AVAILABLE — ALERT SENT". Clean analytics UI with zone labels, timer, and notification status. Photorealistic, well-lit store environment. -->
       </div>
     </div>
   </section>
