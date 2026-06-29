@@ -21,6 +21,9 @@ pnpm-debug.log*
 # local deployment brand overrides (never commit production name)
 src/brand.local.ts
 
+# GCP/infra setup docs contain deployment brand — never commit
+TRACK_A_GCP_SETUP.md
+
 # macOS-specific files
 .DS_Store
 
