@@ -50,7 +50,7 @@ Every page must:
    - A clear CTA.
 4. Build the `schema` array (see §4): always `webPageSchema` + `breadcrumbSchema`, plus type-specific nodes.
 5. Confirm hreflang/canonical auto-generate (handled by `Seo.astro` via `path`).
-6. Add descriptive `alt` text on all images.
+6. Add descriptive `alt` text on all images. For **new AI-generated visuals**, follow `NANO_BANANA_PROMPTS.md` (prompt density, overlay copy, then WebP + filename).
 7. Build, then validate JSON-LD parses and content appears in `dist/*.html` for **both** locales.
 
 ---
