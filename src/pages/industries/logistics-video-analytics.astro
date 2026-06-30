@@ -1,0 +1,862 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import CapabilityIcon from "../../components/CapabilityIcon.astro";
+import StepIcon from "../../components/StepIcon.astro";
+import AskShopEye from "../../components/AskShopEye.astro";
+import ContactDemo from "../../components/ContactDemo.astro";
+import CtaBanner from "../../components/CtaBanner.astro";
+import AuthorityCitations from "../../components/AuthorityCitations.astro";
+import { logisticsCitations } from "../../lib/industry-citations";
+import { BRAND, SITE_URL, type Locale } from "../../config";
+import { resolveLocale, localizePath } from "../../i18n/utils";
+import {
+  webPageSchema,
+  faqSchema,
+  breadcrumbSchema,
+  howToSchema,
+  itemListSchema,
+} from "../../lib/schema";
+
+const locale: Locale = resolveLocale(Astro.currentLocale);
+const path = "/industries/logistics-video-analytics";
+const pageUrl = new URL(localizePath(path, locale), SITE_URL).href;
+const contact = localizePath("/contact", locale);
+
+const title = `Logistics Video Analytics for Warehouses & DCs | ${BRAND.name}`;
+const description = `${BRAND.name} logistics video analytics turns your existing CCTV into dock TAT tracking, package mishandling detection, PPE compliance, pilferage alerts, supervisor monitoring, warehouse intrusion detection, and SOP automation — no new hardware. Built for Indian warehousing and 3PL operations.`;
+
+const faqItems = [
+  { q: "What is logistics video analytics?", a: `Logistics video analytics is AI-powered software that processes existing warehouse and dock CCTV feeds in real time to measure truck turnaround time, detect package mishandling, monitor PPE compliance, flag open-box pilferage, verify supervisor presence, and alert on intrusion — turning passive security cameras into operational intelligence tools. ${BRAND.name} does this on any IP camera, NVR, or DVR without new hardware.` },
+  { q: "How does AI video analytics reduce DEPS in warehouses?", a: `By detecting box throwing, standing or sitting on cartons, carrying boxes on shoulders instead of using pallets, and other mishandling behaviours in real time. ${BRAND.name} correlates damage events with dock bays, shifts, and handlers — enabling coaching and SOP enforcement that industry deployments associate with up to 38% lower DEPS (damaged/erroneous/pilfered shipments).` },
+  { q: "Does logistics CCTV analytics work with my existing cameras?", a: `Yes. ${BRAND.name} connects to any IP camera, NVR, or DVR via standard RTSP or ONVIF protocols — Hikvision, CP Plus, Dahua, Axis, Bosch, and others. No camera replacement or new hardware is needed for dock, staging, or warehouse floor coverage.` },
+  { q: "What data does a logistics video analytics platform collect?", a: "Core metrics include: dock and truck TAT (arrival, unload, load, departure), package mishandling event counts, PPE compliance scores, open-box and pilferage alerts, supervisor presence verification, crowding density by zone, intrusion events, warehouse open/close compliance, and MHE/forklift safety-zone violations. All data is behavioural — no facial recognition, no PII stored." },
+  { q: "How is worker privacy protected in warehouse video analytics?", a: `${BRAND.name} analyses behavioural patterns and events, not personal identities. No biometric data or facial recognition is used. Video can remain on-premise, all access is encrypted and role-based, and the platform is designed to align with India's DPDP Act.` },
+  { q: "What ROI can I expect from logistics video analytics?", a: "Industry benchmarks for warehouse video analytics indicate 38% lower DEPS, 65% improvement in SOP compliance, 24% faster dock turnaround time, and 96%+ camera uptime — with payback often within months. Actual results depend on warehouse format, shipment volume, and how operations teams act on alerts." },
+  { q: "How long does deployment take at a warehouse or DC?", a: `Single-facility deployment typically takes 7–14 days including site assessment, camera connection via RTSP/ONVIF, AI model configuration for dock bays and handling zones, and testing. Multi-site rollouts accelerate after the first location using configuration templates — 20+ warehouses can be live in 10–14 weeks.` },
+  { q: "Can it scale across multiple warehouses and 3PL sites?", a: `Yes. ${BRAND.name} is cloud-native and scales automatically. All facilities feed into a single centralized dashboard for cross-site benchmarking, regional reporting, and aggregate trend analysis across your logistics network.` },
+  { q: "What types of logistics operations benefit most?", a: "High-throughput environments see the greatest impact: e-commerce fulfillment centres, FMCG distribution warehouses, 3PL hubs, cold-chain facilities, courier sort centres, and manufacturing warehouses with inbound/outbound docks. Any facility moving 500+ shipments daily benefits from dock TAT and handling compliance analytics." },
+  { q: "How does agentic AI video analytics differ from traditional warehouse dashboards?", a: `Traditional analytics shows dashboards you must check. ${BRAND.name}'s agentic AI lets you ask questions in plain English or Hindi ('Which dock bay has the longest truck wait today?'), set monitoring rules once, and receive verified clip-backed alerts on WhatsApp or Slack automatically — no one needs to watch screens.` },
+  { q: "Can video analytics detect box throwing and package mishandling?", a: `Yes. The platform uses pose and motion analysis to identify box throwing, dropping from height, standing or sitting on cartons, and carrying boxes on shoulders instead of using pallets. ${BRAND.name} sends real-time alerts with video clips to warehouse supervisors via WhatsApp.` },
+  { q: "How does truck not covered detection work?", a: `${BRAND.name} monitors loading docks and yard cameras to verify that trucks are tarpaulin-covered or sealed per SOP before departure. When a loaded truck leaves a bay without proper cover, the system flags it instantly with a timestamped clip — preventing weather damage claims and compliance violations.` },
+  { q: "Can the system detect pilferage from open boxes?", a: `Yes. AI monitors staging and sort zones for open cartons, unauthorised hand movements into packages, and cargo theft at dock handoffs. Open box alerts and pilferage detections fire in real time with clip evidence linked to the exact bay, shift, and timestamp for investigation.` },
+  { q: "How does supervisor not present monitoring work?", a: `${BRAND.name} verifies supervisor presence in configured zones during critical operations — dock loading, high-value SKU handling, and shift handovers. When a zone requires supervisory oversight and no supervisor is detected beyond a threshold, alerts go to operations managers with photo evidence.` },
+  { q: "Can video analytics monitor warehouse opening and closing?", a: `Yes. ${BRAND.name} automatically verifies on-time warehouse opening and closing — checking for staff presence, lights, shutter/door status, and predefined routines. Late opens and early closes are flagged to regional managers with photo evidence, replacing trust-based compliance with verified data across all facilities.` },
+];
+
+const howSteps = [
+  { n: "1", title: "Connect existing cameras", body: "Link your IP cameras, NVR, or DVR via RTSP/ONVIF. No new hardware, no rip-and-replace — works with Hikvision, CP Plus, Dahua, and any ONVIF device across docks and warehouse floors." },
+  { n: "2", title: "AI configures detections", body: "Computer vision models automatically set dock bay zones, handling areas, PPE checkpoints, intrusion perimeters, and compliance rules customised for your warehouse layout." },
+  { n: "3", title: "Real-time intelligence flows", body: "Dock TAT, mishandling events, PPE scores, pilferage alerts, and crowding data stream to your centralised dashboard. Multi-site benchmarking from day one." },
+  { n: "4", title: "Agents alert on WhatsApp", body: "Set rules in plain language. AI agents watch 24/7 and send clip-backed alerts to WhatsApp, Slack, or Teams the moment something needs attention." },
+  { n: "5", title: "Optimise and scale", body: "Use data-driven insights to adjust dock scheduling, staffing, and SOP training. Replicate winning configurations across all warehouses." },
+];
+
+// Tone maps mirroring the homepage "How it works" section.
+const howTones = ["brand", "brand", "violet", "signal", "signal"] as const;
+const pillarText: Record<string, string> = {
+  brand: "text-brand-600",
+  signal: "text-signal-600",
+  violet: "text-violet-500",
+};
+const pillarBar: Record<string, string> = {
+  brand: "bg-brand-500",
+  signal: "bg-signal-500",
+  violet: "bg-violet-500",
+};
+
+// Logistics-focused agentic Q&A — reuses the homepage AskShopEye component.
+const logisticsAsk = {
+  eyebrow: "Agentic AI",
+  title: "Talk to your cameras.",
+  titleAccent: "Get answers.",
+  sub: `Ask about any warehouse in plain language, set a monitoring rule once, and let ${BRAND.name} agents watch your docks and floors 24/7 — surfacing TAT, mishandling, PPE gaps and pilferage without anyone watching a screen.`,
+  agentName: `${BRAND.name} Logistics Agent`,
+  online: "online",
+  inputHint: "Ask about dock TAT, box mishandling, truck idle, PPE…",
+  exchanges: [
+    {
+      q: "Which dock bay has the longest truck wait right now?",
+      a: "Bay 4 — truck MH-12-AB-4521 has been idle 47 minutes waiting for a forklift. Bay 2 cleared in 18 min (best today).",
+      kind: "stat" as const,
+      value: "47 min",
+      delta: "Bay 4 · idle wait",
+    },
+    {
+      q: "How many box throwing events in the sort zone today?",
+      a: "6 box throwing detections today in Sort Zone B — up from 2 yesterday. Peak between 2 and 4 PM shift.",
+      kind: "stat" as const,
+      value: "6",
+      note: "Sort Zone B · today",
+    },
+    {
+      q: "Alert me when any truck leaves without tarpaulin cover.",
+      a: "Done. I'll watch every dock exit camera and message you on WhatsApp the moment a loaded truck departs uncovered.",
+      kind: "alert" as const,
+      note: "Alert created · WhatsApp · 8 dock exits monitored",
+    },
+    {
+      q: "Show PPE violations near the loading dock today.",
+      a: "Flagged 4 PPE not worn events at Dock Bay 3 today — 3 missing hard hats, 1 missing safety vest. Here's the latest clip.",
+      kind: "clip" as const,
+      note: "Bay 3 · 11:34 · 0:22",
+    },
+    {
+      q: "Is the supervisor present in the high-value staging area?",
+      a: "Supervisor not present in High-Value Staging for 12 minutes — threshold is 5 min. Alert sent to Ops Manager at 14:08.",
+      kind: "clip" as const,
+      note: "Staging HV · 14:08 · 0:15",
+    },
+  ],
+  rail: [
+    { tag: "ASK", title: "Ask in plain language", body: "Question any warehouse in English or Hindi — dock TAT, mishandling, PPE, pilferage or intrusion. No dashboards to learn." },
+    { tag: "MONITOR", title: "Agents watch 24/7", body: "Set up monitoring once and agents watch every camera around the clock, detecting only the logistics events that matter to you." },
+    { tag: "ACT", title: "Close the loop", body: "Verified, clip-backed alerts land on WhatsApp, Slack or Teams — so dock and warehouse managers act in the moment." },
+  ],
+};
+
+const metrics = [
+  { value: "38%", label: "lower DEPS" },
+  { value: "+65%", label: "SOP compliance" },
+  { value: "24%", label: "faster dock TAT" },
+  { value: "96%", label: "camera uptime" },
+];
+
+const capabilities = [
+  { icon: "QUEUE", title: "Dock & truck TAT analytics", body: "Measure arrival-to-departure turnaround for every dock bay — idle truck time, unload duration, load completion, and departure delays. Benchmark bays, shifts, and carriers to cut dock TAT by up to 24%.", keywords: "dock turnaround time analytics, truck TAT warehouse video analytics, loading dock efficiency AI" },
+  { icon: "SAFETY", title: "Box throwing & mishandling detection", body: "Real-time detection of box throwing, dropping from height, and rough handling that drives DEPS. Correlate events with bays, handlers, and shifts for targeted coaching — industry deployments report up to 38% lower DEPS.", keywords: "box throwing detection warehouse, package mishandling AI, DEPS reduction video analytics" },
+  { icon: "COMPLIANCE", title: "PPE & MHE safety compliance", body: "Automated checks for hard hats, safety vests, and gloves in configured zones. MHE/forklift safety zones flag pedestrians in restricted paths and near-miss events — with clip-backed alerts to safety officers.", keywords: "warehouse PPE detection AI, forklift safety zone monitoring, MHE compliance video analytics" },
+  { icon: "LOSS_PREVENTION", title: "Pilferage, open box & cargo theft", body: "Detect pilferage from open boxes, unauthorised hand movements into cartons, and cargo theft at dock handoffs. Open box alerts fire instantly with clip evidence for loss-prevention teams.", keywords: "warehouse pilferage detection, open box alert AI, cargo theft dock handoff monitoring" },
+  { icon: "COMPLIANCE", title: "Supervisor not present monitoring", body: "Verify supervisor presence during critical operations — dock loading, high-value SKU handling, and shift handovers. Alerts fire when required oversight is missing beyond a configurable threshold.", keywords: "supervisor presence monitoring warehouse, SOP compliance video analytics, warehouse supervisor detection" },
+  { icon: "INTRUSION", title: "Warehouse intrusion detection", body: "After-hours and restricted-zone intrusion alerts trigger instantly when anyone enters the warehouse floor, staging area, or high-value cage outside permitted hours — with clip-backed WhatsApp notifications to security.", keywords: "warehouse intrusion detection AI, after hours warehouse security, restricted zone alert logistics" },
+  { icon: "HEATMAP", title: "Crowding detection", body: "Real-time density monitoring in sort zones, staging lanes, and dock aprons. Predictive crowding alerts help redeploy staff before bottlenecks slow throughput or create safety hazards.", keywords: "warehouse crowding detection, sort zone density analytics, logistics congestion monitoring" },
+  { icon: "SAFETY", title: "Handling ergonomics & pallet compliance", body: "Detect standing or sitting on cartons, boxes carried on shoulders instead of pallets, and pallet-not-used violations. Enforce proper handling SOPs that protect inventory and reduce worker injury risk.", keywords: "standing on box detection, pallet not used alert, box on shoulder warehouse AI" },
+  { icon: "PERIMETER", title: "Truck not covered alerts", body: "Monitor dock exits and yard cameras to verify trucks are tarpaulin-covered or sealed before departure. Uncovered departures trigger instant alerts — preventing weather damage and compliance violations.", keywords: "truck not covered detection, tarpaulin compliance warehouse, dock exit monitoring AI" },
+  { icon: "ALERTS", title: "Fire, smoke & dock hazard detection", body: "Early fire and smoke detection in warehouse and dock areas. Combined with cargo theft monitoring at handoff points, the system provides a unified safety and loss-prevention layer across your facility.", keywords: "warehouse fire smoke detection AI, dock hazard monitoring, logistics safety video analytics" },
+  { icon: "STORE_HOURS", title: "Warehouse open / close compliance", body: "Automated verification of on-time warehouse opening and closing routines — lights, shutters, doors, staff presence. Late opens and early closes are flagged instantly to regional managers with photo evidence.", keywords: "warehouse opening closing monitoring, warehouse open close compliance AI, DC operations automation" },
+  { icon: "AGENTIC", title: "Agentic AI — talk to your cameras", body: "Ask questions in plain English or Hindi. Set monitoring rules in one sentence. AI agents watch every camera 24/7, verify events, and send clip-backed alerts to WhatsApp automatically. No dashboards to learn.", keywords: "agentic AI logistics analytics, conversational warehouse video analytics, logistics video analytics WhatsApp alerts" },
+];
+
+const useCases = [
+  { title: "E-commerce fulfillment centres", points: ["Pick-path crowding alerts", "Sort-zone mishandling detection", "Dock TAT by carrier", "PPE compliance at loading bays"] },
+  { title: "FMCG & distribution warehouses", points: ["Pallet handling SOP enforcement", "Open-box pilferage monitoring", "Multi-dock TAT benchmarking", "Supervisor presence at dispatch"] },
+  { title: "3PL & contract logistics", points: ["Cross-client SOP compliance scoring", "Cargo theft at handoff points", "Truck coverage verification", "Multi-site regional dashboards"] },
+  { title: "Cold chain & pharma logistics", points: ["Restricted-zone intrusion alerts", "Temperature-adjacent dock monitoring", "High-value cage supervision", "Warehouse open/close compliance"] },
+  { title: "Courier & express sort hubs", points: ["Peak-shift crowding management", "Box throwing in sort lanes", "MHE safety zone enforcement", "Shift-handover supervisor checks"] },
+  { title: "Manufacturing inbound/outbound", points: ["Raw material dock TAT", "Finished-goods staging compliance", "Forklift-pedestrian near-miss alerts", "After-hours perimeter intrusion"] },
+];
+
+const comparisonRows = [
+  { metric: "Dock turnaround time", without: "Manual logs, gate timestamps, or no bay-level data", with: "Automated per-bay TAT — arrival, unload, load, departure on existing cameras" },
+  { metric: "Package mishandling (DEPS)", without: "Discovered at delivery — root cause unknown", with: "Real-time box throwing and mishandling alerts with handler correlation" },
+  { metric: "PPE compliance", without: "Periodic walk-through audits — gaps between checks", with: "Continuous automated PPE verification with instant clip-backed alerts" },
+  { metric: "Pilferage & open boxes", without: "Found during inventory counts — days or weeks later", with: "Real-time open box and pilferage detection at staging and dock zones" },
+  { metric: "Supervisor oversight", without: "Trust-based — no verification during critical shifts", with: "Automated supervisor presence checks with photo evidence" },
+  { metric: "Warehouse intrusion", without: "After-the-fact footage review — incidents found next morning", with: "Instant restricted-zone and after-hours intrusion alerts" },
+  { metric: "Crowding & bottlenecks", without: "Reactive — supervisors notice congestion after throughput drops", with: "Predictive density alerts before sort lanes and docks choke" },
+  { metric: "Handling ergonomics", without: "No visibility into standing on boxes or shoulder-carry violations", with: "Automated pallet-not-used and improper-carry detection" },
+  { metric: "Truck coverage", without: "Discovered when customer claims weather damage", with: "Real-time truck not covered alerts at every dock exit" },
+  { metric: "Warehouse open/close", without: "Trust-based — no verification of on-time opening or closing", with: "Automated compliance checks with photo evidence to regional managers" },
+  { metric: "Multi-site benchmarking", without: "Manual spreadsheets, inconsistent manual data", with: "Centralised dashboard across all warehouses in real time" },
+  { metric: "Hardware required", without: "New sensors, RFID gates, dedicated dock cameras", with: "Works with existing CCTV — zero new hardware investment" },
+  { metric: "Time to ROI", without: "12–18 months (traditional solutions)", with: "2–4 months; measurable DEPS and TAT gains within first quarter" },
+];
+
+const integrations = [
+  "WhatsApp", "Slack", "MS Teams", "SMS & Email", "SAP EWM", "Oracle WMS",
+  "Blue Yonder", "TMS Systems", "Power BI", "REST API", "Webhooks", "AWS",
+  "Google Cloud", "Azure", "Hikvision", "CP Plus", "Dahua", "ONVIF NVR/DVR",
+];
+
+const related = [
+  { label: "Retail video analytics", href: "/industries/retail-video-analytics", note: "Footfall & conversion" },
+  { label: "Manufacturing video analytics", href: "/industries/manufacturing-video-analytics", note: "Plant floor & safety" },
+  { label: "Pricing", href: "/pricing", note: "Per-camera plans" },
+  { label: "Book a demo", href: "/contact", note: "See it on your cameras" },
+];
+
+const schema = [
+  webPageSchema({ url: pageUrl, name: title, description, image: "/og/logistics-video-analytics.png" }),
+  howToSchema("How logistics video analytics works", "Deploy AI video analytics on existing warehouse CCTV in 5 steps", howSteps),
+  itemListSchema(
+    "Logistics video analytics capabilities",
+    capabilities.map((cap) => ({ name: cap.title, description: cap.body })),
+  ),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Industries", url: "/industries" },
+    { name: "Logistics Video Analytics", url: path },
+  ]),
+];
+---
+<BaseLayout title={title} description={description} path={path} schema={schema}>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="bg-grid relative overflow-hidden">
+    <div class="glow-radial pointer-events-none absolute inset-0"></div>
+    <div class="container-x relative grid items-center gap-12 py-16 lg:grid-cols-[1fr_1fr] lg:py-24">
+      <div>
+        <nav class="mb-6 flex items-center gap-2 text-xs text-faint" aria-label="Breadcrumb">
+          <a href={localizePath("/", locale)} class="hover:text-ink">Home</a>
+          <span>/</span>
+          <a href={localizePath("/industries", locale)} class="hover:text-ink">Industries</a>
+          <span>/</span>
+          <span class="text-ink">Logistics</span>
+        </nav>
+        <span class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 eyebrow shadow-sm">
+          <span class="h-1.5 w-1.5 rounded-full bg-signal-500"></span>Logistics Video Analytics
+        </span>
+        <h1 class="mt-5 text-balance text-4xl font-semibold leading-[1.07] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
+          Turn every warehouse camera into a <span class="text-brand-600">dock & compliance</span> intelligence engine
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+          {BRAND.name} transforms your existing CCTV into dock TAT trackers, mishandling detectors, PPE monitors, pilferage alerts, and supervisor compliance AI — no new hardware, no rip-and-replace. Agentic AI lets you ask questions in plain language and get WhatsApp alerts automatically.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href={contact} size="lg">
+            Book a logistics demo
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </Button>
+          <Button href="#how-it-works" variant="secondary" size="lg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            See how it works
+          </Button>
+        </div>
+        <p class="mt-6 sys-tag text-faint">Works with any IP camera · Hikvision · CP Plus · Dahua · ONVIF</p>
+      </div>
+
+      <div class="relative">
+        <div class="surface-card aspect-video overflow-hidden bg-mist">
+          <img
+            src="/images/industries/logistics/logistics-video-analytics-dashboard-hero.webp"
+            alt="Logistics video analytics dashboard showing real-time dock TAT tracking, package mishandling alerts, PPE compliance scores and warehouse crowding detection on existing CCTV cameras"
+            title="AI video analytics for logistics — real-time warehouse dashboard powered by existing dock cameras"
+            width="800"
+            height="450"
+            loading="eager"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUICK ANSWER (AEO/GEO/LLMO) ===================== -->
+  <section class="container-x -mt-6 relative z-10 pb-12">
+    <div class="surface-card p-6 md:p-8" data-answer>
+      <div class="flex items-start gap-3">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        </span>
+        <div>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-600">Quick answer — What is logistics video analytics?</h2>
+          <p class="mt-2 text-base leading-relaxed text-ink">
+            <strong>Logistics video analytics</strong> is AI software that turns existing warehouse and dock CCTV cameras into operational intelligence tools. It measures dock and truck turnaround time, detects package mishandling and box throwing, monitors PPE compliance, flags pilferage from open boxes, verifies supervisor presence, and alerts on warehouse intrusion — without new hardware. Indian 3PL and distribution operators use it to cut DEPS, accelerate dock TAT, and enforce SOPs from cameras they already own — with industry benchmarks pointing to 38% lower DEPS, 65% better SOP compliance, and 24% faster dock turnaround. {BRAND.name} adds an agentic layer: ask questions in plain language, set monitoring rules once, and receive verified clip-backed alerts on WhatsApp automatically.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OUTCOME METRICS ===================== -->
+  <section class="container-x pb-14">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+      {metrics.map((m) => (
+        <div class="surface-card p-5 text-center">
+          <div class="bg-gradient-to-br from-brand-600 to-signal-600 bg-clip-text font-mono text-2xl font-bold text-transparent md:text-3xl">{m.value}</div>
+          <div class="mt-1.5 text-xs text-muted">{m.label}</div>
+        </div>
+      ))}
+    </div>
+    <p class="mt-4 text-center text-xs text-faint">Figures are industry benchmarks for logistics video analytics; actual results vary by warehouse format, shipment volume and execution.</p>
+  </section>
+
+  <AuthorityCitations citations={logisticsCitations} class="-mt-6" />
+
+  <!-- ===================== WHAT IS (detailed) ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-3xl">
+        <span class="eyebrow">Understanding logistics video analytics</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">What is logistics video analytics and why do India's top warehouses use it?</h2>
+        <div class="mt-8 space-y-6 text-base leading-relaxed text-muted">
+          <p>
+            Logistics video analytics is the application of <strong>computer vision and artificial intelligence</strong> to existing warehouse and dock security cameras, transforming passive CCTV footage into actionable operational intelligence in real time. Unlike traditional video surveillance that simply records for later review, modern AI video analytics for warehousing <em>processes</em> every frame as it happens — tracking dock TAT, detecting mishandling, monitoring PPE, flagging pilferage, and verifying SOP compliance automatically.
+          </p>
+          <p>
+            The technology answers the fundamental question logistics operators have struggled with for decades: <strong>"What is actually happening on my dock and warehouse floor?"</strong> WMS and TMS systems track inventory and shipments digitally — but the physical handling, waiting, and compliance gaps between scan events remain invisible. Logistics video analytics brings that visibility to the physical layer, using the cameras that are already installed.
+          </p>
+          <p>
+            India's logistics sector is expanding rapidly — e-commerce fulfillment, FMCG distribution, and 3PL networks are scaling into tier-2 and tier-3 cities where operational oversight becomes harder to maintain. The convergence of affordable IP cameras, widespread CCTV adoption, and mature AI inference engines has created ideal conditions for warehouse CCTV analytics adoption. Operators managing DEPS, dock congestion, and compliance gaps are increasingly adopting these platforms to compete on operational excellence.
+          </p>
+          <p>
+            {BRAND.name} takes this further with <strong>agentic AI video analytics</strong> — instead of dashboards you have to check, AI agents watch your cameras 24/7 and proactively surface insights and alerts. Ask "Which dock bay has the longest truck wait today?" in plain English or Hindi and get an instant answer. Set a rule — "alert me if anyone throws a box" — and the agent handles the rest, sending verified clip-backed notifications to WhatsApp.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AGENTIC AI (logistics) ===================== -->
+  <AskShopEye content={logisticsAsk} />
+
+  <!-- ===================== CAPABILITIES GRID ===================== -->
+  <section id="capabilities" class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Complete logistics analytics suite</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Everything your existing cameras can tell you about your warehouses</h2>
+      <p class="mt-4 text-muted">From dock TAT to pilferage prevention, every capability runs on your current CCTV — no new hardware needed.</p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {capabilities.map((cap, i) => {
+        const tones = ["brand", "signal", "violet", "brand", "signal", "violet", "brand", "signal"];
+        const tone = tones[i % tones.length];
+        const chipClass = tone === "brand" ? "bg-brand-50 text-brand-600" : tone === "signal" ? "bg-signal-50 text-signal-600" : "bg-violet-50 text-violet-500";
+        return (
+          <div class="surface-card group relative flex flex-col p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-float)]">
+            <span class={`flex h-12 w-12 items-center justify-center rounded-xl ${chipClass}`}>
+              <CapabilityIcon tag={cap.icon} class="h-6 w-6" />
+            </span>
+            <h3 class="mt-4 text-base font-semibold text-ink">{cap.title}</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{cap.body}</p>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS (homepage style) ===================== -->
+  <section id="how-it-works" class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="eyebrow">Easy implementation</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Works with your existing CCTV infrastructure</h2>
+        <p class="mt-4 text-muted">No new cameras needed. Connect your existing setup and start getting logistics video analytics insights in days, not months.</p>
+      </div>
+      <div class="relative mt-16">
+        <!-- horizontal flow connector (lg+) -->
+        <div class="absolute left-0 right-0 top-9 hidden lg:block">
+          <div class="relative mx-[10%] h-0.5 rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-x"></span>
+            <span class="flow-dot flow-dot-x" style="animation-delay:1.8s"></span>
+          </div>
+        </div>
+        <!-- vertical flow connector (below lg) -->
+        <div class="absolute bottom-10 left-9 top-9 w-0.5 lg:hidden">
+          <div class="relative h-full w-full rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-b from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-y"></span>
+          </div>
+        </div>
+
+        <div class="grid gap-10 lg:grid-cols-5 lg:gap-4">
+          {
+            howSteps.map((step, i) => (
+              <div class="group relative flex items-start gap-6 lg:flex-col lg:items-center lg:gap-0 lg:text-center">
+                <span class={`relative z-10 flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-float)] ${pillarText[howTones[i]]}`}>
+                  <StepIcon n={Number(step.n)} />
+                  <span class={`absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full font-mono text-xs font-bold text-white ring-4 ring-mist ${pillarBar[howTones[i]]}`}>{step.n}</span>
+                </span>
+                <div class="pt-1 lg:mt-5 lg:pt-0">
+                  <h3 class="text-base font-semibold text-ink">{step.title}</h3>
+                  <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted lg:max-w-[15rem]">{step.body}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DOCK & TRUCK TAT ANALYTICS SECTION ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Dock & truck TAT analytics</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Dock turnaround time you can actually optimise</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Traditional dock management relies on gate logs, driver sign-in sheets, or WMS timestamps that miss idle wait time on the apron. <strong>AI-powered dock TAT analytics</strong> uses your existing cameras to measure the full cycle — truck arrival, bay assignment, unload start, load completion, and departure — with per-bay granularity and carrier benchmarking.
+          </p>
+          <p>
+            This means you don't just know <em>when</em> a shipment was scanned — you know how long trucks waited idle, which bays are bottlenecks, which shifts run fastest, and where forklift availability is the constraint. Correlate with TMS data and you have a complete <strong>dock efficiency picture</strong> that reveals the exact delays in your inbound/outbound flow.
+          </p>
+          <p>
+            For Indian 3PL and distribution operators managing 5–50+ dock bays, this data enables: carrier performance scorecards, evidence-based dock scheduling, labour redeployment during idle peaks, and regional benchmarking across all facilities from a single dashboard — industry deployments report <strong>24% faster dock TAT</strong>.
+          </p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-brand-600">24%</div>
+            <div class="text-xs text-muted">faster dock TAT</div>
+          </div>
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-signal-600">Per-bay</div>
+            <div class="text-xs text-muted">arrival-to-departure tracking</div>
+          </div>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/logistics/dock-truck-tat-analytics.webp"
+          alt="Dock and truck TAT analytics — AI tracking per-bay turnaround time with idle wait alerts on warehouse loading dock CCTV"
+          title="Warehouse dock turnaround time analytics — truck TAT monitoring on existing cameras"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PACKAGE HANDLING & DEPS SECTION ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/logistics/package-handling-deps-reduction.webp"
+            alt="Package handling and DEPS reduction — AI detecting box throwing and improper carton handling in warehouse sort zone with real-time alert overlay"
+            title="Warehouse package mishandling detection — DEPS reduction with video analytics"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Package handling & DEPS reduction</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Catch mishandling before it becomes a damage claim</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              DEPS — damaged, erroneous, pilfered shipments — is one of the largest hidden costs in logistics. Most operators only discover mishandling when customers file claims, with no way to trace which handler, shift, or bay caused the damage. Traditional CCTV review happens days later, if at all.
+            </p>
+            <p>
+              {BRAND.name}'s <strong>package mishandling detection</strong> identifies box throwing, dropping from height, standing or sitting on cartons, and carrying boxes on shoulders instead of using pallets — in real time. Each event is tagged with bay, zone, shift, and timestamp for immediate coaching and trend analysis.
+            </p>
+            <p>
+              For operators managing high-volume sort and staging operations, this transforms DEPS from a lagging KPI into a leading indicator. Industry deployments associate real-time mishandling detection with <strong>38% lower DEPS</strong> when teams act on daily event digests and shift-level coaching.
+            </p>
+          </div>
+          <ul class="mt-6 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Box throwing detection with clip evidence</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Standing / sitting on box alerts</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Pallet not used / box on shoulder detection</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Per-shift and per-zone DEPS trending</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PPE & SAFETY COMPLIANCE SECTION ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">PPE & safety compliance</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Continuous PPE and MHE safety — not just audit-day checks</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Warehouse safety audits happen weekly or monthly — but PPE violations and forklift near-misses occur every shift. A missing hard hat on the dock apron or a pedestrian in an MHE safety zone can result in serious injury and regulatory penalties that periodic walk-throughs cannot prevent.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>PPE compliance monitoring</strong> uses existing cameras to verify hard hats, safety vests, and gloves in configured zones — dock aprons, sort lanes, and staging areas. When PPE is not worn, supervisors receive instant WhatsApp alerts with clip evidence. Combined with <strong>MHE/forklift safety zones</strong>, the system flags pedestrians in restricted paths and documents near-miss events for safety reviews.
+          </p>
+          <p>
+            For multi-site logistics networks, the platform benchmarks compliance scores across warehouses and shifts — identifying which facilities and teams need additional training. Industry deployments report <strong>65% improvement in SOP compliance</strong> when continuous monitoring replaces periodic audits alone.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">PPE not worn</span>
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Missing hard hat</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">MHE safety zone breach</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Forklift near-miss</span>
+          <span class="rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-600">Fire & smoke detection</span>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/logistics/ppe-safety-compliance-warehouse.webp"
+          alt="PPE and safety compliance monitoring — AI detecting missing hard hat and safety vest on warehouse dock with real-time alert overlay on CCTV footage"
+          title="Warehouse PPE compliance AI — hard hat and safety vest detection on existing cameras"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MID CTA BANNER ===================== -->
+  <CtaBanner
+    eyebrow="See it on your footage"
+    title="See what your warehouse cameras have been missing."
+    sub="Book a 30-minute walkthrough on your own logistics footage — no new hardware, no rip-and-replace, no risk."
+    primary="Book a logistics demo"
+    primaryHref="#get-started"
+    secondary="See how it works"
+    secondaryHref="#how-it-works"
+  />
+
+  <!-- ===================== THEFT / PILFERAGE & OPEN BOX SECTION ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/logistics/theft-pilferage-open-box-monitoring.webp"
+            alt="Theft and pilferage monitoring — AI detecting pilferage from open box and cargo theft at dock handoff with real-time alert on warehouse staging CCTV"
+            title="Warehouse pilferage and open box detection — cargo theft prevention AI"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Theft, pilferage & open box monitoring</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Stop inventory loss at the source — not during cycle counts</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              Warehouse shrinkage from pilferage and open-box tampering often goes undetected until inventory discrepancies surface days or weeks later. Staging areas and dock handoff points are the highest-risk zones — yet most facilities have no real-time monitoring beyond periodic guard patrols.
+            </p>
+            <p>
+              {BRAND.name}'s <strong>open box and pilferage detection</strong> monitors staging zones for unsealed cartons, unauthorised hand movements into packages, and suspicious dwell near high-value SKUs. <strong>Cargo theft at dock handoffs</strong> is flagged when packages change hands without corresponding WMS scan events — with clip evidence synced to transaction logs.
+            </p>
+            <p>
+              Security and operations teams receive instant WhatsApp alerts with timestamped clips — enabling investigation during the shift, not after the fact. Combined with crowding detection in sort zones, the system reduces blind spots where theft and mishandling cluster.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SUPERVISOR & SOP MONITORING ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Supervisor & SOP monitoring</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Verify supervisor presence when it matters most</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Critical warehouse operations — dock loading of high-value SKUs, shift handovers, and bulk dispatch — require supervisory oversight by SOP. Yet most facilities have no automated way to verify a supervisor is actually present during these windows.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>supervisor not present monitoring</strong> uses zone-level presence analysis to verify supervisory staff in configured areas during required periods. When a zone requires oversight and no supervisor is detected beyond a threshold, operations managers receive instant alerts with photo evidence.
+          </p>
+          <p>
+            For multi-site networks, the system benchmarks SOP compliance across warehouses and shifts — identifying which facilities consistently miss supervisory requirements. Combined with handling and PPE detections, this creates a comprehensive compliance scorecard that industry deployments associate with <strong>65% improvement in SOP adherence</strong>.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Supervisor not present</span>
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Shift handover gap</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">High-value zone unsupervised</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Dock loading without oversight</span>
+          <span class="rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-600">SOP compliance scoring</span>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/logistics/supervisor-sop-monitoring.webp"
+          alt="Supervisor and SOP monitoring — AI detecting supervisor not present in high-value warehouse staging zone with compliance alert overlay"
+          title="Warehouse supervisor presence monitoring — SOP compliance AI for logistics"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PERIMETER & WAREHOUSE INTRUSION ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/logistics/warehouse-intrusion-perimeter.webp"
+            alt="Warehouse intrusion detection — AI identifying after-hours perimeter breach and unauthorised entry in warehouse restricted zone with real-time alert"
+            title="Warehouse perimeter intrusion AI — after-hours security monitoring on existing CCTV"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Perimeter & warehouse intrusion</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Detect intrusions before inventory walks out the door</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              Warehouse theft and vandalism overwhelmingly occur after hours — yet most facilities rely on alarm systems that only trigger after a break-in is complete, or guards who cannot monitor every camera simultaneously across large perimeters.
+            </p>
+            <p>
+              {BRAND.name}'s <strong>warehouse intrusion detection</strong> turns your existing exterior and interior cameras into a proactive security layer. The system detects perimeter breaches, tailgating through access gates, after-hours entry to the warehouse floor and high-value cages, and unusual movement in restricted zones — sending real-time WhatsApp alerts with clip evidence.
+            </p>
+            <p>
+              Combined with <strong>crowding detection</strong> during operating hours, the platform covers both security and operational density — alerting when sort zones exceed safe occupancy thresholds and when unauthorised personnel enter restricted areas after closing.
+            </p>
+          </div>
+          <ul class="mt-6 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Perimeter breach and fence intrusion alerts</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> After-hours warehouse floor entry detection</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Crowding detection in sort and staging zones</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Instant WhatsApp alerts with clip evidence</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WAREHOUSE OPEN / CLOSE COMPLIANCE ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Warehouse open / close compliance</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Verified opening and closing — not trust-based checklists</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Late warehouse opens delay outbound dispatches and inbound receipts. Early closes leave trucks waiting on the apron and miss critical sorting windows. Yet most operators have no automated verification that opening and closing routines were followed correctly across sites.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>warehouse open/close detection</strong> automatically verifies on-time opening and closing — checking for staff presence, lights, shutter/door status, and predefined routines at configured times. Late opens and early closes are flagged to regional managers with photo evidence.
+          </p>
+          <p>
+            Combined with <strong>truck not covered</strong> monitoring at dock exits, the system ensures the last mile of every shift is compliant — covered trucks, secured doors, and verified close routines. This replaces manual checklists with camera-verified data across every facility in the network.
+          </p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-brand-600">Auto</div>
+            <div class="text-xs text-muted">open/close verification</div>
+          </div>
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-signal-600">Photo</div>
+            <div class="text-xs text-muted">evidence to regional managers</div>
+          </div>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/logistics/warehouse-open-close-compliance.webp"
+          alt="Warehouse open close compliance — AI verifying on-time warehouse opening with shutter status and staff presence detection on exterior CCTV"
+          title="Warehouse open and close detection — automated compliance monitoring for logistics facilities"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER (post deep-dives) ===================== -->
+  <CtaBanner
+    eyebrow="See it on your footage"
+    title="Ready to see logistics intelligence on your warehouse cameras?"
+    sub="Book a 30-minute walkthrough — we'll show dock TAT, mishandling, PPE gaps and pilferage on the CCTV you already have."
+    primary="Book a logistics demo"
+    primaryHref="#get-started"
+    secondary="Explore capabilities"
+    secondaryHref="#capabilities"
+  />
+
+  <!-- ===================== BEFORE/AFTER COMPARISON ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Impact comparison</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">How does logistics video analytics transform operations?</h2>
+      <p class="mt-4 text-muted">Side-by-side comparison — before and after deploying AI video analytics on existing warehouse CCTV.</p>
+    </div>
+    <div class="mt-12 overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-line text-left">
+            <th class="px-4 py-3 font-semibold text-ink">Metric</th>
+            <th class="px-4 py-3 font-semibold text-danger-500">Without video analytics</th>
+            <th class="px-4 py-3 font-semibold text-signal-600">With {BRAND.name}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonRows.map((row) => (
+            <tr class="border-b border-line/60">
+              <td class="px-4 py-3 font-medium text-ink">{row.metric}</td>
+              <td class="px-4 py-3 text-muted">{row.without}</td>
+              <td class="px-4 py-3 text-ink">{row.with}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== USE CASES BY LOGISTICS FORMAT ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="eyebrow">Logistics format coverage</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Purpose-built for every logistics operation</h2>
+        <p class="mt-4 text-muted">Whether you run an e-commerce FC, FMCG DC, 3PL hub, or courier sort centre — the platform adapts to your specific operational needs.</p>
+      </div>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {useCases.map((uc) => (
+          <div class="surface-card p-6">
+            <h3 class="text-base font-semibold text-ink">{uc.title}</h3>
+            <ul class="mt-3 space-y-2">
+              {uc.points.map((pt) => (
+                <li class="flex items-start gap-2 text-sm text-muted">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-500"><path d="M20 6 9 17l-5-5"/></svg>
+                  {pt}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTEGRATIONS ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-14 text-center md:py-16">
+      <span class="eyebrow">Connects with your stack</span>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Seamless integration with your existing logistics infrastructure</h2>
+      <p class="mx-auto mt-3 max-w-xl text-sm text-muted">From cameras to WMS to TMS — works with what you already have.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-2.5">
+        {integrations.map((name) => (
+          <span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted shadow-sm">{name}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INDIA-SPECIFIC SEO SECTION ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-3xl">
+      <span class="eyebrow">Logistics video analytics India</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Built for Indian warehousing and distribution at scale</h2>
+      <div class="mt-8 space-y-6 text-base leading-relaxed text-muted">
+        <p>
+          India's logistics and warehousing sector is expanding at 20%+ annually, with e-commerce fulfillment, FMCG distribution, and 3PL networks growing from metros into tier-2 and tier-3 cities where operational visibility becomes harder to maintain. {BRAND.name} is purpose-built for this reality:
+        </p>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Works with Indian camera brands</strong> — Hikvision, CP Plus, Dahua, and any ONVIF device. No replacement needed for the millions of cameras already deployed across Indian warehouses and DCs.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Hindi + English agentic interface</strong> — warehouse managers and regional heads can ask questions and receive alerts in the language they're comfortable with.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>WhatsApp-first alerting</strong> — because that's where Indian logistics operations teams actually communicate. Not email, not Slack. WhatsApp.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>WMS & TMS integration</strong> — SAP EWM, Oracle WMS, Blue Yonder, and major TMS platforms via REST API and webhooks for dock-to-system correlation.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Edge + cloud flexibility</strong> — on-premise processing for data residency requirements, cloud for scale, or hybrid for the best of both.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>DPDP Act aligned</strong> — privacy-first design with no facial recognition, no PII capture, encrypted access, and audit logging.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Priced for Indian scale</strong> — per-camera monthly pricing that makes deployment economical whether you have 1 warehouse or 50.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER (lower) ===================== -->
+  <CtaBanner
+    title="Ready to turn your CCTV into logistics intelligence?"
+    sub={`Tell us about your warehouses and we'll show you exactly what ${BRAND.name} surfaces on the cameras you already own.`}
+    primary="Talk to us"
+    primaryHref="#get-started"
+  />
+
+  <!-- ===================== PRIVACY & COMPLIANCE ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-20">
+      <div class="surface-card relative overflow-hidden p-8 md:p-12">
+        <div class="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-signal-500/8 blur-3xl"></div>
+        <div class="relative grid gap-10 lg:grid-cols-2">
+          <div>
+            <span class="eyebrow text-signal-600">Privacy-first design</span>
+            <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Enterprise-grade privacy without compromising insights</h2>
+            <p class="mt-4 text-muted">
+              {BRAND.name} analyses patterns and events — not personal identities. Get the insight without the risk, and pass legal, IT, and procurement review with confidence.
+            </p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">No facial recognition</h3>
+              <p class="mt-1 text-xs text-muted">Behaviour analysis only — no biometrics, no PII capture, no identity tracking.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">On-premise option</h3>
+              <p class="mt-1 text-xs text-muted">Video stays on your infrastructure. Edge processing for strict data residency.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">DPDP aligned</h3>
+              <p class="mt-1 text-xs text-muted">Designed to meet India's Digital Personal Data Protection Act requirements.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">Role-based access</h3>
+              <p class="mt-1 text-xs text-muted">Encrypted connections, MFA, audit logs — enterprise security from day one.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <span class="eyebrow">FAQ</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Frequently asked questions about logistics video analytics</h2>
+        <p class="mt-4 text-muted">Everything you need to know about deploying AI video analytics in your warehouses and distribution centres.</p>
+      </div>
+      <div class="divide-y divide-line">
+        {faqItems.map((item, i) => (
+          <details class="group py-4" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium text-ink">
+              {item.q}
+              <span class="shrink-0 text-faint transition-transform group-open:rotate-45">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </summary>
+            <p class="mt-3 text-sm leading-relaxed text-muted">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RELATED SOLUTIONS ===================== -->
+  <section class="container-x py-14 md:py-16">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Explore related solutions</span>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Keep exploring {BRAND.name}</h2>
+    </div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {related.map((r) => (
+        <a href={localizePath(r.href, locale)} class="surface-card group flex items-center justify-between gap-3 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)]">
+          <span>
+            <span class="block text-sm font-semibold text-ink">{r.label}</span>
+            <span class="mt-0.5 block text-xs text-muted">{r.note}</span>
+          </span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT + DEMO (homepage component) ===================== -->
+  <ContactDemo />
+
+</BaseLayout>

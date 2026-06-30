@@ -1,0 +1,863 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import CapabilityIcon from "../../components/CapabilityIcon.astro";
+import StepIcon from "../../components/StepIcon.astro";
+import AskShopEye from "../../components/AskShopEye.astro";
+import ContactDemo from "../../components/ContactDemo.astro";
+import CtaBanner from "../../components/CtaBanner.astro";
+import AuthorityCitations from "../../components/AuthorityCitations.astro";
+import { manufacturingCitations } from "../../lib/industry-citations";
+import { BRAND, SITE_URL, type Locale } from "../../config";
+import { resolveLocale, localizePath } from "../../i18n/utils";
+import {
+  webPageSchema,
+  faqSchema,
+  breadcrumbSchema,
+  howToSchema,
+  itemListSchema,
+} from "../../lib/schema";
+
+const locale: Locale = resolveLocale(Astro.currentLocale);
+const path = "/industries/manufacturing-video-analytics";
+const pageUrl = new URL(localizePath(path, locale), SITE_URL).href;
+const contact = localizePath("/contact", locale);
+
+const title = `Manufacturing Video Analytics for Factory Floors & Plants | ${BRAND.name}`;
+const description = `${BRAND.name} manufacturing video analytics turns existing factory CCTV into PPE compliance monitoring, production line tracking, safety zone alerts, equipment analysis, worker counting, perimeter intrusion detection, and quality control automation — no new hardware. Built for Indian manufacturing plants.`;
+
+const faqItems = [
+  { q: "What is manufacturing video analytics?", a: `Manufacturing video analytics is AI software that processes existing factory CCTV feeds in real time to monitor PPE compliance, safety zones, production lines, equipment status, worker movement, uniform detection, supervisor presence, and perimeter intrusion — turning passive surveillance into operational intelligence. ${BRAND.name} works on any IP camera, NVR, or DVR without new hardware.` },
+  { q: "How does AI video analytics improve factory safety?", a: `By detecting missing PPE (helmet, vest, gloves, shoes), unauthorised entry into restricted zones, machine proximity violations, and safety SOP breaches in real time — with instant clip-backed WhatsApp alerts to supervisors. Case studies report up to 38% reduction in safety incidents when teams act on automated monitoring.` },
+  { q: "Does manufacturing CCTV analytics work with my existing cameras?", a: `Yes. ${BRAND.name} connects to any IP camera, NVR, or DVR via RTSP or ONVIF — Hikvision, CP Plus, Dahua, Axis, Bosch, and others common on Indian factory floors. No camera replacement or new hardware is required.` },
+  { q: "What PPE items can video analytics detect?", a: "The platform detects hard hats/helmets, high-visibility safety vests, safety gloves, and safety shoes/boots — individually or in combination. Each item is scored per worker with shift-level compliance percentages, trend reports, and clip evidence for every violation flagged." },
+  { q: "Can video analytics monitor production lines?", a: `Yes. ${BRAND.name} tracks line throughput, equipment idle vs. active states, bottleneck zones, and stoppage events from overhead cameras. Data feeds into MES dashboards or exports via REST API for correlation with production targets and OEE metrics.` },
+  { q: "How does equipment monitoring and predictive maintenance work?", a: "Computer vision monitors equipment for abnormal vibration patterns (visual cues), unexpected stoppages, idle-time spikes, and operator absence at critical stations. Anomaly trends trigger predictive maintenance alerts before unplanned downtime — correlated with historical equipment analysis data from the same camera feeds." },
+  { q: "What ROI can I expect from manufacturing video analytics?", a: "Industry case studies report 91% PPE compliance rates (up from manual audits), 65% SOP improvement, 38% incident reduction, and typical payback within 2–3 months. Actual results depend on plant size, shift patterns, and how quickly teams respond to alerts." },
+  { q: "How long does deployment take on a factory floor?", a: `Single-plant deployment typically takes 7–14 days including site assessment, camera mapping, zone configuration for safety areas and production lines, AI model tuning, and operator training. Multi-plant rollouts use configuration templates — 10+ plants can be live in 8–12 weeks.` },
+  { q: "Can it integrate with MES, ERP, and SAP?", a: `Yes. ${BRAND.name} integrates with MES, ERP (including SAP), Power BI, Tableau, and custom systems via REST API and webhooks. Safety events, PPE scores, line stoppages, and worker counts can push into your existing operational dashboards automatically.` },
+  { q: "How does agentic AI work on the factory floor?", a: `Instead of dashboards you must check, ${BRAND.name}'s agentic AI lets plant managers ask questions in plain English or Hindi ("What's PPE compliance on Line 3 this shift?"), set monitoring rules once ("alert me if anyone enters Zone B without a helmet"), and receive verified clip-backed alerts on WhatsApp automatically.` },
+  { q: "How is worker privacy protected in manufacturing?", a: `${BRAND.name} analyses behavioural patterns, PPE status, and zone occupancy — not personal identities. No facial recognition or biometric storage. Video can remain on-premise, all access is encrypted and role-based, and the platform aligns with India's DPDP Act.` },
+  { q: "Can the system detect uniform and supervisor compliance?", a: "Yes. Uniform detection verifies workers wear approved plant attire in designated zones. Supervisor presence monitoring confirms shift supervisors are on the floor at required intervals — flagging absence during critical operations or handover windows with timestamped clip evidence." },
+  { q: "What is compliance cleaning monitoring?", a: "AI verifies scheduled cleaning and hygiene routines in production areas, washdown zones, and cleanrooms — checking that cleaning SOPs are performed on time with visual confirmation. Missed or incomplete cleaning cycles trigger alerts to quality and EHS teams." },
+  { q: "How does perimeter and intrusion detection work in plants?", a: `${BRAND.name} monitors fence lines, gates, loading bays, and restricted areas for after-hours intrusion, tailgating, and unauthorised vehicle or personnel entry. Perimeter cameras send real-time WhatsApp alerts with clip evidence before threats reach the production floor.` },
+  { q: "Can video analytics support shift handover monitoring?", a: "Yes. Worker counting and movement analysis track headcount by shift, zone occupancy during handover windows, and supervisor sign-off presence. The system flags incomplete handovers, overcrowding in transition zones, and missing supervisor coverage at shift change." },
+  { q: "What types of manufacturing facilities benefit most?", a: "Automotive assembly, FMCG and food processing, pharmaceuticals, electronics manufacturing, metal fabrication, textiles, and chemical plants — any facility with safety compliance requirements, production lines, and existing CCTV infrastructure sees measurable impact from AI video analytics." },
+];
+
+const howSteps = [
+  { n: "1", title: "Connect existing cameras", body: "Link your IP cameras, NVR, or DVR via RTSP/ONVIF. No new hardware — works with Hikvision, CP Plus, Dahua, and any ONVIF device already on your factory floor." },
+  { n: "2", title: "AI maps your plant", body: "Computer vision models configure safety zones, PPE detection rules, production line areas, restricted zones, and perimeter boundaries customised to your plant layout." },
+  { n: "3", title: "Real-time intelligence flows", body: "PPE scores, line status, equipment alerts, worker counts, and movement data stream to your centralised dashboard. Multi-plant benchmarking from day one." },
+  { n: "4", title: "Agents alert on WhatsApp", body: "Set rules in plain language. AI agents watch 24/7 and send clip-backed alerts to WhatsApp, Slack, or Teams the moment a safety or production event needs attention." },
+  { n: "5", title: "Optimise and scale", body: "Use data-driven insights to improve SOP compliance, reduce incidents, and boost line productivity. Replicate winning configurations across all plants." },
+];
+
+const howTones = ["brand", "brand", "violet", "signal", "signal"] as const;
+const pillarText: Record<string, string> = {
+  brand: "text-brand-600",
+  signal: "text-signal-600",
+  violet: "text-violet-500",
+};
+const pillarBar: Record<string, string> = {
+  brand: "bg-brand-500",
+  signal: "bg-signal-500",
+  violet: "bg-violet-500",
+};
+
+const manufacturingAsk = {
+  eyebrow: "Agentic AI",
+  title: "Talk to your factory cameras.",
+  titleAccent: "Get answers.",
+  sub: `Ask about any line or zone in plain language, set a monitoring rule once, and let ${BRAND.name} agents watch your factory floor 24/7 — surfacing PPE compliance, safety events, line status and equipment alerts without anyone watching a screen.`,
+  agentName: `${BRAND.name} Factory Agent`,
+  online: "online",
+  inputHint: "Ask about PPE, safety zones, lines, equipment…",
+  exchanges: [
+    {
+      q: "What's PPE compliance on Assembly Line 3 this shift?",
+      a: "Line 3 is at 91% PPE compliance this shift — 4 helmet violations and 2 missing-vest events flagged, all with clip evidence.",
+      kind: "stat" as const,
+      value: "91%",
+      delta: "PPE compliance · Shift B",
+    },
+    {
+      q: "Is the CNC bay running right now?",
+      a: "CNC Bay 2 has been idle for 14 minutes — no operator present. Last active output was 08:42. Predictive maintenance flag raised.",
+      kind: "stat" as const,
+      value: "14 min",
+      note: "idle · CNC Bay 2",
+    },
+    {
+      q: "Alert me if anyone enters the chemical storage zone without a helmet.",
+      a: "Done. I'll watch CAM-PLT-09 and message you on WhatsApp the moment someone enters Zone C without head protection.",
+      kind: "alert" as const,
+      note: "Alert created · WhatsApp · Zone C monitored",
+    },
+    {
+      q: "Show intrusion events at the north gate last night.",
+      a: "2 perimeter intrusion events at North Gate between 22:00–06:00 — tailgating at 23:14 and unauthorised vehicle at 02:47. Clips attached.",
+      kind: "clip" as const,
+      note: "North Gate · 23:14 · 0:22",
+    },
+    {
+      q: "How many workers are on the packaging floor right now?",
+      a: "47 workers on the packaging floor — 3 above shift target. Supervisor Rajesh confirmed present at 14:05.",
+      kind: "stat" as const,
+      value: "47",
+      note: "packaging floor · live count",
+    },
+  ],
+  rail: [
+    { tag: "ASK", title: "Ask in plain language", body: "Question any line, zone or plant in English or Hindi — PPE, safety, equipment, worker counts or intrusions. No dashboards to learn." },
+    { tag: "MONITOR", title: "Agents watch 24/7", body: "Set up monitoring once and agents watch every camera around the clock, detecting only the factory events that matter to your EHS and operations teams." },
+    { tag: "ACT", title: "Close the loop", body: "Verified, clip-backed alerts land on WhatsApp, Slack or Teams — so supervisors and plant managers act in the moment." },
+  ],
+};
+
+const metrics = [
+  { value: "91%", label: "PPE compliance (case study)" },
+  { value: "65%", label: "SOP improvement" },
+  { value: "38%", label: "incident reduction" },
+  { value: "2–3 mo", label: "typical payback period" },
+];
+
+const capabilities = [
+  { icon: "SAFETY", title: "PPE compliance monitoring", body: "Detect missing helmets, safety vests, gloves, and shoes in real time — with per-shift compliance scores, violation clips, and trend dashboards. Case studies reach 91% sustained PPE compliance.", keywords: "PPE compliance video analytics, helmet detection manufacturing, safety vest detection AI" },
+  { icon: "COMPLIANCE", title: "Uniform detection", body: "Verify workers wear approved plant uniforms and colour-coded attire in designated zones. Flag incorrect or missing uniforms before workers enter production areas.", keywords: "uniform detection manufacturing, factory uniform compliance AI, workwear monitoring CCTV" },
+  { icon: "UNATTENDED", title: "Supervisor presence", body: "Confirm shift supervisors are on the floor at required intervals and during critical operations. Absence during handover windows or high-risk tasks triggers instant alerts.", keywords: "supervisor presence monitoring, shift supervisor compliance manufacturing, factory floor supervision AI" },
+  { icon: "SAFETY", title: "Safety monitoring", body: "Continuous monitoring of safety SOPs — restricted zone breaches, machine proximity violations, spill hazards, and unsafe behaviour patterns with clip-backed evidence for EHS audits.", keywords: "factory safety monitoring AI, manufacturing safety video analytics, EHS compliance CCTV" },
+  { icon: "PERIMETER", title: "Perimeter monitoring", body: "Exterior and boundary cameras detect loitering, tailgating, forced-entry attempts, and unauthorised vehicle access around plant perimeters — alerting security before threats reach the floor.", keywords: "manufacturing perimeter monitoring, factory exterior security AI, plant boundary CCTV analytics" },
+  { icon: "COMPLIANCE", title: "Compliance cleaning", body: "Verify scheduled cleaning and hygiene routines in production areas, washdown zones, and cleanrooms. Missed or incomplete cleaning cycles trigger alerts to quality and EHS teams.", keywords: "compliance cleaning monitoring, factory hygiene SOP verification, cleanroom cleaning AI" },
+  { icon: "HEATMAP", title: "Equipment analysis", body: "Analyse equipment utilisation, idle vs. active states, and throughput patterns from overhead cameras. Identify bottlenecks and correlate visual equipment behaviour with production data.", keywords: "equipment analysis video analytics, manufacturing equipment utilisation AI, machine throughput CCTV" },
+  { icon: "FOOTFALL", title: "Worker counting", body: "Automated headcount by zone, shift, and production line with 98%+ accuracy. Track occupancy limits, shift handover headcount, and staffing levels against production targets.", keywords: "worker counting manufacturing, factory headcount AI, shift occupancy video analytics" },
+  { icon: "CASH_OPS", title: "Equipment monitoring", body: "Real-time monitoring of critical machinery — stoppages, idle spikes, operator absence, and abnormal states. Predictive maintenance alerts fire before unplanned downtime escalates.", keywords: "equipment monitoring manufacturing, predictive maintenance video analytics, machine downtime detection AI" },
+  { icon: "DWELL", title: "Movement analysis", body: "Track worker movement patterns, zone dwell time, traffic flow, and congestion hotspots. Optimise floor layouts, reduce unnecessary travel, and improve line-side productivity.", keywords: "worker movement analysis manufacturing, factory traffic flow AI, production floor heatmap analytics" },
+  { icon: "INTRUSION", title: "Intrusion detection", body: "After-hours and restricted-area intrusion alerts trigger instantly when unauthorised personnel enter production floors, chemical storage, or server rooms — with clip-backed WhatsApp notifications.", keywords: "factory intrusion detection AI, manufacturing restricted zone alert, plant security video analytics" },
+  { icon: "AGENTIC", title: "Agentic AI — talk to your cameras", body: "Ask questions in plain English or Hindi. Set monitoring rules in one sentence. AI agents watch every camera 24/7, verify events, and send clip-backed alerts to WhatsApp automatically. No dashboards to learn.", keywords: "agentic AI manufacturing analytics, conversational factory video analytics, manufacturing video analytics WhatsApp alerts" },
+];
+
+const useCases = [
+  { title: "Automotive & assembly", points: ["PPE compliance on assembly lines", "Machine proximity alerts", "Supervisor presence verification", "Equipment downtime detection"] },
+  { title: "FMCG & food processing", points: ["Hygiene & compliance cleaning", "Uniform detection in production zones", "Line throughput monitoring", "Quality control automation"] },
+  { title: "Pharmaceuticals", points: ["Cleanroom compliance monitoring", "Restricted zone access control", "GMP SOP verification", "Shift handover documentation"] },
+  { title: "Electronics manufacturing", points: ["ESD zone compliance", "Worker counting by line", "Equipment analysis & OEE correlation", "Perimeter intrusion detection"] },
+  { title: "Metal & heavy industry", points: ["Helmet and vest enforcement", "Safety zone monitoring", "Movement analysis in hazardous areas", "Predictive maintenance alerts"] },
+  { title: "Textiles & chemicals", points: ["PPE gloves and shoe detection", "Chemical storage zone monitoring", "Worker movement optimisation", "Multi-shift compliance reporting"] },
+];
+
+const comparisonRows = [
+  { metric: "PPE compliance", without: "Periodic manual audits — violations discovered hours later", with: "Real-time helmet, vest, glove and shoe detection with 91%+ compliance rates" },
+  { metric: "Safety incidents", without: "Reactive — incidents reviewed from footage after the fact", with: "Proactive alerts before escalation; 38% incident reduction in case studies" },
+  { metric: "SOP adherence", without: "Paper checklists and spot checks — inconsistent coverage", with: "Automated SOP verification with 65% improvement and clip evidence" },
+  { metric: "Production line visibility", without: "MES data only — no visual confirmation of line status", with: "Camera-verified throughput, stoppages, and bottleneck identification" },
+  { metric: "Equipment downtime", without: "Unplanned failures discovered when output drops", with: "Predictive maintenance alerts from visual anomaly and idle-time patterns" },
+  { metric: "Quality control", without: "End-of-line inspection catches defects late", with: "In-line visual QC automation flags defects earlier in the process" },
+  { metric: "Worker productivity", without: "No visibility into movement waste or zone congestion", with: "Movement analysis and heatmaps optimise floor layouts and staffing" },
+  { metric: "Supervisor compliance", without: "Trust-based — no verification of floor presence", with: "Automated supervisor presence checks with timestamped evidence" },
+  { metric: "Perimeter security", without: "Guards only or no exterior monitoring", with: "AI detects intrusion, tailgating, and after-hours approach automatically" },
+  { metric: "Shift handover", without: "Manual headcount and paper sign-off", with: "Automated worker counting and supervisor verification at shift change" },
+  { metric: "Multi-plant benchmarking", without: "Siloed data across plants in spreadsheets", with: "Centralised dashboard across all facilities in real time" },
+  { metric: "Hardware required", without: "New sensors, wearables, or specialised safety cameras", with: "Works with existing CCTV — zero new hardware investment" },
+  { metric: "Time to ROI", without: "12–18 months (traditional safety systems)", with: "2–3 months typical payback from compliance and downtime gains" },
+];
+
+const integrations = [
+  "WhatsApp", "Slack", "MS Teams", "SMS & Email", "MES", "ERP", "SAP",
+  "Power BI", "Tableau", "REST API", "Webhooks", "AWS", "Google Cloud",
+  "Azure", "Hikvision", "CP Plus", "Dahua", "ONVIF NVR/DVR",
+];
+
+const related = [
+  { label: "Logistics video analytics", href: "/industries/logistics-video-analytics", note: "Warehouse & yard safety" },
+  { label: "Education video analytics", href: "/industries/education-video-analytics", note: "Campus safety & attendance" },
+  { label: "Pricing", href: "/pricing", note: "Per-camera plans" },
+  { label: "Book a demo", href: "/contact", note: "See it on your cameras" },
+];
+
+const schema = [
+  webPageSchema({ url: pageUrl, name: title, description, image: "/og/manufacturing-video-analytics.png" }),
+  howToSchema("How manufacturing video analytics works", "Deploy AI video analytics on existing factory CCTV in 5 steps", howSteps),
+  itemListSchema(
+    "Manufacturing video analytics capabilities",
+    capabilities.map((cap) => ({ name: cap.title, description: cap.body })),
+  ),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Industries", url: "/industries" },
+    { name: "Manufacturing Video Analytics", url: path },
+  ]),
+];
+---
+<BaseLayout title={title} description={description} path={path} schema={schema}>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="bg-grid relative overflow-hidden">
+    <div class="glow-radial pointer-events-none absolute inset-0"></div>
+    <div class="container-x relative grid items-center gap-12 py-16 lg:grid-cols-[1fr_1fr] lg:py-24">
+      <div>
+        <nav class="mb-6 flex items-center gap-2 text-xs text-faint" aria-label="Breadcrumb">
+          <a href={localizePath("/", locale)} class="hover:text-ink">Home</a>
+          <span>/</span>
+          <a href={localizePath("/industries", locale)} class="hover:text-ink">Industries</a>
+          <span>/</span>
+          <span class="text-ink">Manufacturing</span>
+        </nav>
+        <span class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 eyebrow shadow-sm">
+          <span class="h-1.5 w-1.5 rounded-full bg-signal-500"></span>Manufacturing Video Analytics
+        </span>
+        <h1 class="mt-5 text-balance text-4xl font-semibold leading-[1.07] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
+          Turn every factory camera into a <span class="text-brand-600">safety & productivity</span> engine
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+          {BRAND.name} transforms your existing CCTV into PPE compliance monitoring, production line tracking, safety zone alerts, equipment analysis, and intrusion detection — no new hardware, no rip-and-replace. Agentic AI lets you ask questions in plain language and get WhatsApp alerts automatically.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href={contact} size="lg">
+            Book a manufacturing demo
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </Button>
+          <Button href="#how-it-works" variant="secondary" size="lg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            See how it works
+          </Button>
+        </div>
+        <p class="mt-6 sys-tag text-faint">Works with any IP camera · Hikvision · CP Plus · Dahua · ONVIF</p>
+      </div>
+
+      <div class="relative">
+        <div class="surface-card aspect-video overflow-hidden bg-mist">
+          <img
+            src="/images/industries/manufacturing/manufacturing-video-analytics-dashboard-hero.webp"
+            alt="Manufacturing video analytics dashboard showing PPE compliance, production line status, safety zones and equipment monitoring on existing factory CCTV"
+            title="AI video analytics for manufacturing — real-time plant dashboard powered by existing factory cameras"
+            width="800"
+            height="450"
+            loading="eager"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUICK ANSWER (AEO/GEO/LLMO) ===================== -->
+  <section class="container-x -mt-6 relative z-10 pb-12">
+    <div class="surface-card p-6 md:p-8" data-answer>
+      <div class="flex items-start gap-3">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        </span>
+        <div>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-600">Quick answer — What is manufacturing video analytics?</h2>
+          <p class="mt-2 text-base leading-relaxed text-ink">
+            <strong>Manufacturing video analytics</strong> is AI software that turns existing factory CCTV cameras into real-time operational intelligence. It monitors PPE compliance (helmet, vest, gloves, shoes), safety zones, production lines, equipment status, worker movement, uniform detection, supervisor presence, perimeter intrusion, and quality control — without new hardware. Indian manufacturing plants use it to reach 91% PPE compliance, improve SOP adherence by 65%, reduce safety incidents by 38%, and achieve payback in 2–3 months. {BRAND.name} adds an agentic layer: ask questions in plain language, set monitoring rules once, and receive verified clip-backed alerts on WhatsApp automatically.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OUTCOME METRICS ===================== -->
+  <section class="container-x pb-14">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+      {metrics.map((m) => (
+        <div class="surface-card p-5 text-center">
+          <div class="bg-gradient-to-br from-brand-600 to-signal-600 bg-clip-text font-mono text-2xl font-bold text-transparent md:text-3xl">{m.value}</div>
+          <div class="mt-1.5 text-xs text-muted">{m.label}</div>
+        </div>
+      ))}
+    </div>
+    <p class="mt-4 text-center text-xs text-faint">Figures from manufacturing video analytics case studies; actual results vary by plant size, shift patterns and execution.</p>
+  </section>
+
+  <AuthorityCitations citations={manufacturingCitations} class="-mt-6" />
+
+  <!-- ===================== WHAT IS (detailed) ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-3xl">
+        <span class="eyebrow">Understanding manufacturing video analytics</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">What is manufacturing video analytics and why are India's top plants adopting it?</h2>
+        <div class="mt-8 space-y-6 text-base leading-relaxed text-muted">
+          <p>
+            Manufacturing video analytics applies <strong>computer vision and artificial intelligence</strong> to existing factory security cameras, transforming passive CCTV into real-time safety and productivity intelligence. Unlike traditional surveillance reviewed after incidents, modern AI video analytics for manufacturing <em>processes</em> every frame — detecting PPE violations, safety zone breaches, equipment stoppages, and intrusion events as they happen.
+          </p>
+          <p>
+            The technology answers the question plant managers have struggled with for decades: <strong>"Is my factory floor safe, compliant, and productive right now?"</strong> Manual safety audits capture a snapshot; production dashboards show numbers without visual context. Manufacturing video analytics bridges both — giving EHS teams, production managers, and plant heads continuous, camera-verified visibility across every shift.
+          </p>
+          <p>
+            India's manufacturing sector — automotive, FMCG, pharma, electronics, and heavy industry — is accelerating adoption as affordable IP cameras and mature AI inference make deployment practical on existing infrastructure. With Make in India driving capacity expansion and stricter EHS compliance, plants need scalable monitoring that works across multiple facilities without deploying wearables or specialised hardware on every worker.
+          </p>
+          <p>
+            {BRAND.name} takes this further with <strong>agentic AI video analytics</strong> — instead of dashboards you have to check, AI agents watch your cameras 24/7 and proactively surface safety and production insights. Ask "What's PPE compliance on Line 3 this shift?" in plain English or Hindi. Set a rule — "alert me if anyone enters the chemical zone without a helmet" — and the agent handles the rest, sending verified clip-backed notifications to WhatsApp.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AGENTIC AI (manufacturing) ===================== -->
+  <AskShopEye content={manufacturingAsk} />
+
+  <!-- ===================== CAPABILITIES GRID ===================== -->
+  <section id="capabilities" class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Complete manufacturing analytics suite</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Everything your existing cameras can tell you about your factory floor</h2>
+      <p class="mt-4 text-muted">From PPE compliance to production line monitoring — every capability runs on your current CCTV, no new hardware needed.</p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {capabilities.map((cap, i) => {
+        const tones = ["brand", "signal", "violet", "brand", "signal", "violet", "brand", "signal"];
+        const tone = tones[i % tones.length];
+        const chipClass = tone === "brand" ? "bg-brand-50 text-brand-600" : tone === "signal" ? "bg-signal-50 text-signal-600" : "bg-violet-50 text-violet-500";
+        return (
+          <div class="surface-card group relative flex flex-col p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-float)]">
+            <span class={`flex h-12 w-12 items-center justify-center rounded-xl ${chipClass}`}>
+              <CapabilityIcon tag={cap.icon} class="h-6 w-6" />
+            </span>
+            <h3 class="mt-4 text-base font-semibold text-ink">{cap.title}</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{cap.body}</p>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section id="how-it-works" class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="eyebrow">Easy implementation</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Works with your existing factory CCTV infrastructure</h2>
+        <p class="mt-4 text-muted">No new cameras needed. Connect your existing setup and start getting manufacturing video analytics insights in days, not months.</p>
+      </div>
+      <div class="relative mt-16">
+        <div class="absolute left-0 right-0 top-9 hidden lg:block">
+          <div class="relative mx-[10%] h-0.5 rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-x"></span>
+            <span class="flow-dot flow-dot-x" style="animation-delay:1.8s"></span>
+          </div>
+        </div>
+        <div class="absolute bottom-10 left-9 top-9 w-0.5 lg:hidden">
+          <div class="relative h-full w-full rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-b from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-y"></span>
+          </div>
+        </div>
+
+        <div class="grid gap-10 lg:grid-cols-5 lg:gap-4">
+          {
+            howSteps.map((step, i) => (
+              <div class="group relative flex items-start gap-6 lg:flex-col lg:items-center lg:gap-0 lg:text-center">
+                <span class={`relative z-10 flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-float)] ${pillarText[howTones[i]]}`}>
+                  <StepIcon n={Number(step.n)} />
+                  <span class={`absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full font-mono text-xs font-bold text-white ring-4 ring-mist ${pillarBar[howTones[i]]}`}>{step.n}</span>
+                </span>
+                <div class="pt-1 lg:mt-5 lg:pt-0">
+                  <h3 class="text-base font-semibold text-ink">{step.title}</h3>
+                  <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted lg:max-w-[15rem]">{step.body}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEEP DIVE 1: PPE COMPLIANCE ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">PPE compliance monitoring</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Helmet, vest, gloves and shoes — verified on every worker, every shift</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Manual PPE audits capture a moment in time — and workers often comply only when auditors are visible. <strong>AI-powered PPE compliance monitoring</strong> uses your existing cameras to detect missing hard hats, safety vests, gloves, and shoes in real time, scoring every worker who enters a monitored zone.
+          </p>
+          <p>
+            When a violation is detected, supervisors receive an instant WhatsApp alert with a timestamped clip — enabling correction <em>before</em> an incident occurs, not during a post-shift review. Shift-level dashboards show compliance percentages, trending violations by zone, and repeat offenders — giving EHS teams data to drive sustained behavioural change.
+          </p>
+          <p>
+            Manufacturing case studies using automated PPE monitoring report sustained <strong>91% compliance rates</strong> — a dramatic improvement over manual audit baselines. For multi-plant operators, centralised benchmarking reveals which facilities and shifts need targeted intervention.
+          </p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-brand-600">91%</div>
+            <div class="text-xs text-muted">PPE compliance (case study)</div>
+          </div>
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-signal-600">4 items</div>
+            <div class="text-xs text-muted">helmet · vest · gloves · shoes</div>
+          </div>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/manufacturing/ppe-compliance-monitoring-factory.webp"
+          alt="PPE compliance monitoring on factory floor — AI detecting worker without safety helmet with real-time violation alert overlay"
+          title="Manufacturing PPE compliance AI — helmet, vest, gloves and shoes detection on existing cameras"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEEP DIVE 2: PRODUCTION LINE & EQUIPMENT ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/manufacturing/production-line-equipment-monitoring.webp"
+            alt="Production line and equipment monitoring — AI dashboard showing line throughput, equipment idle state and predictive maintenance alert"
+            title="Factory production line monitoring — equipment idle and predictive maintenance AI"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Production line & equipment monitoring</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">See every line, every machine — in real time</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              Production managers often rely on MES dashboards that show numbers without visual confirmation. <strong>Production line monitoring</strong> from {BRAND.name} adds a camera-verified layer — tracking line throughput, stoppage events, operator presence, and equipment idle states from overhead cameras.
+            </p>
+            <p>
+              <strong>Equipment monitoring</strong> detects when critical machinery goes idle unexpectedly, when operators leave stations during active production, and when visual anomalies suggest maintenance is needed. <strong>Predictive maintenance alerts</strong> fire when idle-time patterns or stoppage frequency exceed baselines — giving maintenance teams lead time before unplanned downtime hits output targets.
+            </p>
+            <p>
+              Data exports to MES, ERP, and Power BI via REST API — correlating visual equipment analysis with OEE metrics and production schedules across every shift and plant.
+            </p>
+          </div>
+          <ul class="mt-6 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Line throughput and stoppage detection</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Equipment idle and operator absence alerts</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Predictive maintenance from visual anomaly patterns</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> MES and ERP integration via REST API</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEEP DIVE 3: SAFETY ZONE & MACHINE PROXIMITY ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Safety zone & machine proximity</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Stop zone breaches and machine proximity violations before someone gets hurt</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Restricted zones around heavy machinery, chemical storage, and high-voltage equipment are among the highest-risk areas on any factory floor. Traditional approaches rely on signage and training — but violations happen when attention lapses under production pressure.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>safety zone monitoring</strong> draws configurable polygons around danger areas and machine perimeters. When a worker enters a restricted zone without authorisation or crosses a <strong>machine proximity threshold</strong>, the system fires an instant alert with clip evidence — enabling supervisors to intervene in seconds.
+          </p>
+          <p>
+            Combined with PPE detection, the platform enforces layered safety: a worker near a press brake without gloves and inside the proximity zone triggers a critical alert. Case studies report <strong>38% reduction in safety incidents</strong> when plants act on real-time zone and proximity monitoring.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Restricted zone breach</span>
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Machine proximity</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Chemical storage zone</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">High-voltage area</span>
+          <span class="rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-600">Shift handover zones</span>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/manufacturing/safety-zone-machine-proximity.webp"
+          alt="Safety zone and machine proximity violation — worker entering restricted area near industrial press with real-time alert overlay"
+          title="Manufacturing safety zone monitoring — machine proximity violation detection AI"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MID CTA BANNER ===================== -->
+  <CtaBanner
+    eyebrow="See it on your footage"
+    title="See what your factory cameras have been missing."
+    sub="Book a 30-minute walkthrough on your own plant footage — no new hardware, no rip-and-replace, no risk."
+    primary="Book a manufacturing demo"
+    primaryHref="#get-started"
+    secondary="See how it works"
+    secondaryHref="#how-it-works"
+  />
+
+  <!-- ===================== DEEP DIVE 4: QUALITY CONTROL AUTOMATION ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/manufacturing/quality-control-automation.webp"
+            alt="Quality control automation — AI detecting product defect on manufacturing conveyor line with flagged inspection alert"
+            title="Manufacturing quality control AI — inline defect detection on production line"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Quality control automation</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Catch defects on the line — not at the end of it</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              End-of-line inspection catches defects too late — after materials, labour, and machine time are already spent. <strong>Quality control automation</strong> uses in-line cameras to detect visual defects, misaligned labels, missing components, and packaging errors as products move through the production process.
+            </p>
+            <p>
+              {BRAND.name} flags anomalies with timestamped clip evidence and defect classification — enabling QC teams to intervene at the source rather than scrapping finished batches. Defect rates trend by line, shift, and product type for continuous improvement programmes.
+            </p>
+            <p>
+              For regulated industries like pharma and food processing, inline QC data supplements batch records and supports audit trails — with every flagged event linked to camera evidence and shift metadata.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEEP DIVE 5: WORKER PRODUCTIVITY & MOVEMENT ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Worker productivity & movement analysis</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Optimise floor layouts and staffing with movement intelligence</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Workers spend significant time moving between stations, waiting at bottlenecks, and navigating congested zones — invisible in production reports but measurable from overhead cameras. <strong>Movement analysis</strong> maps traffic flow, dwell hotspots, and congestion patterns across the factory floor.
+          </p>
+          <p>
+            Combined with <strong>worker counting</strong>, plant managers see real-time headcount by zone and shift — supporting staffing decisions, shift handover verification, and occupancy limit enforcement. Heatmaps reveal which paths workers use most and where unnecessary travel wastes productive time.
+          </p>
+          <p>
+            {BRAND.name} correlates movement data with line output to identify productivity levers: repositioning material racks, adjusting shift breaks, or redeploying workers from low-traffic to bottleneck zones. Case studies associate movement optimisation with meaningful <strong>SOP improvement — up to 65%</strong> when teams act on camera-verified workflow data.
+          </p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-brand-600">98%+</div>
+            <div class="text-xs text-muted">worker counting accuracy</div>
+          </div>
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-signal-600">Zone-level</div>
+            <div class="text-xs text-muted">movement heatmaps</div>
+          </div>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/manufacturing/worker-movement-analysis-heatmap.webp"
+          alt="Worker movement analysis heatmap on factory floor showing traffic flow, congestion zones and real-time headcount"
+          title="Factory worker movement analysis — traffic heatmaps and congestion detection AI"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEEP DIVE 6: PERIMETER & INTRUSION ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/manufacturing/perimeter-intrusion-detection.webp"
+            alt="Perimeter and intrusion detection at manufacturing plant — unauthorised entry at north gate with loitering alert overlay"
+            title="Manufacturing perimeter security AI — fence breach and intrusion detection"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Perimeter & intrusion detection</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Protect your plant boundary — before threats reach the floor</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              Manufacturing plants hold high-value inventory, hazardous materials, and critical equipment — making perimeter security essential. Most facilities rely on guards at main gates while fence lines, loading bays, and secondary entrances go unmonitored after hours.
+            </p>
+            <p>
+              {BRAND.name}'s <strong>perimeter monitoring</strong> and <strong>intrusion detection</strong> turn existing exterior cameras into a proactive security layer. The system detects fence breaches, tailgating through gates, unauthorised vehicle entry, loitering near loading docks, and after-hours approach to restricted areas — sending real-time WhatsApp alerts with clip evidence.
+            </p>
+            <p>
+              For multi-building campuses, the platform creates a unified perimeter intelligence layer — covering chemical storage yards, raw material warehouses, and employee parking areas from a single dashboard.
+            </p>
+          </div>
+          <ul class="mt-6 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Fence breach and gate tailgating detection</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> After-hours approach and vehicle intrusion alerts</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Loading bay and warehouse perimeter monitoring</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Instant WhatsApp alerts with clip evidence</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEEP DIVE 7: UNIFORM & SUPERVISOR COMPLIANCE ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Uniform & supervisor compliance</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Right uniform, right zone — with supervisors present when it matters</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Colour-coded uniforms and approved workwear are critical in plants where zone access depends on attire — cleanrooms, chemical areas, and food production lines. <strong>Uniform detection</strong> verifies workers wear approved plant attire before entering designated zones, flagging incorrect or missing uniforms instantly.
+          </p>
+          <p>
+            <strong>Supervisor presence monitoring</strong> confirms shift supervisors are on the floor at required intervals — especially during critical operations, <strong>shift handover</strong> windows, and high-risk tasks. When a supervisor is absent beyond a configured threshold, the system alerts plant management with timestamped evidence.
+          </p>
+          <p>
+            Combined with <strong>compliance cleaning</strong> verification, the platform creates a complete operational compliance picture: the right people, in the right attire, in the right zones, with supervisors accountable — all verified by camera, not clipboard.
+          </p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-brand-600">65%</div>
+            <div class="text-xs text-muted">SOP improvement</div>
+          </div>
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-signal-600">Shift-level</div>
+            <div class="text-xs text-muted">supervisor verification</div>
+          </div>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/manufacturing/uniform-supervisor-compliance.webp"
+          alt="Uniform detection and supervisor presence monitoring — worker with incorrect uniform flagged and supervisor absence alert on factory floor"
+          title="Manufacturing uniform and supervisor compliance — SOP verification AI"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER (post deep-dives) ===================== -->
+  <CtaBanner
+    eyebrow="See it on your footage"
+    title="Ready to see manufacturing intelligence on your factory cameras?"
+    sub="Book a 30-minute walkthrough — we'll show PPE compliance, safety zones, line monitoring and equipment alerts on the CCTV you already have."
+    primary="Book a manufacturing demo"
+    primaryHref="#get-started"
+    secondary="Explore capabilities"
+    secondaryHref="#capabilities"
+  />
+
+  <!-- ===================== BEFORE/AFTER COMPARISON ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Impact comparison</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">How does manufacturing video analytics transform plant operations?</h2>
+      <p class="mt-4 text-muted">Side-by-side comparison — before and after deploying AI video analytics on existing factory CCTV.</p>
+    </div>
+    <div class="mt-12 overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-line text-left">
+            <th class="px-4 py-3 font-semibold text-ink">Metric</th>
+            <th class="px-4 py-3 font-semibold text-danger-500">Without video analytics</th>
+            <th class="px-4 py-3 font-semibold text-signal-600">With {BRAND.name}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonRows.map((row) => (
+            <tr class="border-b border-line/60">
+              <td class="px-4 py-3 font-medium text-ink">{row.metric}</td>
+              <td class="px-4 py-3 text-muted">{row.without}</td>
+              <td class="px-4 py-3 text-ink">{row.with}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== USE CASES BY MANUFACTURING FORMAT ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="eyebrow">Manufacturing format coverage</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Purpose-built for every manufacturing format</h2>
+        <p class="mt-4 text-muted">Whether you run automotive assembly, FMCG processing, pharma cleanrooms, or heavy fabrication — the platform adapts to your operational needs.</p>
+      </div>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {useCases.map((uc) => (
+          <div class="surface-card p-6">
+            <h3 class="text-base font-semibold text-ink">{uc.title}</h3>
+            <ul class="mt-3 space-y-2">
+              {uc.points.map((pt) => (
+                <li class="flex items-start gap-2 text-sm text-muted">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-500"><path d="M20 6 9 17l-5-5"/></svg>
+                  {pt}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTEGRATIONS ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-14 text-center md:py-16">
+      <span class="eyebrow">Connects with your stack</span>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Seamless integration with your existing manufacturing infrastructure</h2>
+      <p class="mx-auto mt-3 max-w-xl text-sm text-muted">From cameras to MES to ERP — works with what you already have.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-2.5">
+        {integrations.map((name) => (
+          <span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted shadow-sm">{name}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INDIA-SPECIFIC SEO SECTION ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-3xl">
+      <span class="eyebrow">Manufacturing video analytics India</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Built for Indian manufacturing operations at scale</h2>
+      <div class="mt-8 space-y-6 text-base leading-relaxed text-muted">
+        <p>
+          India's manufacturing sector is expanding rapidly under Make in India — with plants multiplying across tier-2 and tier-3 industrial corridors where EHS compliance and operational visibility become harder to maintain centrally. {BRAND.name} is purpose-built for this reality:
+        </p>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Works with Indian camera brands</strong> — Hikvision, CP Plus, Dahua, and any ONVIF device. No replacement needed for cameras already deployed across Indian factory floors.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Hindi + English agentic interface</strong> — plant managers and EHS supervisors can ask questions and receive alerts in the language they're comfortable with.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>WhatsApp-first alerting</strong> — because that's where Indian plant operations teams actually communicate. Safety alerts reach supervisors instantly, not buried in email.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>MES, ERP and SAP integration</strong> — safety events, PPE scores, and line data push into your existing operational systems via REST API and webhooks.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Edge + cloud flexibility</strong> — on-premise processing for data residency and air-gapped plants, cloud for multi-site scale, or hybrid for the best of both.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>DPDP Act aligned</strong> — privacy-first design with no facial recognition, no PII capture, encrypted access, and audit logging.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Priced for Indian scale</strong> — per-camera monthly pricing that makes deployment economical whether you have 1 plant or 50.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER (lower) ===================== -->
+  <CtaBanner
+    title="Ready to turn your CCTV into manufacturing intelligence?"
+    sub={`Tell us about your plant and we'll show you exactly what ${BRAND.name} surfaces on the cameras you already own.`}
+    primary="Talk to us"
+    primaryHref="#get-started"
+  />
+
+  <!-- ===================== PRIVACY & COMPLIANCE ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-20">
+      <div class="surface-card relative overflow-hidden p-8 md:p-12">
+        <div class="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-signal-500/8 blur-3xl"></div>
+        <div class="relative grid gap-10 lg:grid-cols-2">
+          <div>
+            <span class="eyebrow text-signal-600">Privacy-first design</span>
+            <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Enterprise-grade privacy without compromising safety insights</h2>
+            <p class="mt-4 text-muted">
+              {BRAND.name} analyses patterns and events — not personal identities. Get the safety and productivity insight without the risk, and pass legal, IT, and procurement review with confidence.
+            </p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">No facial recognition</h3>
+              <p class="mt-1 text-xs text-muted">Behaviour and PPE analysis only — no biometrics, no PII capture, no identity tracking.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">On-premise option</h3>
+              <p class="mt-1 text-xs text-muted">Video stays on your infrastructure. Edge processing for air-gapped and data-residency requirements.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">DPDP aligned</h3>
+              <p class="mt-1 text-xs text-muted">Designed to meet India's Digital Personal Data Protection Act requirements.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">Role-based access</h3>
+              <p class="mt-1 text-xs text-muted">Encrypted connections, MFA, audit logs — enterprise security from day one.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <span class="eyebrow">FAQ</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Frequently asked questions about manufacturing video analytics</h2>
+        <p class="mt-4 text-muted">Everything you need to know about deploying AI video analytics on your factory floor.</p>
+      </div>
+      <div class="divide-y divide-line">
+        {faqItems.map((item, i) => (
+          <details class="group py-4" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium text-ink">
+              {item.q}
+              <span class="shrink-0 text-faint transition-transform group-open:rotate-45">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </summary>
+            <p class="mt-3 text-sm leading-relaxed text-muted">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RELATED SOLUTIONS ===================== -->
+  <section class="container-x py-14 md:py-16">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Explore related solutions</span>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Keep exploring {BRAND.name}</h2>
+    </div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {related.map((r) => (
+        <a href={localizePath(r.href, locale)} class="surface-card group flex items-center justify-between gap-3 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)]">
+          <span>
+            <span class="block text-sm font-semibold text-ink">{r.label}</span>
+            <span class="mt-0.5 block text-xs text-muted">{r.note}</span>
+          </span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT + DEMO ===================== -->
+  <ContactDemo />
+
+</BaseLayout>

@@ -6,6 +6,8 @@ import StepIcon from "../../components/StepIcon.astro";
 import AskShopEye from "../../components/AskShopEye.astro";
 import ContactDemo from "../../components/ContactDemo.astro";
 import CtaBanner from "../../components/CtaBanner.astro";
+import AuthorityCitations from "../../components/AuthorityCitations.astro";
+import { retailCitations } from "../../lib/industry-citations";
 import { BRAND, SITE_URL, type Locale } from "../../config";
 import { resolveLocale, localizePath } from "../../i18n/utils";
 import {
@@ -30,7 +32,7 @@ const faqItems = [
   { q: "Does retail CCTV analytics work with my existing cameras?", a: `Yes. ${BRAND.name} connects to any IP camera, NVR, or DVR via standard RTSP or ONVIF protocols — Hikvision, CP Plus, Dahua, Axis, Bosch, and others. No camera replacement or new hardware is needed.` },
   { q: "What data does a retail video analytics platform collect?", a: "Core metrics include: entrance footfall counts, zone dwell time, zone-level conversion rates, checkout queue length and wait time, anonymous demographics (age/gender estimation), staff-to-customer coverage ratios, and SOP compliance scores. All data is anonymised — no facial recognition, no PII stored." },
   { q: "How is customer privacy protected?", a: `${BRAND.name} analyses behavioural patterns and events, not personal identities. No biometric data or facial recognition is used. Video can remain on-premise, all access is encrypted and role-based, and the platform is designed to align with India's DPDP Act.` },
-  { q: "What ROI can I expect from retail video analytics?", a: "Industry benchmarks for retail video analytics indicate 14–22% conversion improvement, 20–35% reduction in queue wait times, and meaningful shrinkage reduction, with payback often within months. According to Omdia (2024), 86% of video analytics deployments achieve ROI within 12 months. Actual results depend on your store formats, footfall and how teams act on the insights." },
+  { q: "What ROI can I expect from retail video analytics?", a: "Industry benchmarks for retail video analytics indicate 14–22% conversion improvement, 20–35% reduction in queue wait times, and meaningful shrinkage reduction, with payback often within months. An Omdia study (2024) found over 85% of deployments achieve ROI within 12 months. Actual results depend on your store formats, footfall and how teams act on the insights." },
   { q: "How long does deployment take?", a: `Single-store deployment typically takes 5–10 days including site assessment, camera connection via RTSP/ONVIF, AI model configuration, and testing. Multi-store rollouts accelerate after the first location using configuration templates across similar formats — 50+ stores can be live in 8–12 weeks.` },
   { q: "Can it scale across hundreds of store locations?", a: `Yes. ${BRAND.name} is cloud-native and scales automatically. All locations feed into a single centralized dashboard for cross-store benchmarking, regional reporting, and aggregate trend analysis.` },
   { q: "What types of retail businesses benefit most?", a: "High-footfall environments see the greatest impact: fashion/apparel chains, supermarkets, electronics retailers, pharmacies, convenience stores, shopping malls, and multi-brand outlets. Any physical retail space with 50+ daily visitors benefits from footfall and conversion analytics." },
@@ -158,7 +160,7 @@ const comparisonRows = [
   { metric: "Store open/close", without: "Trust-based — no verification of on-time opening or closing", with: "Automated compliance checks with photo evidence to area managers" },
   { metric: "Multi-store benchmarking", without: "Manual spreadsheets, inconsistent manual data", with: "Centralised dashboard across all locations in real time" },
   { metric: "Hardware required", without: "New sensors, counters, people-counting cameras", with: "Works with existing CCTV — zero new hardware investment" },
-  { metric: "Time to ROI", without: "12–18 months (traditional solutions)", with: "2–3 months; 86% achieve ROI within 12 months (Omdia 2024)" },
+  { metric: "Time to ROI", without: "12–18 months (traditional solutions)", with: "2–3 months; over 85% achieve ROI within 12 months (Omdia 2024)" },
 ];
 
 const integrations = [
@@ -226,16 +228,16 @@ const schema = [
       </div>
 
       <div class="relative">
-        <div class="surface-card aspect-[4/3] overflow-hidden">
+        <div class="surface-card aspect-video overflow-hidden bg-mist">
           <img
             src="/images/industries/retail/retail-video-analytics-dashboard-hero.webp"
             alt="Retail video analytics dashboard showing real-time footfall counting, conversion funnel, heatmaps and queue detection on existing CCTV cameras"
             title="AI video analytics for retail — real-time dashboard powered by existing store cameras"
             width="800"
-            height="600"
+            height="450"
             loading="eager"
             decoding="async"
-            class="h-full w-full object-cover"
+            class="h-full w-full object-contain"
           />
         </div>
       </div>
@@ -272,6 +274,8 @@ const schema = [
     <p class="mt-4 text-center text-xs text-faint">Figures are industry benchmarks for retail video analytics; actual results vary by store format, footfall and execution.</p>
   </section>
 
+  <AuthorityCitations citations={retailCitations} class="-mt-6" />
+
   <!-- ===================== WHAT IS (detailed) ===================== -->
   <section class="bg-mist">
     <div class="container-x py-16 md:py-24">
@@ -286,7 +290,7 @@ const schema = [
             The technology answers the fundamental question physical retailers have struggled with for decades: <strong>"What are customers actually doing inside my store?"</strong> E-commerce has had click-stream analytics since the early 2000s — knowing exactly which pages shoppers visit, how long they stay, where they drop off, and what converts. Retail video analytics brings that same granularity to physical stores, using the cameras that are already installed.
           </p>
           <p>
-            According to Grand View Research, the retail segment of the global video analytics market is growing at a <strong>CAGR of 25.6%</strong> and is projected to reach $37.84 billion by 2030. In India specifically, the convergence of affordable IP cameras, widespread CCTV adoption (driven by regulatory and insurance requirements), and mature AI inference engines has created ideal conditions for retail CCTV analytics adoption. Organised retail chains are increasingly adopting these platforms to compete with online retailers on data-driven decision making.
+            Industry analysts project strong growth in retail video analytics — one forecast cites a <strong>CAGR of 25.6%</strong> for the retail segment and a market approaching $38 billion by 2030 as chains adopt footfall and conversion intelligence on existing CCTV. In India specifically, the convergence of affordable IP cameras, widespread CCTV adoption (driven by regulatory and insurance requirements), and mature AI inference engines has created ideal conditions for retail CCTV analytics adoption. Organised retail chains are increasingly adopting these platforms to compete with online retailers on data-driven decision making.
           </p>
           <p>
             {BRAND.name} takes this further with <strong>agentic AI video analytics</strong> — instead of dashboards you have to check, AI agents watch your cameras 24/7 and proactively surface insights and alerts. Ask "How many people visited the electronics section today?" in plain English or Hindi and get an instant answer. Set a rule — "alert me if queue exceeds 5 people" — and the agent handles the rest, sending verified clip-backed notifications to WhatsApp.
@@ -398,16 +402,16 @@ const schema = [
           </div>
         </div>
       </div>
-      <div class="surface-card aspect-[4/3] overflow-hidden">
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
         <img
           src="/images/industries/retail/footfall-analytics-people-counting.webp"
           alt="Footfall analytics for retail stores — AI people counting with zone-level heatmap showing 1,284 visitors and 12% growth on existing CCTV"
           title="Retail footfall counting and store traffic analytics powered by existing cameras"
           width="800"
-          height="600"
+          height="450"
           loading="lazy"
           decoding="async"
-          class="h-full w-full object-cover"
+          class="h-full w-full object-contain"
         />
       </div>
     </div>
@@ -417,16 +421,16 @@ const schema = [
   <section class="bg-mist">
     <div class="container-x py-16 md:py-24">
       <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-        <div class="surface-card aspect-[4/3] overflow-hidden lg:order-1">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
           <img
             src="/images/industries/retail/retail-conversion-funnel-analytics.webp"
             alt="Retail conversion funnel analytics — Visitors to Interested to Interacted to Billed with zone-level conversion rate data from existing CCTV"
             title="Footfall to conversion funnel retail analytics — measure drop-off at every stage"
             width="800"
-            height="600"
+            height="450"
             loading="lazy"
             decoding="async"
-            class="h-full w-full object-cover"
+            class="h-full w-full object-contain"
           />
         </div>
         <div class="lg:order-2">
@@ -479,16 +483,16 @@ const schema = [
           <span class="rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-600">Staff collusion</span>
         </div>
       </div>
-      <div class="surface-card aspect-[4/3] overflow-hidden">
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
         <img
           src="/images/industries/retail/retail-loss-prevention-ai-detection.webp"
           alt="AI-powered retail loss prevention and shoplifting detection — real-time suspicious behaviour alert with video clip evidence from existing CCTV"
           title="Retail loss prevention AI — shoplifting detection and cashier fraud alerts on existing cameras"
           width="800"
-          height="600"
+          height="450"
           loading="lazy"
           decoding="async"
-          class="h-full w-full object-cover"
+          class="h-full w-full object-contain"
         />
       </div>
     </div>
@@ -509,16 +513,16 @@ const schema = [
   <section class="bg-mist">
     <div class="container-x py-16 md:py-24">
       <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-        <div class="surface-card aspect-[4/3] overflow-hidden lg:order-1">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
           <img
             src="/images/industries/retail/retail-queue-analytics-monitoring.webp"
             alt="Retail queue analytics and checkout wait time monitoring — AI counting people in each billing line with real-time alerts when thresholds are exceeded"
             title="Queue management video analytics for retail — predict and reduce checkout wait times"
             width="800"
-            height="600"
+            height="450"
             loading="lazy"
             decoding="async"
-            class="h-full w-full object-cover"
+            class="h-full w-full object-contain"
           />
         </div>
         <div class="lg:order-2">
@@ -565,16 +569,16 @@ const schema = [
           <span class="rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-600">Refund anomalies</span>
         </div>
       </div>
-      <div class="surface-card aspect-[4/3] overflow-hidden">
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
         <img
           src="/images/industries/retail/cash-operations-monitoring-pos-fraud.webp"
           alt="AI cash operations monitoring — POS transaction correlated with video clip showing no-sale register open flagged in real time"
           title="Cash register monitoring AI for retail — POS fraud detection with video evidence"
           width="800"
-          height="600"
+          height="450"
           loading="lazy"
           decoding="async"
-          class="h-full w-full object-cover"
+          class="h-full w-full object-contain"
         />
 
       </div>
@@ -585,16 +589,16 @@ const schema = [
   <section class="bg-mist">
     <div class="container-x py-16 md:py-24">
       <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-        <div class="surface-card aspect-[4/3] overflow-hidden lg:order-1">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
           <img
             src="/images/industries/retail/suspicious-activity-perimeter-monitoring.webp"
             alt="AI suspicious activity detection outside retail store — perimeter camera identifying loitering and unusual gathering near entrance with real-time alert overlay"
             title="Suspicious activity detection outside store — retail perimeter security AI monitoring"
             width="800"
-            height="600"
+            height="450"
             loading="lazy"
             decoding="async"
-            class="h-full w-full object-cover"
+            class="h-full w-full object-contain"
           />
 
         </div>
@@ -651,21 +655,32 @@ const schema = [
           </div>
         </div>
       </div>
-      <div class="surface-card aspect-[4/3] overflow-hidden">
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
         <img
           src="/images/industries/retail/customer-unattended-alert-detection.webp"
           alt="AI customer unattended detection — retail store zone showing customer waiting 95 seconds without staff engagement, triggering alert to nearest associate"
           title="Customer left unattended alert — staff response time monitoring for retail stores"
           width="800"
-          height="600"
+          height="450"
           loading="lazy"
           decoding="async"
-          class="h-full w-full object-cover"
+          class="h-full w-full object-contain"
         />
 
       </div>
     </div>
   </section>
+
+  <!-- ===================== CTA BANNER (post deep-dives) ===================== -->
+  <CtaBanner
+    eyebrow="See it on your footage"
+    title="Ready to see retail intelligence on your store cameras?"
+    sub="Book a 30-minute walkthrough — we'll show footfall, conversion, queues and shrinkage on the CCTV you already have."
+    primary="Book a retail demo"
+    primaryHref="#get-started"
+    secondary="Explore capabilities"
+    secondaryHref="#capabilities"
+  />
 
   <!-- ===================== BEFORE/AFTER COMPARISON ===================== -->
   <section class="container-x py-16 md:py-24">

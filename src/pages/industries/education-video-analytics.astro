@@ -1,0 +1,858 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import CapabilityIcon from "../../components/CapabilityIcon.astro";
+import StepIcon from "../../components/StepIcon.astro";
+import AskShopEye from "../../components/AskShopEye.astro";
+import ContactDemo from "../../components/ContactDemo.astro";
+import CtaBanner from "../../components/CtaBanner.astro";
+import AuthorityCitations from "../../components/AuthorityCitations.astro";
+import { educationCitations } from "../../lib/industry-citations";
+import { BRAND, SITE_URL, type Locale } from "../../config";
+import { resolveLocale, localizePath } from "../../i18n/utils";
+import {
+  webPageSchema,
+  faqSchema,
+  breadcrumbSchema,
+  howToSchema,
+  itemListSchema,
+} from "../../lib/schema";
+
+const locale: Locale = resolveLocale(Astro.currentLocale);
+const path = "/industries/education-video-analytics";
+const pageUrl = new URL(localizePath(path, locale), SITE_URL).href;
+const contact = localizePath("/contact", locale);
+
+const title = `Education & Campus Video Analytics for Schools & Colleges | ${BRAND.name}`;
+const description = `${BRAND.name} education video analytics turns existing campus CCTV into automated attendance, exam integrity monitoring, campus safety alerts, unauthorized access detection, crowding alerts, and emergency response acceleration — no facial recognition, no new hardware. Built for Indian schools, colleges, and multi-campus institutions.`;
+
+const faqItems = [
+  { q: "What is education video analytics?", a: `Education video analytics is AI software that processes existing campus CCTV feeds in real time to automate attendance, detect safety incidents, monitor exam halls, flag unauthorized access, and alert on crowding or after-hours intrusion — without facial recognition or new hardware. ${BRAND.name} works on any IP camera, NVR, or DVR already installed at your school or college.` },
+  { q: "How does automated attendance work without facial recognition?", a: `${BRAND.name} uses privacy-first, proxy-free people counting at classroom and lecture-hall entrances. The system counts entries and exits against scheduled timetables and correlates with your SIS — no biometrics, no identity matching, no PII stored. Institutions typically see 65%+ improvement in attendance accuracy versus manual registers.` },
+  { q: "Does campus CCTV analytics work with our existing cameras?", a: `Yes. ${BRAND.name} connects to any IP camera, NVR, or DVR via RTSP or ONVIF — Hikvision, CP Plus, Dahua, Axis, and others common on Indian campuses. No camera replacement or dedicated attendance hardware is required.` },
+  { q: "How is student privacy protected on campus?", a: `${BRAND.name} analyses behavioural patterns and events, not personal identities. No facial recognition, no biometric enrolment, no student PII in the analytics layer. Video can remain on-premise, access is encrypted and role-based, and the platform is designed to align with India's DPDP Act and institutional data policies.` },
+  { q: "Can video analytics monitor exam integrity?", a: `Yes. ${BRAND.name} monitors exam halls for unauthorised movement, paper-sharing gestures, invigilator absence beyond thresholds, and students leaving seats during active papers. Real-time alerts with clip evidence go to exam controllers and security via WhatsApp — enabling intervention during the paper, not after.` },
+  { q: "How does campus safety and incident detection work?", a: `AI models trained on campus scenarios detect fights, falls, smoke or fire indicators, weapon-like objects, and unusual gathering patterns in corridors and common areas. Security and admin teams receive instant clip-backed alerts — industry deployments report up to 40% fewer escalated incidents when teams act on real-time intelligence.` },
+  { q: "Can it detect tailgating and unauthorized access?", a: `Yes. Entry gates, turnstiles, and staff-only doors are monitored for tailgating (one credential, multiple people), door-held-open events, and access outside permitted hours. Alerts include timestamped clips and gate IDs for security review.` },
+  { q: "How long does deployment take on a campus?", a: `A single school or college block typically goes live in 7–14 days including site assessment, camera connection, zone configuration, and SIS integration testing. Multi-campus rollouts use configuration templates — 20+ campuses can be operational in 10–16 weeks.` },
+  { q: "Can it scale across multiple campuses?", a: `Yes. ${BRAND.name} is cloud-native with a unified multi-campus dashboard. Principals, registrars, and security heads benchmark attendance compliance, incident rates, and camera uptime across all locations from one view.` },
+  { q: "What integrations does campus video analytics support?", a: "Core integrations include Student Information Systems (SIS), Learning Management Systems (LMS), WhatsApp, Slack, MS Teams, SMS, Power BI, REST API, and webhooks. Camera connectivity supports Hikvision, CP Plus, Dahua, and any ONVIF NVR/DVR." },
+  { q: "How does agentic AI differ from traditional campus security dashboards?", a: `Traditional systems require someone to watch screens or check dashboards. ${BRAND.name}'s agentic AI lets admins ask questions in plain English or Hindi ("How many students are in Block B right now?"), set monitoring rules once, and receive verified clip-backed alerts on WhatsApp automatically.` },
+  { q: "Can the system monitor restricted zones like labs and server rooms?", a: `Yes. Restricted zones — chemistry labs, server rooms, staff lounges, exam paper storage — are configured with access schedules. Any entry outside permitted hours or without authorised occupancy triggers an instant alert with video evidence.` },
+  { q: "How does crowding detection help during emergencies?", a: `Corridor and common-area cameras count occupancy in real time. When density exceeds safe thresholds — during assemblies, fire drills, or actual emergencies — the system alerts security and triggers evacuation workflow notifications. Deployments report up to 60% faster emergency response when teams have live occupancy data.` },
+  { q: "Does it work for parking lots and perimeter security?", a: `Yes. Exterior cameras monitor gates, parking lots, and campus perimeters for after-hours intrusion, vehicle loitering, forced-entry attempts, and unusual gathering near boundaries — sending alerts before threats reach classrooms.` },
+  { q: "What ROI can schools and colleges expect?", a: "Institutions typically see 40% fewer escalated safety incidents, 65% attendance accuracy improvement, 60% faster emergency response, and 96% camera uptime — with payback often within an academic year when manual security and attendance labour costs are factored in. Actual results vary by campus size and execution." },
+  { q: "Is it compliant with India's DPDP Act for educational institutions?", a: `Yes. ${BRAND.name} is designed for DPDP alignment: no facial recognition, anonymised event data, on-premise processing options, role-based access, audit logs, and configurable retention policies — helping schools and colleges pass legal, IT, and board review.` },
+];
+
+const howSteps = [
+  { n: "1", title: "Connect existing cameras", body: "Link campus IP cameras, NVR, or DVR via RTSP/ONVIF. No new hardware — works with Hikvision, CP Plus, Dahua, and any ONVIF device already on your premises." },
+  { n: "2", title: "AI configures campus zones", body: "Computer vision models set classroom entry lines, exam-hall boundaries, restricted zones, corridor crowding thresholds, and perimeter rules customised to your campus layout." },
+  { n: "3", title: "Real-time intelligence flows", body: "Attendance, safety incidents, access violations, and crowding data stream to your multi-campus dashboard. Cross-campus benchmarking from day one." },
+  { n: "4", title: "Agents alert on WhatsApp", body: "Set rules in plain language. AI agents watch 24/7 and send clip-backed alerts to WhatsApp, Slack, or Teams the moment something needs attention." },
+  { n: "5", title: "Integrate and scale", body: "Sync with your SIS and LMS. Replicate winning configurations across blocks, campuses, and academic terms." },
+];
+
+const howTones = ["brand", "brand", "violet", "signal", "signal"] as const;
+const pillarText: Record<string, string> = {
+  brand: "text-brand-600",
+  signal: "text-signal-600",
+  violet: "text-violet-500",
+};
+const pillarBar: Record<string, string> = {
+  brand: "bg-brand-500",
+  signal: "bg-signal-500",
+  violet: "bg-violet-500",
+};
+
+const educationAsk = {
+  eyebrow: "Agentic AI",
+  title: "Talk to your campus cameras.",
+  titleAccent: "Get answers.",
+  sub: `Ask about any building or campus in plain language, set a monitoring rule once, and let ${BRAND.name} agents watch your school or college 24/7 — surfacing attendance, safety, exam integrity and access violations without anyone watching a screen.`,
+  agentName: `${BRAND.name} Campus Agent`,
+  online: "online",
+  inputHint: "Ask about attendance, exams, safety, access…",
+  exchanges: [
+    {
+      q: "What's the attendance rate in Block A classrooms this morning?",
+      a: "Block A shows 94% present across 12 classrooms — Room 204 is at 78%, below the 85% threshold.",
+      kind: "stat" as const,
+      value: "94%",
+      delta: "Block A · this morning",
+    },
+    {
+      q: "Any unauthorized access at the science lab after hours?",
+      a: "Yes — 1 after-hours entry at Science Lab B at 21:14. Clip sent to security head via WhatsApp.",
+      kind: "clip" as const,
+      note: "Lab B · 21:14 · 0:22",
+    },
+    {
+      q: "Alert me if more than 40 people gather in the main corridor.",
+      a: "Done. I'll monitor the corridor cameras and message you on WhatsApp the moment occupancy crosses 40.",
+      kind: "alert" as const,
+      note: "Alert created · WhatsApp · 3 corridor cameras",
+    },
+    {
+      q: "Show exam integrity flags from Hall 3 today.",
+      a: "Hall 3 had 2 integrity flags today — 1 invigilator absence (12 min) and 1 student movement during active paper. Clips attached.",
+      kind: "clip" as const,
+      note: "Hall 3 · 10:42 · 0:15",
+    },
+    {
+      q: "Is the invigilator present in Exam Hall 2 right now?",
+      a: "Yes — invigilator confirmed present in Hall 2 for 47 minutes. Supervisor coverage meets SOP.",
+      kind: "stat" as const,
+      value: "Present",
+      note: "Hall 2 · 47 min coverage",
+    },
+  ],
+  rail: [
+    { tag: "ASK", title: "Ask in plain language", body: "Question any campus block in English or Hindi — attendance, exams, safety, crowding or access. No dashboards to learn." },
+    { tag: "MONITOR", title: "Agents watch 24/7", body: "Set up monitoring once and agents watch every camera around the clock, detecting only the campus events that matter to you." },
+    { tag: "ACT", title: "Close the loop", body: "Verified, clip-backed alerts land on WhatsApp, Slack or Teams — so principals and security act in the moment." },
+  ],
+};
+
+const metrics = [
+  { value: "40%", label: "fewer escalated incidents" },
+  { value: "65%", label: "attendance accuracy improvement" },
+  { value: "60%", label: "faster emergency response" },
+  { value: "96%", label: "camera uptime" },
+];
+
+const capabilities = [
+  { icon: "FOOTFALL", title: "Automated attendance (proxy-free)", body: "Privacy-first people counting at classroom and lecture-hall entrances — no facial recognition, no biometrics. Correlates entry counts with timetables and SIS records for accurate, automated attendance without proxy teachers or manual registers.", keywords: "automated attendance CCTV, proxy-free attendance schools, classroom attendance video analytics" },
+  { icon: "SAFETY", title: "Campus safety & incident detection", body: "Real-time detection of fights, falls, smoke indicators, and unusual gathering patterns in corridors and common areas. Security teams receive instant clip-backed WhatsApp alerts — enabling intervention before incidents escalate.", keywords: "campus safety AI, school incident detection CCTV, college security video analytics" },
+  { icon: "COMPLIANCE", title: "Exam integrity monitoring", body: "Monitors exam halls for unauthorised movement, paper-sharing gestures, invigilator absence, and students leaving seats during active papers. Exam controllers get real-time alerts with timestamped clip evidence.", keywords: "exam integrity monitoring AI, exam hall CCTV analytics, invigilation compliance video" },
+  { icon: "INTRUSION", title: "Unauthorized access & tailgating", body: "Detects tailgating through gates and turnstiles, door-held-open events, and access attempts outside permitted hours. Every flag includes gate ID, timestamp, and video clip for security review.", keywords: "campus tailgating detection, unauthorized access school CCTV, gate security video analytics" },
+  { icon: "ALERTS", title: "Restricted zone alerts", body: "Chemistry labs, server rooms, staff areas, and exam paper storage are monitored against access schedules. Any entry outside permitted hours triggers instant alerts to security and admin teams.", keywords: "restricted zone alert campus, lab access monitoring AI, school restricted area CCTV" },
+  { icon: "HEATMAP", title: "Crowding in corridors & common areas", body: "Real-time occupancy monitoring in corridors, cafeterias, assembly halls, and playgrounds. Alerts fire when density exceeds safe thresholds — critical for emergency evacuation and daily crowd management.", keywords: "corridor crowding detection, campus occupancy monitoring, school crowd management AI" },
+  { icon: "STORE_HOURS", title: "After-hours intrusion", body: "Classrooms, libraries, and administrative blocks are monitored outside school hours. Any unauthorised entry triggers instant clip-backed alerts — replacing periodic guard rounds with continuous AI coverage.", keywords: "after hours campus intrusion, school night security AI, college after-hours CCTV" },
+  { icon: "UNATTENDED", title: "Invigilator & supervisor presence", body: "Verifies invigilator and supervisor coverage in exam halls and sensitive zones. Absence beyond configured thresholds triggers alerts to exam controllers — ensuring SOP compliance during every paper.", keywords: "invigilator presence monitoring, exam supervisor compliance AI, invigilation video analytics" },
+  { icon: "ALERTS", title: "Emergency response acceleration", body: "Live occupancy data, incident detection, and perimeter alerts combine to accelerate emergency workflows. Security and admin teams receive coordinated WhatsApp notifications with location, clip evidence, and recommended actions.", keywords: "campus emergency response AI, school evacuation video analytics, emergency alert CCTV" },
+  { icon: "PERIMETER", title: "Perimeter & gate security", body: "Exterior cameras monitor campus gates, boundaries, and parking areas for loitering, forced-entry attempts, vehicle anomalies, and after-hours approach — alerting security before threats reach buildings.", keywords: "campus perimeter security AI, school gate monitoring CCTV, college boundary video analytics" },
+  { icon: "DWELL", title: "Classroom compliance & parking monitoring", body: "Tracks classroom occupancy against timetables, verifies scheduled sessions are in progress, and monitors parking lots for unauthorised vehicles and after-hours activity — all from existing cameras.", keywords: "classroom compliance monitoring, school parking lot CCTV analytics, campus parking security AI" },
+  { icon: "AGENTIC", title: "Agentic AI — talk to your cameras", body: "Ask questions in plain English or Hindi. Set monitoring rules in one sentence. AI agents watch every campus camera 24/7, verify events, and send clip-backed alerts to WhatsApp automatically. Multi-campus dashboard included.", keywords: "agentic AI education analytics, conversational campus video analytics, school CCTV WhatsApp alerts" },
+];
+
+const useCases = [
+  { title: "K-12 schools & academies", points: ["Automated classroom attendance", "Playground & corridor safety", "Parent pickup zone monitoring", "After-hours intrusion alerts"] },
+  { title: "Colleges & universities", points: ["Lecture-hall occupancy tracking", "Exam hall integrity monitoring", "Hostel perimeter security", "Multi-campus benchmarking"] },
+  { title: "Coaching & test-prep centres", points: ["Batch attendance automation", "Exam integrity enforcement", "Restricted material zone alerts", "Peak-hour crowding management"] },
+  { title: "Residential & boarding campuses", points: ["Hostel after-hours monitoring", "Gate & perimeter security", "Common area crowding alerts", "Emergency evacuation support"] },
+  { title: "International & private schools", points: ["DPDP-compliant privacy design", "Multi-building dashboard", "Invigilator SOP compliance", "Parking & visitor monitoring"] },
+  { title: "University research campuses", points: ["Lab restricted-zone alerts", "Server room access monitoring", "After-hours intrusion detection", "SIS & LMS integration"] },
+];
+
+const comparisonRows = [
+  { metric: "Attendance tracking", without: "Manual registers, proxy teachers, or RFID cards", with: "Automated, proxy-free, 65%+ accuracy on existing cameras" },
+  { metric: "Campus safety", without: "Reactive — incidents discovered when reported or on footage review", with: "Real-time incident detection with instant clip-backed alerts" },
+  { metric: "Exam integrity", without: "Trust-based invigilation; malpractice found after papers end", with: "Live monitoring of movement, sharing, and invigilator presence" },
+  { metric: "Unauthorized access", without: "Guards at gates only; tailgating goes undetected", with: "AI detects tailgating, held-open doors, and after-hours entry" },
+  { metric: "Crowding & emergencies", without: "No live occupancy data; evacuation relies on manual headcounts", with: "Real-time corridor density; 60% faster emergency response" },
+  { metric: "Restricted zones", without: "Key-based access with no continuous monitoring", with: "24/7 zone monitoring with schedule-based alerts" },
+  { metric: "After-hours security", without: "Periodic guard rounds; gaps between patrols", with: "Continuous AI monitoring of all buildings and perimeters" },
+  { metric: "Invigilator compliance", without: "Spot checks; absence discovered mid-paper or after", with: "Automated presence verification with threshold alerts" },
+  { metric: "Perimeter security", without: "Fencing and guards only; no proactive threat detection", with: "AI detects loitering, forced entry, and boundary breaches" },
+  { metric: "Multi-campus visibility", without: "Siloed CCTV per campus; manual reporting", with: "Unified dashboard across all campuses in real time" },
+  { metric: "Student privacy", without: "Facial recognition or biometric systems with PII risk", with: "No facial recognition; behavioural analysis only; DPDP aligned" },
+  { metric: "Hardware required", without: "New attendance hardware, sensors, or biometric devices", with: "Works with existing CCTV — zero new hardware investment" },
+  { metric: "Camera reliability", without: "Blind spots discovered when incidents occur", with: "96% uptime monitoring with proactive camera health alerts" },
+];
+
+const integrations = [
+  "WhatsApp", "Slack", "MS Teams", "SMS & Email", "SIS", "LMS",
+  "Moodle", "Google Classroom", "Power BI", "REST API", "Webhooks",
+  "AWS", "Google Cloud", "Azure", "Hikvision", "CP Plus", "Dahua", "ONVIF NVR/DVR",
+];
+
+const related = [
+  { label: "Retail video analytics", href: "/industries/retail-video-analytics", note: "Footfall & conversion" },
+  { label: "Manufacturing video analytics", href: "/industries/manufacturing-video-analytics", note: "Safety & SOP compliance" },
+  { label: "Pricing", href: "/pricing", note: "Per-camera plans" },
+  { label: "Book a demo", href: "/contact", note: "See it on your cameras" },
+];
+
+const schema = [
+  webPageSchema({ url: pageUrl, name: title, description, image: "/og/education-video-analytics.png" }),
+  howToSchema("How education video analytics works", "Deploy AI video analytics on existing campus CCTV in 5 steps", howSteps),
+  itemListSchema(
+    "Education video analytics capabilities",
+    capabilities.map((cap) => ({ name: cap.title, description: cap.body })),
+  ),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Industries", url: "/industries" },
+    { name: "Education Video Analytics", url: path },
+  ]),
+];
+---
+<BaseLayout title={title} description={description} path={path} schema={schema}>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="bg-grid relative overflow-hidden">
+    <div class="glow-radial pointer-events-none absolute inset-0"></div>
+    <div class="container-x relative grid items-center gap-12 py-16 lg:grid-cols-[1fr_1fr] lg:py-24">
+      <div>
+        <nav class="mb-6 flex items-center gap-2 text-xs text-faint" aria-label="Breadcrumb">
+          <a href={localizePath("/", locale)} class="hover:text-ink">Home</a>
+          <span>/</span>
+          <a href={localizePath("/industries", locale)} class="hover:text-ink">Industries</a>
+          <span>/</span>
+          <span class="text-ink">Education</span>
+        </nav>
+        <span class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 eyebrow shadow-sm">
+          <span class="h-1.5 w-1.5 rounded-full bg-signal-500"></span>Education Video Analytics
+        </span>
+        <h1 class="mt-5 text-balance text-4xl font-semibold leading-[1.07] tracking-tight text-ink md:text-5xl lg:text-[3.4rem]">
+          Turn every campus camera into a <span class="text-brand-600">safety & intelligence</span> engine
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+          {BRAND.name} transforms your existing CCTV into automated attendance, exam integrity monitoring, campus safety alerts, access control intelligence, and emergency response acceleration — no facial recognition, no new hardware. Agentic AI lets you ask questions in plain language and get WhatsApp alerts automatically.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href={contact} size="lg">
+            Book an education demo
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </Button>
+          <Button href="#how-it-works" variant="secondary" size="lg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            See how it works
+          </Button>
+        </div>
+        <p class="mt-6 sys-tag text-faint">Works with any IP camera · Hikvision · CP Plus · Dahua · ONVIF</p>
+      </div>
+
+      <div class="relative">
+        <div class="surface-card aspect-video overflow-hidden bg-mist">
+          <img
+            src="/images/industries/education/education-video-analytics-dashboard-hero.webp"
+            alt="Education video analytics dashboard showing multi-campus attendance, safety alerts and exam integrity monitoring on existing CCTV"
+            title="AI video analytics for education — real-time campus dashboard powered by existing school cameras"
+            width="800"
+            height="450"
+            loading="eager"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUICK ANSWER (AEO/GEO/LLMO) ===================== -->
+  <section class="container-x -mt-6 relative z-10 pb-12">
+    <div class="surface-card p-6 md:p-8" data-answer>
+      <div class="flex items-start gap-3">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        </span>
+        <div>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-600">Quick answer — What is education video analytics?</h2>
+          <p class="mt-2 text-base leading-relaxed text-ink">
+            <strong>Education video analytics</strong> is AI software that turns existing campus CCTV cameras into operational intelligence tools. It automates attendance without facial recognition, monitors exam integrity, detects safety incidents, flags unauthorized access and tailgating, alerts on corridor crowding, and accelerates emergency response — all without new hardware. Indian schools, colleges, and multi-campus institutions use it to improve attendance accuracy by 65%, reduce escalated incidents by 40%, and respond to emergencies 60% faster. {BRAND.name} adds an agentic layer: ask questions in plain language, set monitoring rules once, and receive verified clip-backed alerts on WhatsApp automatically.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OUTCOME METRICS ===================== -->
+  <section class="container-x pb-14">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+      {metrics.map((m) => (
+        <div class="surface-card p-5 text-center">
+          <div class="bg-gradient-to-br from-brand-600 to-signal-600 bg-clip-text font-mono text-2xl font-bold text-transparent md:text-3xl">{m.value}</div>
+          <div class="mt-1.5 text-xs text-muted">{m.label}</div>
+        </div>
+      ))}
+    </div>
+    <p class="mt-4 text-center text-xs text-faint">Figures are benchmarks for education video analytics deployments; actual results vary by campus size, camera coverage and execution.</p>
+  </section>
+
+  <AuthorityCitations citations={educationCitations} class="-mt-6" />
+
+  <!-- ===================== WHAT IS (detailed) ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-3xl">
+        <span class="eyebrow">Understanding education video analytics</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">What is education video analytics and why are India's top schools adopting it?</h2>
+        <div class="mt-8 space-y-6 text-base leading-relaxed text-muted">
+          <p>
+            Education video analytics is the application of <strong>computer vision and artificial intelligence</strong> to existing campus security cameras, transforming passive CCTV footage into actionable operational intelligence in real time. Unlike traditional surveillance that simply records for later review, modern AI video analytics for schools and colleges <em>processes</em> every frame as it happens — counting attendance, detecting incidents, monitoring exam halls, and flagging access violations automatically.
+          </p>
+          <p>
+            The technology answers questions campus administrators have struggled with for decades: <strong>"Are students actually in class? Is the campus safe right now? Is exam integrity being maintained?"</strong> Manual attendance registers, proxy teachers, and trust-based invigilation leave gaps that video analytics closes — using cameras already installed for security, with no facial recognition and no new hardware.
+          </p>
+          <p>
+            India's education sector is undergoing rapid digitisation — from CBSE and state-board compliance requirements to university NAAC accreditation and DPDP Act obligations. The convergence of affordable IP cameras on campuses, widespread CCTV adoption driven by safety mandates, and mature AI inference has created ideal conditions for campus video analytics adoption. Multi-campus school groups and university systems are increasingly deploying these platforms to unify security, attendance, and compliance visibility.
+          </p>
+          <p>
+            {BRAND.name} takes this further with <strong>agentic AI video analytics</strong> — instead of dashboards security staff must check, AI agents watch your campus cameras 24/7 and proactively surface insights and alerts. Ask "What's the attendance rate in Block B this morning?" in plain English or Hindi and get an instant answer. Set a rule — "alert me if anyone enters the chemistry lab after 6 PM" — and the agent handles the rest, sending verified clip-backed notifications to WhatsApp.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AGENTIC AI (education) ===================== -->
+  <AskShopEye content={educationAsk} />
+
+  <!-- ===================== CAPABILITIES GRID ===================== -->
+  <section id="capabilities" class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Complete campus analytics suite</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Everything your existing cameras can tell you about your campus</h2>
+      <p class="mt-4 text-muted">From automated attendance to exam integrity and perimeter security — every capability runs on your current CCTV, with privacy-first design and no facial recognition.</p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {capabilities.map((cap, i) => {
+        const tones = ["brand", "signal", "violet", "brand", "signal", "violet", "brand", "signal"];
+        const tone = tones[i % tones.length];
+        const chipClass = tone === "brand" ? "bg-brand-50 text-brand-600" : tone === "signal" ? "bg-signal-50 text-signal-600" : "bg-violet-50 text-violet-500";
+        return (
+          <div class="surface-card group relative flex flex-col p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-float)]">
+            <span class={`flex h-12 w-12 items-center justify-center rounded-xl ${chipClass}`}>
+              <CapabilityIcon tag={cap.icon} class="h-6 w-6" />
+            </span>
+            <h3 class="mt-4 text-base font-semibold text-ink">{cap.title}</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{cap.body}</p>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section id="how-it-works" class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="eyebrow">Easy implementation</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Works with your existing campus CCTV infrastructure</h2>
+        <p class="mt-4 text-muted">No new cameras needed. Connect your existing setup and start getting education video analytics insights in days, not months.</p>
+      </div>
+      <div class="relative mt-16">
+        <div class="absolute left-0 right-0 top-9 hidden lg:block">
+          <div class="relative mx-[10%] h-0.5 rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-x"></span>
+            <span class="flow-dot flow-dot-x" style="animation-delay:1.8s"></span>
+          </div>
+        </div>
+        <div class="absolute bottom-10 left-9 top-9 w-0.5 lg:hidden">
+          <div class="relative h-full w-full rounded-full bg-line">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-b from-brand-500/50 via-violet-500/50 to-signal-500/50"></div>
+            <span class="flow-dot flow-dot-y"></span>
+          </div>
+        </div>
+
+        <div class="grid gap-10 lg:grid-cols-5 lg:gap-4">
+          {
+            howSteps.map((step, i) => (
+              <div class="group relative flex items-start gap-6 lg:flex-col lg:items-center lg:gap-0 lg:text-center">
+                <span class={`relative z-10 flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-float)] ${pillarText[howTones[i]]}`}>
+                  <StepIcon n={Number(step.n)} />
+                  <span class={`absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full font-mono text-xs font-bold text-white ring-4 ring-mist ${pillarBar[howTones[i]]}`}>{step.n}</span>
+                </span>
+                <div class="pt-1 lg:mt-5 lg:pt-0">
+                  <h3 class="text-base font-semibold text-ink">{step.title}</h3>
+                  <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted lg:max-w-[15rem]">{step.body}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AUTOMATED ATTENDANCE SECTION ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Automated attendance</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Proxy-free attendance that principals can trust</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Traditional attendance in Indian schools relies on manual registers, roll calls, or proxy teachers — methods prone to inaccuracy, fraud, and administrative burden. RFID cards and biometric systems raise privacy concerns and require dedicated hardware at every classroom entrance.
+          </p>
+          <p>
+            <strong>AI-powered automated attendance</strong> uses your existing corridor and classroom cameras to count entries and exits with 65%+ accuracy improvement over manual methods — simultaneously capturing late arrivals, early departures, and period-by-period presence without facial recognition or student biometrics.
+          </p>
+          <p>
+            {BRAND.name} correlates camera counts with your SIS timetable and pushes attendance records automatically. For multi-campus school groups, principals benchmark attendance compliance across all locations from a single dashboard — replacing end-of-day reconciliation with real-time visibility.
+          </p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-brand-600">65%+</div>
+            <div class="text-xs text-muted">accuracy improvement</div>
+          </div>
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-signal-600">No biometrics</div>
+            <div class="text-xs text-muted">proxy-free · privacy-first</div>
+          </div>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/education/automated-attendance-classroom.webp"
+          alt="Automated classroom attendance — AI people counting at school entrance with SIS sync and 94% present rate"
+          title="Automated school attendance — proxy-free classroom counting with SIS integration"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAMPUS SAFETY & THREAT DETECTION ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/education/campus-safety-incident-detection.webp"
+            alt="Campus safety incident detection — AI flagging unusual gathering in school corridor with real-time WhatsApp alert"
+            title="Campus safety AI — incident and unusual gathering detection in schools"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Campus safety & threat detection</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Detect incidents in corridors — not hours later on footage</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              Campus safety incidents — fights, falls, bullying gatherings, and unauthorized assemblies — often go unreported until someone reviews CCTV hours or days later. By then, the window for intervention has closed and documentation for disciplinary or legal action is incomplete.
+            </p>
+            <p>
+              {BRAND.name}'s <strong>campus safety AI</strong> uses behavioural models trained on education scenarios to detect fights, falls, smoke indicators, weapon-like objects, and unusual gathering patterns in corridors, cafeterias, and playgrounds. Security teams receive instant WhatsApp alerts with video clips — enabling response <em>during</em> the incident.
+            </p>
+            <p>
+              Deployments across Indian schools and colleges report up to <strong>40% fewer escalated incidents</strong> when security teams act on real-time intelligence rather than reactive reports. The system also creates an auditable incident log for principal and board review.
+            </p>
+          </div>
+          <ul class="mt-6 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Fight, fall, and gathering detection in real time</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Playground and cafeteria coverage</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Auditable incident log for admin review</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Instant WhatsApp alerts with clip evidence</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXAM INTEGRITY MONITORING ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Exam integrity monitoring</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Protect every paper — from the first minute to the last</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Exam malpractice — paper sharing, unauthorized materials, invigilator absence, and students leaving seats during active papers — undermines institutional credibility. Traditional invigilation relies on human attention across dozens of students simultaneously, with violations often discovered only after papers are collected.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>exam integrity monitoring</strong> uses overhead exam-hall cameras to detect unauthorized movement between desks, paper-passing gestures, students leaving seats during active papers, and invigilator absence beyond configured thresholds. Exam controllers receive real-time alerts with timestamped clips.
+          </p>
+          <p>
+            Combined with <strong>invigilator presence verification</strong>, the system ensures every hall maintains supervisor coverage for the full duration of each paper — replacing spot checks with continuous, auditable compliance data for university exam cells and school boards.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Paper-sharing detection</span>
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Seat-leaving alerts</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Invigilator absence</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Unauthorized materials</span>
+          <span class="rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-600">Clip evidence per flag</span>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/education/exam-integrity-monitoring.webp"
+          alt="Exam integrity monitoring — AI detecting paper-sharing gesture in exam hall with invigilator absence alert"
+          title="Exam integrity AI — paper sharing and invigilator presence monitoring"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MID CTA BANNER ===================== -->
+  <CtaBanner
+    eyebrow="See it on your footage"
+    title="See what your campus cameras have been missing."
+    sub="Book a 30-minute walkthrough on your own school or college footage — no new hardware, no facial recognition, no risk."
+    primary="Book an education demo"
+    primaryHref="#get-started"
+    secondary="See how it works"
+    secondaryHref="#how-it-works"
+  />
+
+  <!-- ===================== UNAUTHORIZED ACCESS & TAILGATING ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/education/unauthorized-access-tailgating.webp"
+            alt="Unauthorized access and tailgating detection at school gate — one credential two people flagged by AI"
+            title="School tailgating detection — unauthorized campus access AI monitoring"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Unauthorized access & tailgating</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">One swipe, two people — caught automatically</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              Campus access control systems verify credentials at the point of entry — but tailgating (one authorized person holding the door for an unauthorized follower) is the most common bypass in schools and colleges. Guards cannot watch every gate simultaneously, especially during peak arrival and dispersal windows.
+            </p>
+            <p>
+              {BRAND.name}'s <strong>tailgating detection</strong> uses gate and corridor cameras to identify when multiple people pass through an access point on a single credential, when doors are held open beyond thresholds, and when individuals enter staff-only or after-hours zones without authorization.
+            </p>
+            <p>
+              Every violation generates a timestamped clip with gate ID, direction of travel, and person count — giving security teams evidence for immediate response and disciplinary action. Integrate with your access control system for correlated credential-to-video matching.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CROWDING & EMERGENCY RESPONSE ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">Crowding & emergency response</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Know who's where — when every second counts</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            During fire drills, natural disasters, or security lockdowns, campus administrators need live occupancy data — not guesses. Traditional evacuation relies on teachers doing manual headcounts at assembly points, a process that can take 15–30 minutes on large campuses.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>corridor crowding detection</strong> counts occupancy in real time across hallways, stairwells, cafeterias, and assembly areas. When density exceeds safe thresholds, the system alerts security and triggers evacuation workflow notifications to admin teams via WhatsApp.
+          </p>
+          <p>
+            Combined with incident detection and perimeter alerts, the platform accelerates end-to-end emergency response. Deployments report up to <strong>60% faster emergency response</strong> when teams have live occupancy maps and clip-backed incident intelligence from the first alert.
+          </p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-brand-600">60%</div>
+            <div class="text-xs text-muted">faster emergency response</div>
+          </div>
+          <div class="rounded-xl border border-line bg-mist p-3 text-center">
+            <div class="font-mono text-lg font-bold text-signal-600">Live</div>
+            <div class="text-xs text-muted">corridor occupancy maps</div>
+          </div>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/education/corridor-crowding-emergency-response.webp"
+          alt="Corridor crowding detection during campus emergency — occupancy exceeding safe threshold with evacuation alert"
+          title="Campus crowding and emergency response — corridor occupancy AI for schools"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESTRICTED ZONE MONITORING ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="surface-card aspect-video overflow-hidden bg-mist lg:order-1">
+          <img
+            src="/images/industries/education/restricted-zone-chemistry-lab.webp"
+            alt="Restricted zone alert — unauthorized after-hours entry detected at school chemistry lab"
+            title="School restricted zone monitoring — chemistry lab after-hours access AI"
+            width="800"
+            height="450"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain"
+          />
+        </div>
+        <div class="lg:order-2">
+          <span class="eyebrow">Restricted zone monitoring</span>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Labs, server rooms, and paper stores — monitored 24/7</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <p>
+              Every campus has zones that require restricted access — chemistry labs with hazardous materials, server rooms, exam paper storage, staff lounges, and administrative offices. Key-based systems verify entry at the door but provide no continuous monitoring once inside.
+            </p>
+            <p>
+              {BRAND.name} configures <strong>restricted zone schedules</strong> for each sensitive area. Any entry outside permitted hours, occupancy when the zone should be empty, or dwell beyond configured thresholds triggers an instant alert with video evidence to security and admin teams.
+            </p>
+            <p>
+              For university research campuses with high-value equipment and hazardous materials, this replaces periodic security rounds with continuous AI coverage — creating an auditable access log for compliance and insurance requirements.
+            </p>
+          </div>
+          <ul class="mt-6 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Schedule-based access rules per zone</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Chemistry lab & server room coverage</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Exam paper storage monitoring</li>
+            <li class="flex items-center gap-2 text-sm text-ink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-signal-600"><path d="M20 6 9 17l-5-5"/></svg> Auditable access log for compliance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AFTER-HOURS & PERIMETER SECURITY ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="eyebrow">After-hours & perimeter security</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Protect the campus boundary — not just the buildings</h2>
+        <div class="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <p>
+            Most campus security focuses on daytime operations. After hours, coverage depends on a handful of guards doing periodic rounds — leaving gaps between patrols when intrusion, vandalism, and unauthorized entry are most likely.
+          </p>
+          <p>
+            {BRAND.name}'s <strong>perimeter and after-hours AI</strong> monitors exterior cameras across gates, parking lots, playgrounds, and building perimeters. The system detects after-hours approach, forced-entry attempts, vehicle loitering, and boundary breaches — sending real-time WhatsApp alerts with clip evidence before threats reach classrooms or hostels.
+          </p>
+          <p>
+            For boarding schools and university campuses with large boundaries, this creates a unified perimeter intelligence layer — complementing physical fencing and guard patrols with continuous AI coverage that maintains <strong>96% camera uptime</strong> monitoring with proactive health alerts.
+          </p>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">After-hours intrusion</span>
+          <span class="rounded-full border border-danger-500/20 bg-danger-50 px-3 py-1 text-xs font-medium text-danger-500">Forced-entry attempts</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Parking lot monitoring</span>
+          <span class="rounded-full border border-warn-500/20 bg-warn-50 px-3 py-1 text-xs font-medium text-warn-500">Gate & boundary breaches</span>
+          <span class="rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-600">96% camera uptime</span>
+        </div>
+      </div>
+      <div class="surface-card aspect-video overflow-hidden bg-mist">
+        <img
+          src="/images/industries/education/after-hours-perimeter-security.webp"
+          alt="After-hours perimeter security — AI detecting unauthorized approach at school gate at night with WhatsApp alert"
+          title="Campus perimeter security AI — after-hours intrusion detection for schools"
+          width="800"
+          height="450"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER (post deep-dives) ===================== -->
+  <CtaBanner
+    eyebrow="See it on your footage"
+    title="Ready to see campus intelligence on your school cameras?"
+    sub="Book a 30-minute walkthrough — we'll show attendance, safety, exam integrity and access control on the CCTV you already have."
+    primary="Book an education demo"
+    primaryHref="#get-started"
+    secondary="Explore capabilities"
+    secondaryHref="#capabilities"
+  />
+
+  <!-- ===================== BEFORE/AFTER COMPARISON ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Impact comparison</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">How does education video analytics transform campus operations?</h2>
+      <p class="mt-4 text-muted">Side-by-side comparison — before and after deploying AI video analytics on existing campus CCTV.</p>
+    </div>
+    <div class="mt-12 overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-line text-left">
+            <th class="px-4 py-3 font-semibold text-ink">Metric</th>
+            <th class="px-4 py-3 font-semibold text-danger-500">Without video analytics</th>
+            <th class="px-4 py-3 font-semibold text-signal-600">With {BRAND.name}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonRows.map((row) => (
+            <tr class="border-b border-line/60">
+              <td class="px-4 py-3 font-medium text-ink">{row.metric}</td>
+              <td class="px-4 py-3 text-muted">{row.without}</td>
+              <td class="px-4 py-3 text-ink">{row.with}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== USE CASES BY CAMPUS TYPE ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-24">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="eyebrow">Campus type coverage</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Purpose-built for every education environment</h2>
+        <p class="mt-4 text-muted">Whether you run a K-12 school, university, coaching centre, or boarding campus — the platform adapts to your specific operational needs.</p>
+      </div>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {useCases.map((uc) => (
+          <div class="surface-card p-6">
+            <h3 class="text-base font-semibold text-ink">{uc.title}</h3>
+            <ul class="mt-3 space-y-2">
+              {uc.points.map((pt) => (
+                <li class="flex items-start gap-2 text-sm text-muted">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-500"><path d="M20 6 9 17l-5-5"/></svg>
+                  {pt}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTEGRATIONS ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-14 text-center md:py-16">
+      <span class="eyebrow">Connects with your stack</span>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Seamless integration with your existing campus infrastructure</h2>
+      <p class="mx-auto mt-3 max-w-xl text-sm text-muted">From cameras to SIS to LMS — works with what you already have.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-2.5">
+        {integrations.map((name) => (
+          <span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted shadow-sm">{name}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INDIA-SPECIFIC SEO SECTION ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="mx-auto max-w-3xl">
+      <span class="eyebrow">Education video analytics India</span>
+      <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Built for Indian schools, colleges, and multi-campus institutions</h2>
+      <div class="mt-8 space-y-6 text-base leading-relaxed text-muted">
+        <p>
+          India's education sector spans 1.5 million schools and 40,000 colleges — with growing safety mandates from CBSE, state boards, UGC, and NAAC accreditation requirements. {BRAND.name} is purpose-built for this reality:
+        </p>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Works with Indian camera brands</strong> — Hikvision, CP Plus, Dahua, and any ONVIF device. No replacement needed for the millions of cameras already deployed across Indian campuses.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Hindi + English agentic interface</strong> — principals, registrars, and security heads can ask questions and receive alerts in the language they're comfortable with.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>WhatsApp-first alerting</strong> — because that's where Indian school and college admin teams actually communicate. Not email, not Slack. WhatsApp.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>SIS & LMS integration</strong> — sync attendance with your Student Information System and connect alerts to Moodle, Google Classroom, or your existing LMS.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>DPDP Act aligned</strong> — privacy-first design with no facial recognition, no student PII in analytics, encrypted access, and audit logging for board and legal review.</span></li>
+          <li class="flex items-start gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="mt-0.5 shrink-0 text-brand-600"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Priced for Indian scale</strong> — per-camera monthly pricing that makes deployment economical whether you have one school or a 50-campus group.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER (lower) ===================== -->
+  <CtaBanner
+    title="Ready to turn your CCTV into campus intelligence?"
+    sub={`Tell us about your school or college and we'll show you exactly what ${BRAND.name} surfaces on the cameras you already own.`}
+    primary="Talk to us"
+    primaryHref="#get-started"
+  />
+
+  <!-- ===================== PRIVACY & COMPLIANCE ===================== -->
+  <section class="bg-mist">
+    <div class="container-x py-16 md:py-20">
+      <div class="surface-card relative overflow-hidden p-8 md:p-12">
+        <div class="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-signal-500/8 blur-3xl"></div>
+        <div class="relative grid gap-10 lg:grid-cols-2">
+          <div>
+            <span class="eyebrow text-signal-600">Privacy-first design</span>
+            <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Enterprise-grade privacy for schools and colleges</h2>
+            <p class="mt-4 text-muted">
+              {BRAND.name} analyses patterns and events — not student identities. No facial recognition, no biometric enrolment, no PII in the analytics layer. Get campus intelligence without compromising student privacy, and pass legal, IT, and board review with confidence.
+            </p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">No facial recognition</h3>
+              <p class="mt-1 text-xs text-muted">Behaviour analysis only — no biometrics, no student PII, no identity tracking.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">On-premise option</h3>
+              <p class="mt-1 text-xs text-muted">Video stays on your infrastructure. Edge processing for strict data residency.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">DPDP aligned</h3>
+              <p class="mt-1 text-xs text-muted">Designed to meet India's Digital Personal Data Protection Act requirements.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-mist p-4">
+              <h3 class="text-sm font-semibold text-ink">Role-based access</h3>
+              <p class="mt-1 text-xs text-muted">Encrypted connections, MFA, audit logs — enterprise security from day one.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="container-x py-16 md:py-24">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <span class="eyebrow">FAQ</span>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">Frequently asked questions about education video analytics</h2>
+        <p class="mt-4 text-muted">Everything you need to know about deploying AI video analytics on your campus.</p>
+      </div>
+      <div class="divide-y divide-line">
+        {faqItems.map((item, i) => (
+          <details class="group py-4" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium text-ink">
+              {item.q}
+              <span class="shrink-0 text-faint transition-transform group-open:rotate-45">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </summary>
+            <p class="mt-3 text-sm leading-relaxed text-muted">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RELATED SOLUTIONS ===================== -->
+  <section class="container-x py-14 md:py-16">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Explore related solutions</span>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">Keep exploring {BRAND.name}</h2>
+    </div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {related.map((r) => (
+        <a href={localizePath(r.href, locale)} class="surface-card group flex items-center justify-between gap-3 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)]">
+          <span>
+            <span class="block text-sm font-semibold text-ink">{r.label}</span>
+            <span class="mt-0.5 block text-xs text-muted">{r.note}</span>
+          </span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT + DEMO ===================== -->
+  <ContactDemo />
+
+</BaseLayout>

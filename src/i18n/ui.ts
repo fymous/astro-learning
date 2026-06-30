@@ -35,7 +35,10 @@ export const ui: Record<Locale, UIStrings> = {
         label: "Industries",
         href: "/industries",
         children: [
-          { label: "Retail Video Analytics", href: "/industries/retail-video-analytics" },
+          { label: "Retail", href: "/industries/retail-video-analytics" },
+          { label: "Logistics", href: "/industries/logistics-video-analytics" },
+          { label: "Manufacturing", href: "/industries/manufacturing-video-analytics" },
+          { label: "Education", href: "/industries/education-video-analytics" },
         ],
       },
       { label: "Pricing", href: "/pricing" },
@@ -80,7 +83,10 @@ export const ui: Record<Locale, UIStrings> = {
         label: "इंडस्ट्री",
         href: "/industries",
         children: [
-          { label: "रिटेल वीडियो एनालिटिक्स", href: "/industries/retail-video-analytics" },
+          { label: "रिटेल", href: "/industries/retail-video-analytics" },
+          { label: "लॉजिस्टिक्स", href: "/industries/logistics-video-analytics" },
+          { label: "मैन्युफैक्चरिंग", href: "/industries/manufacturing-video-analytics" },
+          { label: "एजुकेशन", href: "/industries/education-video-analytics" },
         ],
       },
       { label: "मूल्य", href: "/pricing" },

@@ -1,0 +1,38 @@
+---
+import type { IndustryCitation } from "../lib/industry-citations";
+
+interface Props {
+  citations: IndustryCitation[];
+  class?: string;
+}
+
+const { citations, class: className = "" } = Astro.props;
+---
+{citations.length > 0 && (
+  <section
+    class={`container-x pb-14 ${className}`}
+    aria-label="Industry research and standards"
+    data-citations
+  >
+    <div class={`grid gap-4 ${citations.length > 1 ? "md:grid-cols-2" : "max-w-3xl"}`}>
+      {citations.map((c) => (
+        <blockquote class="surface-card relative overflow-hidden p-5 md:p-6">
+          <div class="absolute inset-y-0 left-0 w-[3px] bg-gradient-to-b from-brand-400 to-signal-400"></div>
+          <p class="text-sm leading-relaxed text-muted">
+            According to{" "}
+            <a
+              href={c.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-brand-600 underline decoration-brand-200 underline-offset-2 transition-colors hover:text-brand-700 hover:decoration-brand-400"
+            >
+              {c.source}
+              <span class="sr-only"> (opens in new tab)</span>
+            </a>
+            , {c.text}
+          </p>
+        </blockquote>
+      ))}
+    </div>
+  </section>
+)}
