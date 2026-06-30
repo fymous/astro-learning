@@ -1,0 +1,20 @@
+---
+/** GA4 — production builds only. Override via PUBLIC_GA_MEASUREMENT_ID in .env.production */
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? "G-TN36WV69FG";
+const enabled = import.meta.env.PROD && Boolean(gaId);
+---
+{
+  enabled && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+      <script is:inline define:vars={{ gaId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", gaId);
+      </script>
+    </>
+  )
+}
