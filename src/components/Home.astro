@@ -71,6 +71,10 @@ const howTones = ["brand", "brand", "violet", "signal", "signal"] as const;
 // Internal links for industries that have a dedicated page (others link to the industries hub)
 const industryHref: Record<string, string> = {
   retail: localizePath("/industries/retail-video-analytics", locale),
+  qsr: localizePath("/industries/restaurants-qsr-video-analytics", locale),
+  logistics: localizePath("/industries/logistics-video-analytics", locale),
+  manufacturing: localizePath("/industries/manufacturing-video-analytics", locale),
+  education: localizePath("/industries/education-video-analytics", locale),
 };
 const industriesHub = localizePath("/industries", locale);
 ---

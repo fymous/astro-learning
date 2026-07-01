@@ -61,3 +61,16 @@ export const educationCitations: IndustryCitation[] = [
     text: "notes that school violence can be prevented through layered safety strategies — areas where behavioural video analytics on existing CCTV can augment human patrols without facial recognition.",
   },
 ];
+
+export const restaurantCitations: IndustryCitation[] = [
+  {
+    source: "FSSAI",
+    href: "https://www.fssai.gov.in/cms/food-safety-and-standards-regulations.php",
+    text: "sets mandatory food safety and hygiene standards for food businesses across India — making continuous kitchen compliance monitoring essential for premium restaurant and QSR chains facing audits and licence renewals.",
+  },
+  {
+    source: "National Restaurant Association of India",
+    href: "https://www.nrai.org/",
+    text: "represents India's organised restaurant industry — where multi-outlet operators increasingly invest in operational visibility, guest experience metrics, and loss prevention as dining competition intensifies in tier-1 and tier-2 cities.",
+  },
+];

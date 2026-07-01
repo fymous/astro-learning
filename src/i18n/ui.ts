@@ -36,6 +36,7 @@ export const ui: Record<Locale, UIStrings> = {
         href: "/industries",
         children: [
           { label: "Retail", href: "/industries/retail-video-analytics" },
+          { label: "Restaurants & QSRs", href: "/industries/restaurants-qsr-video-analytics" },
           { label: "Logistics", href: "/industries/logistics-video-analytics" },
           { label: "Manufacturing", href: "/industries/manufacturing-video-analytics" },
           { label: "Education", href: "/industries/education-video-analytics" },
@@ -84,6 +85,7 @@ export const ui: Record<Locale, UIStrings> = {
         href: "/industries",
         children: [
           { label: "रिटेल", href: "/industries/retail-video-analytics" },
+          { label: "रेस्टोरेंट और QSR", href: "/industries/restaurants-qsr-video-analytics" },
           { label: "लॉजिस्टिक्स", href: "/industries/logistics-video-analytics" },
           { label: "मैन्युफैक्चरिंग", href: "/industries/manufacturing-video-analytics" },
           { label: "एजुकेशन", href: "/industries/education-video-analytics" },

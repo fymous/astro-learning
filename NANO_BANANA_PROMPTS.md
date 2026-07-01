@@ -167,3 +167,82 @@ While waiting on assets, you may leave a single-line HTML comment **immediately 
 ```
 
 Remove the comment once the WebP is committed. Do not leave placeholders in production deploys.
+
+---
+
+## 8. Restaurants & QSR industry page (`/industries/restaurants-qsr-video-analytics`)
+
+**Output folder:** `public/images/industries/restaurants-qsr/`  
+**Count:** 12 images (hero + 11 deep-dive sections). Wire with `aspect-video`, `object-contain`, `bg-mist`.
+
+### 8.1 Hero — `restaurants-qsr-video-analytics-dashboard-hero.webp`
+
+```
+Split-screen dark-mode restaurant analytics dashboard on a wide monitor filling the frame. LEFT PANEL (55%): multi-outlet command center titled "Restaurant Intelligence — 8 Outlets Live" with KPI tiles: "COVERS TODAY 2,847 ↑12%", "AVG TABLE TURN 68 min", "HOST QUEUE 4 waiting", "KITCHEN SOP 94%". A live alerts feed shows rows: "Bandra · Billing void flagged · 19:42", "Koramangala · FSSAI glove gap · 13:08". RIGHT PANEL (45%): bird's-eye CCTV of a premium Indian dining room with warm lighting, occupied tables, host stand visible. Amber overlay on host queue: "QUEUE · 4 GUESTS · 6m 12s". Bottom bar: "WHATSAPP ALERTS ACTIVE · 6 CAMERAS". Style: photorealistic professional SaaS UI, crisp typography, Indian premium restaurant interior.
+```
+
+### 8.2 Covers & footfall — `covers-footfall-peak-hour-analytics.webp`
+
+```
+Dark analytics panel filling the frame: "Covers & Footfall — All Outlets" with a bar chart of hourly covers for lunch and dinner peaks, highlighted band "PEAK DINNER 19:00–21:00". Side list ranks outlets: "1. Bandra 412 covers", "2. Saket 387". Small inset CCTV thumbnail top-right shows restaurant entrance with green entry line counting "IN +1". HUD: "CAM-ENT-01 · LIVE". Bottom tag: "STAFFING SIGNAL · +2 FLOOR NEEDED 19:30". Photorealistic SaaS dashboard, sharp, no monitor bezel.
+```
+
+### 8.3 Table turn-time — `table-turn-time-seating-utilisation.webp`
+
+```
+Overhead CCTV of a premium Indian fine-dining room at dinner service, warm ambient lighting, white tablecloths. Multiple tables with amber occupancy overlays and dwell timers: one table highlighted red "TURN TIME · 94 min · THRESHOLD 75m". Heatmap tint on floor plan inset bottom-right: "SEATING UTIL 82%". HUD top-left: "CAM-DIN-03 · 20:14:33". Bottom bar: "SLOW TURN ALERT · TABLE 12 · FLOOR MANAGER NOTIFIED". Photorealistic CCTV with crisp AI overlays, Indian upscale restaurant aesthetic.
+```
+
+### 8.4 Host & billing queue — `host-billing-takeaway-queue-management.webp`
+
+```
+Wide-angle CCTV from elevated angle inside a busy Indian QSR outlet at lunch rush. FOREGROUND: 5 customers in line at billing counter, amber queue polygon "HOST/BILLING QUEUE · 5 PEOPLE · 8m 04s". BACKGROUND: takeaway parcel counter with 2 riders waiting. Red badge on longest wait: "WALKAWAY RISK". HUD: "CAM-CTR-02 · 13:22:11". Bottom bar: "QUEUE THRESHOLD EXCEEDED · WHATSAPP · SHIFT LEAD". Bright LED interior, staff in brand uniforms. Photorealistic CCTV surveillance aesthetic.
+```
+
+### 8.5 Kitchen hygiene & FSSAI — `kitchen-hygiene-fssai-compliance.webp`
+
+```
+Commercial restaurant kitchen CCTV at 45-degree angle, stainless prep tables, busy dinner service. A cook without gloves handling plated food highlighted with red bounding box "FSSAI · GLOVES NOT WORN". Adjacent green box on another cook: "COMPLIANT". Hand-wash station zone polygon labeled "HW-STATION A". HUD: "CAM-KIT-05 · 20:41:09". Bottom bar: "HYGIENE SOP BREACH · CLIP SAVED · KITCHEN MANAGER". Steam, warm kitchen lighting. Photorealistic CCTV with crisp annotation overlays.
+```
+
+### 8.6 Kitchen SOP & food-handling — `kitchen-sop-food-handling-monitoring.webp`
+
+```
+Kitchen cook line CCTV, wide angle. Raw chicken prep zone in blue polygon "RAW ZONE", cooked plating zone in green "COOKED ZONE". A staff member crosses between zones with red alert badge "CROSS-CONTACT RISK · SOP BREACH". Expo pass window visible with orders lined up. HUD: "CAM-KIT-02 · 13:05:44". Bottom: "FOOD-HANDLING SOP · FLAGGED · AREA CHEF ALERT". Photorealistic commercial kitchen, Indian QSR chain scale.
+```
+
+### 8.7 POS billing & cash ops — `pos-billing-fraud-cash-operations.webp`
+
+```
+Split-screen 60/40 dark SaaS UI. LEFT: POS transaction log "Cash Operations — Outlet Bandra" with one row highlighted red "TXN #8842 · VOID AFTER BILL · ₹1,850 · Counter 1 · 19:37:14 · FLAGGED". Tags below: "2 Voids · 1 Discount anomaly today". RIGHT: grainy CCTV of restaurant billing counter, cashier at POS, register drawer open, no guest in frame, amber box "VOID EVENT · NO GUEST IN FRAME". Sync bar orange "POS-VIDEO SYNC ACTIVE". Photorealistic fraud-ops dashboard aesthetic.
+```
+
+### 8.8 Kitchen pass & order-to-serve — `kitchen-pass-order-serve-speed.webp`
+
+```
+QSR kitchen pass window CCTV, straight-on angle. Orders on pass shelf with ticket times; one order highlighted amber "ORDER #442 · ON PASS · 4m 18s". Runner idle nearby in green box "RUNNER AVAILABLE". Red escalating badge "SERVE SLA BREACH · 4m 18s". HUD: "CAM-PASS-01 · 13:18:02". Bottom: "EXPO BOTTLENECK · SHIFT MANAGER WHATSAPP". Stainless pass, heat lamps, busy kitchen blur. Photorealistic CCTV.
+```
+
+### 8.9 Guest service unattended — `guest-service-table-unattended-alerts.webp`
+
+```
+Bird's-eye CCTV premium dining room. FOREGROUND: couple at table looking around, amber box "UNATTENDED · 3m 12s · ZONE: MAIN DINING". BACKGROUND: server at another table with green box "STAFF ENGAGED · OTHER ZONE". Bottom bar: "GUEST WAIT ALERT · NEAREST SERVER NOTIFIED · 20:08:44". HUD: "CAM-DIN-07". Warm lighting, Indian fine-dining decor. Photorealistic, same-frame foreground/background story.
+```
+
+### 8.10 Staff uniform & presence — `staff-uniform-grooming-compliance.webp`
+
+```
+Restaurant entrance/host stand CCTV at evening service. Empty host podium highlighted red "HOST STAND UNMANNED · 4m 02s". Two arriving guests waiting. Secondary amber box on staff in dining area without name badge: "UNIFORM SOP · BADGE MISSING". HUD: "CAM-ENT-03 · 19:55:10". Bottom: "BRAND STANDARDS · OPS ALERT". Premium Indian restaurant lobby, warm lighting. Photorealistic CCTV overlays.
+```
+
+### 8.11 Aggregator pickup — `aggregator-pickup-handoff-discipline.webp`
+
+```
+Indian QSR aggregator pickup counter CCTV. Swiggy/Zomato branded bags on shelf; one bag unattended amber "BAG UNATTENDED · 6m 40s". Two delivery riders in queue, red queue depth badge "PICKUP QUEUE · 4 RIDERS". Window handoff zone polygon "HANDOFF ZONE A". HUD: "CAM-PKP-01 · 13:45:22". Bottom: "AGGREGATOR SLA RISK · COUNTER MANAGER". Bright counter, busy lunch service. Photorealistic.
+```
+
+### 8.12 Loss prevention bar/store room — `loss-prevention-bar-store-room.webp`
+
+```
+After-hours back-of-house CCTV, low light. Bar store room door held open, figure entering red box "AFTER-HOURS INTRUSION · BAR STORE". Liquor shelves visible. Door contact overlay "RESTRICTED ZONE · 23:14:08". HUD: "CAM-BOH-06". Bottom bar: "HIGH PRIORITY · SECURITY WHATSAPP · CLIP RECORDING". Photorealistic night-vision CCTV aesthetic with crisp red alert overlays.
+```

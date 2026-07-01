@@ -249,9 +249,9 @@ const homeContentRaw: Record<Locale, HomeContent> = {
         },
         {
           slug: "qsr",
-          name: "QSRs",
-          blurb: "Speed up service and protect quality at the counter and drive-thru.",
-          points: ["Drive-thru & counter speed", "Kitchen hygiene & SOP", "Queue & order accuracy"],
+          name: "Restaurants & QSRs",
+          blurb: "Protect guest experience and margins across premium dining and QSR outlets.",
+          points: ["Counter & table wait alerts", "Kitchen hygiene & FSSAI SOP", "POS-linked billing oversight"],
           tone: "signal",
         },
         {
@@ -604,7 +604,7 @@ const homeContentRaw: Record<Locale, HomeContent> = {
       items: [
         { slug: "retail", name: "रिटेल", blurb: "फुटफॉल को राजस्व में बदलें और हर स्टोर में चोरी रोकें।", points: ["फुटफॉल, कन्वर्शन और हीटमैप", "कतार और चेकआउट प्रतीक्षा अलर्ट", "लॉस प्रिवेंशन और कैशियर धोखाधड़ी"], tone: "brand" },
         { slug: "consumer-services", name: "कंज़्यूमर सर्विसेज़", blurb: "सैलून, क्लीनिक, जिम और ब्रांच — वॉक-इन और सेवा गुणवत्ता संभालें।", points: ["वॉक-इन और प्रतीक्षा-समय ट्रैकिंग", "स्टाफ़ उपस्थिति और सेवा SOP", "ऑक्यूपेंसी और ब्रांच सुरक्षा"], tone: "violet" },
-        { slug: "qsr", name: "QSR", blurb: "काउंटर और ड्राइव-थ्रू पर सेवा तेज़ करें और गुणवत्ता बचाएँ।", points: ["ड्राइव-थ्रू और काउंटर गति", "किचन स्वच्छता और SOP", "कतार और ऑर्डर सटीकता"], tone: "signal" },
+        { slug: "qsr", name: "रेस्टोरेंट और QSR", blurb: "प्रीमियम डाइनिंग और QSR आउटलेट में अनुभव और मार्जिन सुरक्षित रखें।", points: ["काउंटर और टेबल प्रतीक्षा अलर्ट", "किचन स्वच्छता और FSSAI SOP", "POS-लिंक्ड बिलिंग निगरानी"], tone: "signal" },
         { slug: "dark-stores", name: "डार्क स्टोर", blurb: "उत्पादक, सुरक्षित फ़ुलफ़िलमेंट से क्विक-कॉमर्स SLA पूरे करें।", points: ["पिक और पैक उत्पादकता", "डिस्पैच SLA और राइडर फ़्लो", "चोरी और सुरक्षा"], tone: "brand" },
         { slug: "cloud-kitchens", name: "क्लाउड किचन", blurb: "हर किचन को स्वच्छ, अनुपालक और थ्रूपुट पर रखें।", points: ["स्वच्छता और PPE अनुपालन", "प्रेप SOP और थ्रूपुट", "आग और धुआँ सुरक्षा अलर्ट"], tone: "signal" },
         { slug: "manufacturing", name: "मैन्युफैक्चरिंग", blurb: "हमेशा-चालू निगरानी से सुरक्षित फ़्लोर और अधिक उत्पादन।", points: ["PPE और सुरक्षा-ज़ोन अनुपालन", "लाइन उत्पादकता और डाउनटाइम", "घुसपैठ और ख़तरा पहचान"], tone: "violet" },
