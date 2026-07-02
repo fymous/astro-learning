@@ -173,7 +173,7 @@ Remove the comment once the WebP is committed. Do not leave placeholders in prod
 ## 8. Restaurants & QSR industry page (`/industries/restaurants-qsr-video-analytics`)
 
 **Output folder:** `public/images/industries/restaurants-qsr/`  
-**Count:** 12 images (hero + 11 deep-dive sections). Wire with `aspect-video`, `object-contain`, `bg-mist`.
+**Count:** 12 images (hero + 11 deep-dive sections). Export at **16:9 (1200×675)** — centre-crop ultra-wide sources. Wire with `aspect-video`, `object-cover`, `lg:items-start` on text+image grids.
 
 ### 8.1 Hero — `restaurants-qsr-video-analytics-dashboard-hero.webp`
 

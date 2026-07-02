@@ -1,0 +1,34 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  title?: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  title,
+  width = 1200,
+  height = 675,
+  loading = "lazy",
+  class: className = "",
+} = Astro.props;
+---
+
+<div class:list={["surface-card aspect-video overflow-hidden", className]}>
+  <img
+    src={src}
+    alt={alt}
+    title={title}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding="async"
+    class="h-full w-full object-cover"
+  />
+</div>
